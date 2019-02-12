@@ -9,8 +9,8 @@
    |
    <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
    |
-   <a href="${pageContext.request.contextPath}/login">Login</a>
+   <a id = "login" href="${pageContext.request.contextPath}/login">Login</a>
    |
-   <a href="${pageContext.request.contextPath}/">Logout</a>
+   <a id = logout href="${pageContext.request.contextPath}/logout">Logout</a><!-- switch to logout path -->
     
 </div>  
