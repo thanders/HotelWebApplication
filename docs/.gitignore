@@ -1,4 +1,6 @@
 # This is a Git ignore file
 
 # Hidden files
-.project*
+.project
+.*
+!/docs/.gitignore
