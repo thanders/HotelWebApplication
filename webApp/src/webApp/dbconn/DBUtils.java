@@ -82,14 +82,15 @@ public class DBUtils {
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	 
 	        ResultSet rs = pstm.executeQuery();
+	        // Create an arraylist
 	        List<Room> list = new ArrayList<Room>();
 	        while (rs.next()) {
 	            int roomNumber = rs.getInt("Room_Number");
 	            String roomType = rs.getString("Room_Type");
 	            float price = rs.getFloat("Room_Price");
-	            
+	            // Create instance of Room class
 	            Room room = new Room(price, roomNumber, roomType);
-
+	            // Add Room class to list
 	            list.add(room);
 	        }
 	        return list;
