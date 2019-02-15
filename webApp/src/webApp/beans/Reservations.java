@@ -10,19 +10,19 @@ public class Reservations implements Serializable {
 	private int Id;
 	private int Room_Number;
 	private String Room_Owner;
-	private LocalDate Book_Date;
+	private LocalDate Start_Date;
 	private LocalDate End_Date;
 	private Float Price;
 	private Boolean Member_Status;
 	
 	// Constructor
-	public Reservations(int id, int room_Number, String room_Owner, LocalDate book_Date, LocalDate end_Date,
+	public Reservations(int id, int room_Number, String room_Owner, LocalDate start_Date, LocalDate end_Date,
 			Float price, Boolean member_Status) {
 		super();
 		Id = id;
 		this.Room_Number = room_Number;
 		this.Room_Owner = room_Owner;
-		this.Book_Date = book_Date;
+		this.Start_Date = start_Date;
 		this.End_Date = end_Date;
 		this.Price = price;
 		this.Member_Status = member_Status;
@@ -54,11 +54,11 @@ public class Reservations implements Serializable {
 	}
 
 	public LocalDate getBook_Date() {
-		return Book_Date;
+		return Start_Date;
 	}
 
 	public void setBook_Date(LocalDate book_Date) {
-		Book_Date = book_Date;
+		Start_Date = book_Date;
 	}
 
 	public LocalDate getEnd_Date() {

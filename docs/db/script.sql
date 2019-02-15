@@ -1,4 +1,9 @@
 
+-- Create database
+CREATE DATABASE sse character set UTF8 collate utf8_bin;
+
+USE sse;
+
 -- Create table
 create table Room
 (
@@ -11,15 +16,15 @@ primary key (Room_Number)
 -- Create table
 create table Reservations
 (
-Id  int AUTO_INCREMENT not null ,
+Reservation_Id  int AUTO_INCREMENT not null ,
 Room_Number INT not null,
-Room_Owner VARCHAR(128) not null,
-Book_Date Date not null, 
+Reserved_By VARCHAR(128) not null,
+Start_Date Date not null, 
 End_Date Date not null,
 Price float ,
 -- guest/member 
 Member_Status VARCHAR(280) not null,
-primary key (Id)
+primary key (Reservation_Id)
 ) ;
 
 -- Create table
@@ -59,13 +64,21 @@ Email_Address VARCHAR(128) not null,
 primary key (Id)
 ) ;
 
+-- Create table, for details about which rooms were reserved
+-- create table Reserved_Rooms
+-- (
+-- Id  int AUTO_INCREMENT not null ,
+-- Number_Rooms int not null,
+-- FK_Reservation_Id  int UNIQUE FOREIGN KEY REFERENCES Reservations(Reservation_Id)
+-- );
+
 
 -- Insert data: ---------------------------------------------------------------
  
 insert into Room (Room_Number, Room_Type, Room_Price)
 values (1, 'Double', 20);
 
-insert into Reservations (Room_Number,Room_Owner, Book_Date, End_Date,Price,Member_Status)
+insert into Reservations (Room_Number,Reserved_By, Start_Date, End_Date,Price,Member_Status)
 values (1, 'Abdul', '2015-12-11','2015-12-21',20,'Guest');
 
 insert into Credit_Card (Card_Number,Card_Owner)
@@ -76,3 +89,5 @@ values ( 'Abdul','Salim',1233232,'Dublin 5',0852222432, 'Abdulj947@gmail');
 
 insert into Starwood (Member_Name,Member_Surname,User_Name,User_Password,Memebership_Status,Card_Number,Address,Phone_Number,Email_Address)
 values ( 'Tom','Yates','Tom.yates','Password1','Active',1233232,'Dublin 5',0852222432,'Abdulj947@gmail');
+
+
