@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class Reservations implements Serializable {
 	
-	// Class field
+	// Class fields
 	private static final long serialVersionUID = 1L;
 	private int Id;
 	private int Room_Number;

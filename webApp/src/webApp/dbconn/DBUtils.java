@@ -74,6 +74,26 @@ public class DBUtils {
 	        }
 	        return list;
 	    }
+	    
+	    // queryRoom
+	    public static List<Room> queryRoom(Connection conn) throws SQLException {
+	        String sql = "Select a.Room_Number, a.Room_Type, a.Room_Price from Room a ";
+	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	 
+	        ResultSet rs = pstm.executeQuery();
+	        List<Room> list = new ArrayList<Room>();
+	        while (rs.next()) {
+	            int roomNumber = rs.getInt("Room_Number");
+	            String roomType = rs.getString("Room_Type");
+	            float price = rs.getFloat("Room_Price");
+	            
+	            Room room = new Room(price, roomNumber, roomType);
+
+	            list.add(room);
+	        }
+	        return list;
+	    }
 	 
 	    public static Product findProduct(Connection conn, String code) throws SQLException {
 	        String sql = "Select a.Code, a.Name, a.Price from Product a where a.Code=?";
