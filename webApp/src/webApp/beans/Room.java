@@ -2,42 +2,43 @@ package webApp.beans;
 
 import java.io.Serializable;
 
+// A class for hotel rooms
 public class Room implements Serializable{
 	
-	/**
-	 * 
-	 */
+	// Fields
 	private static final long serialVersionUID = 1L;
-
-	public Room(float price, int roomNumber, String roomType) {
+	private int Room_Number;
+	private int FK_Room_Type_ID;
+	
+	// Constructor
+	public Room(int Room_Number, int FK_Room_Type_ID) {
 		super();
-		this.price = price;
-		this.roomNumber = roomNumber;
-		this.roomType = roomType;
+		this.Room_Number = Room_Number;
+		this.FK_Room_Type_ID = FK_Room_Type_ID;
 	}
-	
-	private float price;
-	private int  roomNumber;
-	private String roomType;
 
-	public float getPrice() {
-		return price;
+	public int getRoom_Number() {
+		return Room_Number;
 	}
-	public void setPrice(float price) {
-		this.price = price;
+
+	public void setRoom_Number(int Room_Number) {
+		this.Room_Number = Room_Number;
 	}
-	public int getRoomNumber() {
-		return roomNumber;
+
+	public int getFK_Room_Type_ID() {
+		return FK_Room_Type_ID;
 	}
-	public void setRoomNumber(int roomNumber) {
-		this.roomNumber = roomNumber;
+
+	public void setFK_Room_Type_ID(int FK_Room_Type_ID) {
+		this.FK_Room_Type_ID = FK_Room_Type_ID;
 	}
-	public String getRoomType() {
-		return roomType;
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	public void setRoomType(String roomType) {
-		this.roomType = roomType;
-	}
+
+	// Getters and Setters
 	
+
 
 }
