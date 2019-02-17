@@ -99,7 +99,7 @@ public class DBUtils {
 	    
 	    // queryRoom
 	    public static List<Room> queryRoom(Connection conn) throws SQLException {
-	        String sql = "Select a.Room_Number, a.FK_Room_Type_ID from Room a ";
+	        String sql = "Select a.Room_Number, a.FK_Room_Type_ID from Room a order by Room_Number";
 	 
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	        ResultSet rs = pstm.executeQuery();
