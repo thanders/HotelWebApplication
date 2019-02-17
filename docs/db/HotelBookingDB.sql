@@ -83,6 +83,7 @@ CREATE TABLE `Reservations` (
   `Reserved_By` varchar(128) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Reservation_Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +113,7 @@ CREATE TABLE `Reserved_Rooms` (
   KEY `fk_ReservationID_idx` (`FK_ReservationID`),
   KEY `Room_Type_ID_idx` (`Room_Type_ID`),
   CONSTRAINT `Room_Type_ID` FOREIGN KEY (`Room_Type_ID`) REFERENCES `Room_Type` (`room_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ReservationID` FOREIGN KEY (`FK_ReservationID`) REFERENCES `Reservations` (`Reservation_Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ReservationID` FOREIGN KEY (`FK_ReservationID`) REFERENCES `Reservations` (`Reservation_Id`) ON DELETE cascade ON UPDATE restrict
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -255,10 +256,7 @@ CREATE TABLE `occupied_room` (
   `room_id` int(11) NOT NULL,
   `reservation_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `reserve_id_idx` (`reservation_id`),
-  KEY `room_id_idx` (`room_id`),
-  CONSTRAINT `reserve_id` FOREIGN KEY (`reservation_id`) REFERENCES `Reservations` (`Reservation_Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `room_id` FOREIGN KEY (`room_id`) REFERENCES `Room` (`Room_Number`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  FOREIGN KEY (reservation_id) REFERENCES Reservations(Reservation_Id) ON DELETE Cascade ON UPDATE restrict
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
