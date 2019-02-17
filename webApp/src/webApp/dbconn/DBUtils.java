@@ -88,8 +88,8 @@ public class DBUtils {
 	            
 	            System.out.println("Reservation: "+ Reservation_Id + Reserved_By);
 	            Reservation reservation = new Reservation();
-	            reservation.setReservation_Id(Reservation_Id);
-	            reservation.setReserved_By(Reserved_By);
+	            reservation.setReservationId(Reservation_Id);
+	            reservation.setReservedBy(Reserved_By);
 	            list.add(reservation);
 	            
 	            System.out.println(list.toString());

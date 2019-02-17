@@ -24,8 +24,8 @@
        </tr>
        <c:forEach items="${roomList}" var="room" >
           <tr>
-             <td>${room.Room_Number}</td>
-             <td>${room.FK_Room_Type_ID}</td>
+             <td>${room.roomNumber}</td>
+             <td>${room.fkRoomTypeId}</td>
           </tr>
        </c:forEach>
     </table>

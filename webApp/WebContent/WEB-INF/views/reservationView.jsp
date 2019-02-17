@@ -24,8 +24,8 @@
        </tr>
        <c:forEach items="${reservationList}" var="res" >
           <tr>
-             <td>${res.Reservation_Id}</td>
-             <td>${res.Reserved_By}</td>
+             <td>${res.reservationId}</td>
+             <td>${res.reservedBy}</td>
           </tr>
        </c:forEach>
     </table>

@@ -7,36 +7,33 @@ public class Room implements Serializable{
 	
 	// Fields
 	private static final long serialVersionUID = 1L;
-	private int Room_Number;
-	private int FK_Room_Type_ID;
+	private int roomNumber;
+	private int fkRoomTypeId;
 	
 	// Constructor
 	public Room(int Room_Number, int FK_Room_Type_ID) {
 		super();
-		this.Room_Number = Room_Number;
-		this.FK_Room_Type_ID = FK_Room_Type_ID;
+		this.roomNumber = Room_Number;
+		this.fkRoomTypeId = FK_Room_Type_ID;
 	}
 
-	public int getRoom_Number() {
-		return Room_Number;
+	public int getRoomNumber() {
+		return roomNumber;
 	}
 
-	public void setRoom_Number(int Room_Number) {
-		this.Room_Number = Room_Number;
+	public void setRoomNumber(int roomNumber) {
+		this.roomNumber = roomNumber;
 	}
 
-	public int getFK_Room_Type_ID() {
-		return FK_Room_Type_ID;
+	public int getFkRoomTypeId() {
+		return fkRoomTypeId;
 	}
 
-	public void setFK_Room_Type_ID(int FK_Room_Type_ID) {
-		this.FK_Room_Type_ID = FK_Room_Type_ID;
+	public void setFkRoomTypeId(int fkRoomTypeId) {
+		this.fkRoomTypeId = fkRoomTypeId;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
 	// Getters and Setters
 	
 
