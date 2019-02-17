@@ -74,22 +74,43 @@ public class DBUtils {
 	        }
 	        return list;
 	    }
-	    
-	    // queryRoom
-	    public static List<Room> queryRoom(Connection conn) throws SQLException {
-	        String sql = "Select a.Room_Number, a.Room_Type, a.Room_Price from Room a ";
+	    // Query Reservation
+	    public static List<Reservation> queryReservations(Connection conn) throws SQLException {
+	        String sql = "Select a.Reservation_Id, a.Reserved_By from Reservations a ";
 	 
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	 
 	        ResultSet rs = pstm.executeQuery();
+	        List<Reservation> list = new ArrayList<Reservation>();
+	        while (rs.next()) {
+	            int Reservation_Id = rs.getInt("Reservation_Id");
+	            String Reserved_By= rs.getString("Reserved_By");
+	            
+	            System.out.println("Reservation: "+ Reservation_Id + Reserved_By);
+	            Reservation reservation = new Reservation();
+	            reservation.setReservationId(Reservation_Id);
+	            reservation.setReservedBy(Reserved_By);
+	            list.add(reservation);
+	            
+	            System.out.println(list.toString());
+	        }
+	        return list;
+	    }
+	    
+	    // queryRoom
+	    public static List<Room> queryRoom(Connection conn) throws SQLException {
+	        String sql = "Select a.Room_Number, a.FK_Room_Type_ID from Room a order by Room_Number";
+	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        ResultSet rs = pstm.executeQuery();
 	        // Create an arraylist
 	        List<Room> list = new ArrayList<Room>();
 	        while (rs.next()) {
-	            int roomNumber = rs.getInt("Room_Number");
-	            String roomType = rs.getString("Room_Type");
-	            float price = rs.getFloat("Room_Price");
+	            int Room_Number = rs.getInt("Room_Number");
+	            int FK_Room_Type_ID = rs.getInt("FK_Room_Type_ID");
 	            // Create instance of Room class
-	            Room room = new Room(price, roomNumber, roomType);
+	            System.out.println("Test "+Room_Number);
+	            Room room = new Room(Room_Number, FK_Room_Type_ID);
 	            // Add Room class to list
 	            list.add(room);
 	        }

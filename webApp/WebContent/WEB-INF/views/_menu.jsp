@@ -11,6 +11,8 @@
    |
    <a href="${pageContext.request.contextPath}/userRooms">Available Rooms</a>
    |
+      <a href="${pageContext.request.contextPath}/reservations">Reservations</a>
+   |
    <a id = "login" href="${pageContext.request.contextPath}/login">Login</a>
    |
    <a id = logout href="${pageContext.request.contextPath}/logout">Logout</a><!-- switch to logout path -->

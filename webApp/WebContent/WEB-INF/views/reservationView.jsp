@@ -5,27 +5,27 @@
 <html>
  <head>
     <meta charset="UTF-8">
-    <title>Available Rooms</title>
+    <title>Reservations</title>
  </head>
  <body>
  
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
  
-    <h3>Available Rooms</h3>
+    <h3>Reseration List</h3>
  
     <p style="color: red;">${errorString}</p>
  
- 	<!--Table to display available rooms-->
     <table border="1" style="padding:5;border-spacing:1" >
        <tr>
-          <th>Room Number</th>
-          <th>Room Type</th>
+          <th>Reservation ID</th>
+          <th>Reserved By</th>
+
        </tr>
-       <c:forEach items="${roomList}" var="room" >
+       <c:forEach items="${reservationList}" var="res" >
           <tr>
-             <td>${room.roomNumber}</td>
-             <td>${room.fkRoomTypeId}</td>
+             <td>${res.reservationId}</td>
+             <td>${res.reservedBy}</td>
           </tr>
        </c:forEach>
     </table>
