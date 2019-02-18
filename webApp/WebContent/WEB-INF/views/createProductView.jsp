@@ -13,23 +13,39 @@
       <jsp:include page="_header.jsp"></jsp:include>
       <jsp:include page="_menu.jsp"></jsp:include>
        
-      <h3>Create Product</h3>
+      <h2>Make a reservation</h2>
        
       <p style="color: red;">${errorString}</p>
        
-      <form method="POST" action="${pageContext.request.contextPath}/createProduct">
+      <form method="POST" action="${pageContext.request.contextPath}/createReservation">
+       
+      <h3>Guest information</h3>
          <table border="1">
             <tr>
-               <td>Code</td>
-               <td><input type="text" name="code" value="${product.code}" /></td>
-            </tr>
-            <tr>
                <td>Name</td>
-               <td><input type="text" name="name" value="${product.name}" /></td>
+               <td><input type="text" name=guestName value="${Guest.guestName}" /></td>
             </tr>
             <tr>
-               <td>Price</td>
-               <td><input type="text" name="price" value="${product.price}" /></td>
+               <td>Surname</td>
+               <td><input type="text" name="guestSurename" value="${Guest.guestSurename}" /></td>
+            </tr>
+            <tr>
+               <td>Address</td>
+               <td><input type="text" name="guestAddress" value="${Guest.guestAddress}" /></td>
+            </tr>
+            <tr>
+               <td>Email</td>
+               <td><input type="text" name="guestEmail" value="${Guest.guestEmail}" /></td>
+            </tr>
+            
+            <tr>
+               <td>Credit card number</td>
+               <td><input type="text" name="guestCardNumber" value="${Guest.guestCardNumber}" /></td>
+            </tr>
+            
+            <tr>
+               <td>Phone number</td>
+               <td><input type="text" name="guestPhoneNumber" value="${Guest.guestPhoneNumber}" /></td>
             </tr>
             <tr>
                <td colspan="2">                   

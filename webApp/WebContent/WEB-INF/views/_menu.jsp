@@ -11,7 +11,9 @@
    |
    <a href="${pageContext.request.contextPath}/userRooms">Available Rooms</a>
    |
-      <a href="${pageContext.request.contextPath}/reservations">Reservations</a>
+   <a href="${pageContext.request.contextPath}/reservations">Reservations</a>
+   |
+   <a href="${pageContext.request.contextPath}/createReservation">Make a Reservation</a>
    |
    <a id = "login" href="${pageContext.request.contextPath}/login">Login</a>
    |

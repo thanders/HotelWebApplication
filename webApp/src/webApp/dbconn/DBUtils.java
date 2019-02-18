@@ -116,6 +116,23 @@ public class DBUtils {
 	        }
 	        return list;
 	    }
+	    
+	    // insertGuest
+	    public static void insertGuest(Connection conn, Guest guest) throws SQLException {
+	        String sql = "Insert into Guest(Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number) values (?,?,?,?,?,?)";
+	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	 
+	        pstm.setString(1, guest.getGuestName());
+	        pstm.setString(2, guest.getGuestSurename());
+	        pstm.setString(3, guest.getGuestAddress());
+	        pstm.setString(4, guest.getGuestEmail());
+	        pstm.setInt(5, guest.getGuestCardNumber());
+	        pstm.setInt(6, guest.getGuestPhoneNumber());
+	 
+	        pstm.executeUpdate();
+	        System.out.println("insertGuest SQL executed");
+	    }
 	 
 	    public static Product findProduct(Connection conn, String code) throws SQLException {
 	        String sql = "Select a.Code, a.Name, a.Price from Product a where a.Code=?";

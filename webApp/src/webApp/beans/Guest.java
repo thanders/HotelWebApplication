@@ -4,60 +4,85 @@ import java.io.Serializable;
 
 public class Guest implements Serializable{
 
-	/**
-	 * 
-	 */
+	// Declare class fields
 	private static final long serialVersionUID = 1L;
-	private String name;
-	private String surename;
-	private String address;
-	private String email;
-	private int cardNumber;
-	private int phoneNumber;
+	private String guestName;
+	private String guestSurename;
+	private String guestAddress;
+	private String guestEmail;
+	private int guestCardNumber;
+	private int guestPhoneNumber;
 	
-	public Guest(String name, String surename, String address, String email, int cardNumber, int phoneNumber) {
+	// Empty constructor
+	public Guest() {}
+	
+	// Constructor
+	public Guest(String guestName, String guestSurename, String guestAddress, String guestEmail, int guestCardNumber, int guestPhoneNumber) {
 		super();
-		this.name = name;
-		this.surename = surename;
-		this.address = address;
-		this.email = email;
-		this.cardNumber = cardNumber;
-		this.phoneNumber = phoneNumber;
+		this.guestName = guestName;
+		this.guestSurename = guestSurename;
+		this.guestAddress = guestAddress;
+		this.guestEmail = guestEmail;
+		this.guestCardNumber = guestCardNumber;
+		this.guestPhoneNumber = guestPhoneNumber;
 	}
-	public String getName() {
-		return name;
+
+	// Getters and Setters
+	public String getGuestName() {
+		return guestName;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setGuestName(String guestName) {
+		this.guestName = guestName;
 	}
-	public String getSurename() {
-		return surename;
+
+	public String getGuestSurename() {
+		return guestSurename;
 	}
-	public void setSurename(String surename) {
-		this.surename = surename;
+
+	public void setGuestSurename(String guestSurename) {
+		this.guestSurename = guestSurename;
 	}
-	public String getAddress() {
-		return address;
+
+	public String getGuestAddress() {
+		return guestAddress;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+
+	public void setGuestAddress(String guestAddress) {
+		this.guestAddress = guestAddress;
 	}
-	public String getEmail() {
-		return email;
+
+	public String getGuestEmail() {
+		return guestEmail;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+	public void setGuestEmail(String guestEmail) {
+		this.guestEmail = guestEmail;
 	}
-	public int getCardNumber() {
-		return cardNumber;
+
+	public int getGuestCardNumber() {
+		return guestCardNumber;
 	}
-	public void setCardNumber(int cardNumber) {
-		this.cardNumber = cardNumber;
+
+	public void setGuestCardNumber(int guestCardNumber) {
+		this.guestCardNumber = guestCardNumber;
 	}
-	public int getPhoneNumber() {
-		return phoneNumber;
+
+	public int getGuestPhoneNumber() {
+		return guestPhoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
+
+	public void setGuestPhoneNumber(int guestPhoneNumber) {
+		this.guestPhoneNumber = guestPhoneNumber;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	public String toString() {
+		return this.getClass().getName() +" "+ "[" + this.guestName +" "+ this.guestSurename + this.guestAddress + this.guestEmail + this.guestCardNumber + this.guestPhoneNumber + "]";
+	}
+	
+	
 }

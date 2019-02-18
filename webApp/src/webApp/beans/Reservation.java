@@ -18,8 +18,6 @@ public class Reservation implements Serializable {
 		this.reservedBy = Reserved_By;
 	}
 
-	
-	
 	public int getReservationId() {
 		return reservationId;
 	}

@@ -12,10 +12,12 @@
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
  
-    <h3>Reservation List</h3>
+    <h2>Your reservation confirmation</h2>
  
     <p style="color: red;">${errorString}</p>
- 
+ 	
+ 	<h3>Reservation list</h3>
+ 	
     <table border="1" style="padding:5;border-spacing:1" >
        <tr>
           <th>Reservation ID</th>
@@ -28,6 +30,33 @@
              <td>${res.reservedBy}</td>
           </tr>
        </c:forEach>
+    </table>
+    
+    <h3>Guest list</h3>
+    
+    
+    <table border="1" style="padding:5;border-spacing:1" >
+    <tr>
+    	<th>Name</th>
+    	<th>Surname</th>
+    	<th>Address</th>
+    	<th>Email</th>
+    	<th>Card number</th>
+    	<th>Phone number</th>
+
+    </tr>
+    <!--
+       <c:forEach items="${guestList}" var="guest" >
+          <tr>
+             <td>${guest.guestName}</td>
+             <td>${guest.guestSurename}</td>
+             <td>${guest.guestAddress}</td>
+             <td>${guest.guestEmail}</td>
+             <td>${guest.guestCardNumber}</td>
+             <td>${guest.guestPhoneNumber}</td>
+          </tr>
+       </c:forEach>
+    -->
     </table>
  
     <jsp:include page="_footer.jsp"></jsp:include>
