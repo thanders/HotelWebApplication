@@ -12,11 +12,11 @@
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
  
-    <h2>Your reservation confirmation</h2>
+    <h2>Reservation confirmation</h2>
  
     <p style="color: red;">${errorString}</p>
  	
- 	<h3>Reservation list</h3>
+ 	<h3>Your reservation details (Reservation Class)</h3>
  	
     <table border="1" style="padding:5;border-spacing:1" >
        <tr>
@@ -32,7 +32,7 @@
        </c:forEach>
     </table>
     
-    <h3>Guest list</h3>
+    <h3>Your personal details (Guest Class)</h3>
     
     
     <table border="1" style="padding:5;border-spacing:1" >
@@ -45,8 +45,7 @@
     	<th>Phone number</th>
 
     </tr>
-    <!--
-       <c:forEach items="${guestList}" var="guest" >
+       <c:forEach items="${latestGuest}" var="guest" >
           <tr>
              <td>${guest.guestName}</td>
              <td>${guest.guestSurename}</td>
@@ -56,7 +55,6 @@
              <td>${guest.guestPhoneNumber}</td>
           </tr>
        </c:forEach>
-    -->
     </table>
  
     <jsp:include page="_footer.jsp"></jsp:include>

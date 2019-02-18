@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import webApp.beans.Guest;
 import webApp.beans.Reservation;
 import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
@@ -30,6 +31,8 @@ public class ReservationListServlet extends HttpServlet {
         Connection conn = SessionUtils.getStoredConnection(request);
  
         String errorString = null;
+        
+        // Retrieve the reservation list
         List<Reservation> list = null;
         try {
             list = DBUtils.queryReservations(conn);
@@ -38,11 +41,32 @@ public class ReservationListServlet extends HttpServlet {
             e.printStackTrace();
             errorString = e.getMessage();
         }
+        
         // Store info in request attribute, before forward to views
         request.setAttribute("errorString", errorString);
         request.setAttribute("reservationList", list);
+        
         System.out.println("ReservationList retrieved");
         System.out.println(list.toString());
+        
+        // Retrieve the reservation list
+        List<Guest> glist = null;
+        try {
+            glist = DBUtils.QueryLatestGuest(conn);
+            System.out.println("glist created and returned successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            errorString = e.getMessage();
+        }
+        
+        // Store info in request attribute, before forward to views
+        request.setAttribute("errorString", errorString);
+        request.setAttribute("latestGuest", glist);
+        
+        System.out.println("Guest list retrieved");
+        System.out.println(glist.toString());
+        
+        
     
         // Forward to /WEB-INF/views/userRoomsView.jsp
         RequestDispatcher dispatcher = request.getServletContext()

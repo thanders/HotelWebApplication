@@ -39,7 +39,6 @@ public class CreateReservationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-    	System.out.println("HELLLLOOOOOO!!!!");
         Connection conn = SessionUtils.getStoredConnection(request);
         int guestCardNumber = 0;
         int guestPhoneNumber =0;
@@ -86,7 +85,7 @@ public class CreateReservationServlet extends HttpServlet {
  
         // Store information to request attribute, before forward to views.
         request.setAttribute("errorString", errorString);
-        request.setAttribute("guest", guest);
+        request.setAttribute("guestNew", guest);
  
         // If error, forward to Edit page.
         if (errorString != null) {
@@ -95,8 +94,9 @@ public class CreateReservationServlet extends HttpServlet {
             dispatcher.forward(request, response);
         }
         // If everything nice.
-        // Redirect to the product listing page.
+        
         else {
+            // Redirect to the product listing page.
             response.sendRedirect(request.getContextPath() + "/reservations");
         }
     }

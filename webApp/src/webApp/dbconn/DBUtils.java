@@ -97,6 +97,38 @@ public class DBUtils {
 	        return list;
 	    }
 	    
+	    // QueryLatestGuest
+	    public static List<Guest> QueryLatestGuest(Connection conn) throws SQLException {
+	        String sql = "Select a.Guest_Name, a.Guest_Surname, a.Address, a.Card_Number, a.Phone_Number, a.Email_Address from Guest a ORDER BY Id DESC LIMIT 1";
+	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	 
+	        ResultSet rs = pstm.executeQuery();
+	        List<Guest> list = new ArrayList<Guest>();
+	        while (rs.next()) {
+	            String guestName = rs.getString("Guest_Name");
+	            String Guest_Surname= rs.getString("Guest_Surname");
+	            String Address= rs.getString("Address");
+	            int Card_Number= rs.getInt("Card_Number");
+	            int Phone_Number= rs.getInt("Phone_Number");
+	            String Email_Address= rs.getString("Email_Address");
+	            
+	            System.out.println("Guest: "+ guestName + Guest_Surname + Address + Card_Number + Phone_Number + Email_Address);
+	            Guest guest = new Guest();
+	            guest.setGuestName(guestName);
+	            guest.setGuestSurename(Guest_Surname);
+	            guest.setGuestAddress(Address);
+	            guest.setGuestCardNumber(Card_Number);
+	            guest.setGuestPhoneNumber(Phone_Number);
+	            guest.setGuestEmail(Email_Address);
+	            
+	            list.add(guest);
+	            
+	            System.out.println(list.toString());
+	        }
+	        return list;
+	    }
+	    
 	    // queryRoom
 	    public static List<Room> queryRoom(Connection conn) throws SQLException {
 	        String sql = "Select a.Room_Number, a.FK_Room_Type_ID from Room a order by Room_Number";
