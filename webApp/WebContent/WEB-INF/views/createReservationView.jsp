@@ -6,7 +6,7 @@
 <html>
    <head>
       <meta charset="UTF-8">
-      <title>Create Product</title>
+      <title>Make Reservation</title>
    </head>
    <body>
     

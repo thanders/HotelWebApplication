@@ -29,7 +29,7 @@ public class CreateReservationServlet extends HttpServlet {
             throws ServletException, IOException {
  
         RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/createProductView.jsp");
+                .getRequestDispatcher("/WEB-INF/views/createReservationView.jsp");
         dispatcher.forward(request, response);
     }
  
