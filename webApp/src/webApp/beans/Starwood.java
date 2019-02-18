@@ -9,6 +9,11 @@ public class Starwood implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
+	
+	public Starwood() {
+		
+	}
+	
 	public Starwood(String name, String surename, String address, String email, int cardNumber, int phoneNumber,
 			String userName, String password, String membershipStatus) {
 		super();
