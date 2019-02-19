@@ -53,7 +53,7 @@
             </tr>
             <tr>
                <td>Email</td>
-               <td><input type="text" name="guestEmail" value="${Guest.guestEmail}" /></td>
+               <td><input type="email" name="guestEmail" value="${Guest.guestEmail}" /></td>
             </tr>
             
             <tr>
@@ -68,7 +68,7 @@
             <tr>
                <td colspan="2">                   
                    <input type="submit" value="Submit" />
-                   <a href="productList">Cancel</a>
+                   <input type="reset" value="Reset">
                </td>
             </tr>
          </table>

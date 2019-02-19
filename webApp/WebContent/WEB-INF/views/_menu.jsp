@@ -5,8 +5,6 @@
  
    <a href="${pageContext.request.contextPath}/">Home</a>
    |
-   <a href="${pageContext.request.contextPath}/productList">Product List</a>
-   |
    <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
    |
    <a href="${pageContext.request.contextPath}/userRooms">Available Rooms</a>
