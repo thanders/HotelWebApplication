@@ -17,7 +17,7 @@ import webApp.beans.Reservation;
 import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
 
-@WebServlet(urlPatterns = { "/reservations" })
+@WebServlet(urlPatterns = { "/reservationConfirm" })
 public class ReservationConfirmServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  

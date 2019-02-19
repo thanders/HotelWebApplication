@@ -12,7 +12,7 @@
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
  
-    <h2>Reservation (1/3)</h2>
+    <h2>Reservation (1/2)</h2>
     
     Select the dates you would like to book:<br/> <br/>
     

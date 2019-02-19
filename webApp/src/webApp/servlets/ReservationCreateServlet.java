@@ -83,17 +83,6 @@ public class ReservationCreateServlet extends HttpServlet {
         System.out.println(guest.toString());
         String errorString = null;
  
-        // Product ID is the string literal [a-zA-Z_0-9]
-        // with at least 1 character
-        
-        /*
-        String regex = "\\w+";
- 
-        if (code == null || !code.matches(regex)) {
-            errorString = "Product Code invalid!";
-        }
-        
-        */
  
         // If error string is null, try to insert the guest object into the Guest database table
         if (errorString == null) {
@@ -108,19 +97,21 @@ public class ReservationCreateServlet extends HttpServlet {
  
         // Store information to request attribute, before forward to views.
         request.setAttribute("errorString", errorString);
+        
+        // Makes guest available for page redirection
         request.setAttribute("guestNew", guest);
  
         // If error, forward to Edit page.
         if (errorString != null) {
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/reservationOneView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
             dispatcher.forward(request, response);
         }
-        // If everything nice.
+        
         
         else {
             // Redirect to the product listing page.
-            response.sendRedirect(request.getContextPath() + "/reservations");
+            response.sendRedirect(request.getContextPath() + "/reservationConfirm");
         }
     }
  

@@ -18,7 +18,7 @@
  	
  	<h3>Your reservation details (Reservation Class)</h3>
  	
-    <table border="1" style="padding:5;border-spacing:1" >
+    <table border="1" cellspacing="0" >
        <tr>
           <th>Reservation ID</th>
           <th>Reserved By</th>
@@ -35,7 +35,7 @@
     <h3>Your personal details (Guest Class)</h3>
     
     
-    <table border="1" style="padding:5;border-spacing:1" >
+    <table border="1" cellspacing="0" >
     <tr>
     	<th>Name</th>
     	<th>Surname</th>
