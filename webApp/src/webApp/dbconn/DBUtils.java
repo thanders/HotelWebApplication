@@ -166,6 +166,26 @@ public class DBUtils {
 	        System.out.println("insertGuest SQL executed");
 	    }
 	 
+	    
+	    
+	    // insertMember
+	    public static void insertMember(Connection conn, Starwood member) throws SQLException {
+	        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name, User_Password, Memebership_Status) values (?,?,?,?,?,?,?,?,?)";
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        pstm.setString(1, member.getName());
+	        pstm.setString(2, member.getSurename());
+	        pstm.setString(3, member.getAddress());
+	        pstm.setString(4, member.getEmail());
+	        pstm.setString(5, member.getCardNumber());
+	        pstm.setString(6, member.getPhoneNumber());
+	        pstm.setString(7, member.getUserName());
+	        pstm.setString(8, member.getPassword());
+	        pstm.setString(9, member.getMembershipStatus());
+	        pstm.executeUpdate();
+	        System.out.println("insertMember SQL executed");
+            System.out.println(": "+  member.getName()+ "  " + member.getSurename() + "  " + member.getAddress() + "  " + member.getPhoneNumber()+ "  " +  member.getCardNumber() + "  " +   member.getUserName()+ "  " +  member.getPassword()+member.getMembershipStatus());
+	    }
+	 
 	    public static Product findProduct(Connection conn, String code) throws SQLException {
 	        String sql = "Select a.Code, a.Name, a.Price from Product a where a.Code=?";
 	 

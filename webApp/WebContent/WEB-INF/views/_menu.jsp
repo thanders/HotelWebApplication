@@ -11,6 +11,8 @@
    |
    <a href="${pageContext.request.contextPath}/createReservation">Make a Reservation</a>
    |
+   <a href="${pageContext.request.contextPath}/createStarwood">Register Starwood Member</a>
+   |
    <a id = "login" href="${pageContext.request.contextPath}/login">Login</a>
    |
    <a id = logout href="${pageContext.request.contextPath}/logout">Logout</a><!-- switch to logout path -->
