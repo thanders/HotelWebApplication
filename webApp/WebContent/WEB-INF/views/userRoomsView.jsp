@@ -17,7 +17,7 @@
     <p style="color: red;">${errorString}</p>
  
  	<!--Table to display available rooms-->
-    <table border="1" style="padding:5;border-spacing:1" >
+    <table border="1" cellspacing="0">
        <tr>
           <th>Room Number</th>
           <th>Room Type</th>

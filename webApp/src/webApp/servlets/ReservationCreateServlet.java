@@ -67,21 +67,17 @@ public class ReservationCreateServlet extends HttpServlet {
             throws ServletException, IOException {
     	
         Connection conn = SessionUtils.getStoredConnection(request);
-        int guestCardNumber = 0;
-        int guestPhoneNumber =0;
         
         String guestName = (String) request.getParameter("guestName");
         String guestSurename = (String) request.getParameter("guestSurename");
         String guestAddress = (String) request.getParameter("guestAddress");
         String guestEmail = (String) request.getParameter("guestEmail");
-        String gCardstr = (String) request.getParameter("guestCardNumber");
-        String gPhonestr = (String) request.getParameter("guestPhoneNumber");
+        String guestCardNumber = (String) request.getParameter("guestCardNumber");
+        String guestPhoneNumber = (String) request.getParameter("guestPhoneNumber");
+        System.out.println("TEST Card" + " " + guestCardNumber);
 
-        try {
-        	guestCardNumber = Integer.parseInt(gCardstr);
-        	guestPhoneNumber = Integer.parseInt(gPhonestr);
-        } catch (Exception e) { }
-        
+
+        System.out.println("int Card" + " " + guestCardNumber);
         Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
         
         System.out.println(guest.toString());

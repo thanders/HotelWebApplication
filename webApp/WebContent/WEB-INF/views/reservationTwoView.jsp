@@ -17,58 +17,73 @@
        
       <p style="color: red;">${errorString}</p>
       
-      The following hotel rooms are available for <b>${numPeople}</b> people between <b>${sessionScope.resStart}</b> and <b>${sessionScope.resEnd}</b>
+      Thanks we have different rooms available for <b>${numPeople}</b> people between <b>${sessionScope.resStart}</b> and <b>${sessionScope.resEnd}</b>
       
       <br/> <br/>
       
-      <table border="1">
+      <h3>Booking summary</h3>
+      
+      <table border="1" cellspacing="0">
       	<tr>
-	      	<th>Room Type</th>
-	      	<th>Price</th>
-	      	<th>Max occupancy</th>
-	      	<th>Rooms available</th>
+      	<th>Hotel rooms required</th>
+      	<th>Room capacity</th>
       	</tr>
-      	
       	<tr>
-	      	<td>Test</td>
-	      	<td>Test</td>
-	      	<td>Test</td>
-	      	<td>Test</td>
+      	<td></>Test</td>
+      	<td></>Test</td>
       	</tr>
      </table>
+     
+     <br/> <br/>
+      
+      <table border="1" cellspacing="0">
+      	<tr>
+      	<th>Nights in hotel</th>
+      	<th>Cost per night</th>
+      	<th>Total booking cost</th>
+      	</tr>
+      	<tr>
+      	<td></>Test</td>
+      	<td></>Test</td>
+      	<td></>Test</td>
+      	</tr>
+     </table>
+      
+
        
       <form method="POST" action="${pageContext.request.contextPath}/createReservation">
        
 
       <h3>Enter your personal details to start the booking process</h3>
-         <table border="1">
+         <table>
             <tr>
-               <td>Name</td>
+               <th>Name</th>
                <td><input type="text" name=guestName value="${Guest.guestName}" required/></td>
             </tr>
             <tr>
-               <td>Surname</td>
+               <th>Surname</th>
                <td><input type="text" name="guestSurename" value="${Guest.guestSurename}" required/></td>
             </tr>
             <tr>
-               <td>Address</td>
+               <th>Address</th>
                <td><input type="text" name="guestAddress" value="${Guest.guestAddress}" required/></td>
             </tr>
             <tr>
-               <td>Email</td>
+               <th>Email</th>
                <td><input type="email" name="guestEmail" value="${Guest.guestEmail}" required/></td>
             </tr>
-            
+                        
             <tr>
-               <td>Credit card number</td>
+               <th>Phone number</th>
+               <td><input type="text" name="guestPhoneNumber" value="${Guest.guestPhoneNumber}" required/></td>
+            </tr>
+
+         	<tr>
+               <th>Credit card number</th>
                <td><input type="text" name="guestCardNumber" value="${Guest.guestCardNumber}" required/></td>
             </tr>
             
-            <tr>
-               <td>Phone number</td>
-               <td><input type="text" name="guestPhoneNumber" value="${Guest.guestPhoneNumber}" required/></td>
-            </tr>
-            <tr>
+          	<tr>
                <td colspan="2">                   
                    <input type="submit" value="Submit" />
                    <input type="reset" value="Reset">

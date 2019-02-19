@@ -10,14 +10,14 @@ public class Guest implements Serializable{
 	private String guestSurename;
 	private String guestAddress;
 	private String guestEmail;
-	private int guestCardNumber;
-	private int guestPhoneNumber;
+	private String guestCardNumber;
+	private String guestPhoneNumber;
 	
 	// Empty constructor
 	public Guest() {}
 	
 	// Constructor
-	public Guest(String guestName, String guestSurename, String guestAddress, String guestEmail, int guestCardNumber, int guestPhoneNumber) {
+	public Guest(String guestName, String guestSurename, String guestAddress, String guestEmail, String guestCardNumber, String guestPhoneNumber) {
 		super();
 		this.guestName = guestName;
 		this.guestSurename = guestSurename;
@@ -60,19 +60,19 @@ public class Guest implements Serializable{
 		this.guestEmail = guestEmail;
 	}
 
-	public int getGuestCardNumber() {
+	public String getGuestCardNumber() {
 		return guestCardNumber;
 	}
 
-	public void setGuestCardNumber(int guestCardNumber) {
+	public void setGuestCardNumber(String guestCardNumber) {
 		this.guestCardNumber = guestCardNumber;
 	}
 
-	public int getGuestPhoneNumber() {
+	public String getGuestPhoneNumber() {
 		return guestPhoneNumber;
 	}
 
-	public void setGuestPhoneNumber(int guestPhoneNumber) {
+	public void setGuestPhoneNumber(String guestPhoneNumber) {
 		this.guestPhoneNumber = guestPhoneNumber;
 	}
 

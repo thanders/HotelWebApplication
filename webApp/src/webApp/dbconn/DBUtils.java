@@ -109,8 +109,8 @@ public class DBUtils {
 	            String guestName = rs.getString("Guest_Name");
 	            String Guest_Surname= rs.getString("Guest_Surname");
 	            String Address= rs.getString("Address");
-	            int Card_Number= rs.getInt("Card_Number");
-	            int Phone_Number= rs.getInt("Phone_Number");
+	            String Card_Number= rs.getString("Card_Number");
+	            String Phone_Number= rs.getString("Phone_Number");
 	            String Email_Address= rs.getString("Email_Address");
 	            
 	            System.out.println("Guest: "+ guestName + Guest_Surname + Address + Card_Number + Phone_Number + Email_Address);
@@ -159,8 +159,8 @@ public class DBUtils {
 	        pstm.setString(2, guest.getGuestSurename());
 	        pstm.setString(3, guest.getGuestAddress());
 	        pstm.setString(4, guest.getGuestEmail());
-	        pstm.setInt(5, guest.getGuestCardNumber());
-	        pstm.setInt(6, guest.getGuestPhoneNumber());
+	        pstm.setString(5, guest.getGuestCardNumber());
+	        pstm.setString(6, guest.getGuestPhoneNumber());
 	 
 	        pstm.executeUpdate();
 	        System.out.println("insertGuest SQL executed");
