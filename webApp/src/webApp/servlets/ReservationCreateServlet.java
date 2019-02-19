@@ -35,7 +35,9 @@ public class ReservationCreateServlet extends HttpServlet {
     	HttpSession session = request.getSession();
     	String resStart = (String) request.getParameter("resStart");
     	String resEnd = (String) request.getParameter("resEnd");
-    	System.out.println("From "+ resStart + "until "+ resEnd);
+    	String numPeople = request.getParameter("numPeople");
+    	
+    	System.out.println("From "+ resStart + "until "+ resEnd + "" + numPeople);
     	
     	// if start and end date are null, load reservations #1
     	if (resStart == null && resEnd == null) {
@@ -47,9 +49,9 @@ public class ReservationCreateServlet extends HttpServlet {
     	// if start and end date are not null, load reservations #2
     	if (resStart != null && resEnd != null) {
     		
-    		
     		session.setAttribute("resStart", resStart);
     		session.setAttribute("resEnd", resEnd);
+    		session.setAttribute("numPeople", numPeople);
 
 	        RequestDispatcher dispatcher = request.getServletContext()
 	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");

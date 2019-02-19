@@ -17,11 +17,12 @@
     Select the dates you would like to book:<br/> <br/>
     
     <form action="${pageContext.request.contextPath}/createReservation">
-  	From: <input type="date" name="resStart"> <br/> <br/>
-   	Until: <input type="date" name="resEnd"> <br/> <br/>
-   	Number of Guests: <input type="number" name="resEnd" min="1"> <br/> <br/>
+  	From: <input type="date" name="resStart" required> <br/> <br/>
+   	Until: <input type="date" name="resEnd" required> <br/> <br/>
+   	Number of Guests: <input type="number" name="numPeople" min="1" required> <br/> <br/>
    	
    	<input type="submit">
+   	<input type="reset" value="Reset">
 	</form>
  
 

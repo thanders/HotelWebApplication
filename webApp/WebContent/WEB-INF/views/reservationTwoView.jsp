@@ -17,7 +17,7 @@
        
       <p style="color: red;">${errorString}</p>
       
-      The following hotel rooms are available between ${sessionScope.resStart} and ${sessionScope.resEnd}
+      The following hotel rooms are available for <b>${numPeople}</b> people between <b>${sessionScope.resStart}</b> and <b>${sessionScope.resEnd}</b>
       
       <br/> <br/>
       
@@ -25,9 +25,12 @@
       	<tr>
 	      	<th>Room Type</th>
 	      	<th>Price</th>
-	      	<th>Number Available</th>
+	      	<th>Max occupancy</th>
+	      	<th>Rooms available</th>
       	</tr>
+      	
       	<tr>
+	      	<td>Test</td>
 	      	<td>Test</td>
 	      	<td>Test</td>
 	      	<td>Test</td>
@@ -41,29 +44,29 @@
          <table border="1">
             <tr>
                <td>Name</td>
-               <td><input type="text" name=guestName value="${Guest.guestName}" /></td>
+               <td><input type="text" name=guestName value="${Guest.guestName}" required/></td>
             </tr>
             <tr>
                <td>Surname</td>
-               <td><input type="text" name="guestSurename" value="${Guest.guestSurename}" /></td>
+               <td><input type="text" name="guestSurename" value="${Guest.guestSurename}" required/></td>
             </tr>
             <tr>
                <td>Address</td>
-               <td><input type="text" name="guestAddress" value="${Guest.guestAddress}" /></td>
+               <td><input type="text" name="guestAddress" value="${Guest.guestAddress}" required/></td>
             </tr>
             <tr>
                <td>Email</td>
-               <td><input type="email" name="guestEmail" value="${Guest.guestEmail}" /></td>
+               <td><input type="email" name="guestEmail" value="${Guest.guestEmail}" required/></td>
             </tr>
             
             <tr>
                <td>Credit card number</td>
-               <td><input type="text" name="guestCardNumber" value="${Guest.guestCardNumber}" /></td>
+               <td><input type="text" name="guestCardNumber" value="${Guest.guestCardNumber}" required/></td>
             </tr>
             
             <tr>
                <td>Phone number</td>
-               <td><input type="text" name="guestPhoneNumber" value="${Guest.guestPhoneNumber}" /></td>
+               <td><input type="text" name="guestPhoneNumber" value="${Guest.guestPhoneNumber}" required/></td>
             </tr>
             <tr>
                <td colspan="2">                   
