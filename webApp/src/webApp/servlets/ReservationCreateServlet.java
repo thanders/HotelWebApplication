@@ -10,27 +10,52 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import webApp.beans.Guest;
 import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/createReservation" })
-public class CreateReservationServlet extends HttpServlet {
+public class ReservationCreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    
  
-    public CreateReservationServlet() {
+    public ReservationCreateServlet() {
         super();
     }
  
+    
     // Show product creation page.
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-        RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/createProductView.jsp");
-        dispatcher.forward(request, response);
+    	
+    	
+    	HttpSession session = request.getSession();
+    	String resStart = (String) request.getParameter("resStart");
+    	String resEnd = (String) request.getParameter("resEnd");
+    	System.out.println("From "+ resStart + "until "+ resEnd);
+    	
+    	// if start and end date are null, load reservations #1
+    	if (resStart == null && resEnd == null) {
+            RequestDispatcher dispatcher = request.getServletContext()
+                    .getRequestDispatcher("/WEB-INF/views/reservationOneView.jsp");
+            dispatcher.forward(request, response);
+        	}
+    	
+    	// if start and end date are not null, load reservations #2
+    	if (resStart != null && resEnd != null) {
+    		
+    		
+    		session.setAttribute("resStart", resStart);
+    		session.setAttribute("resEnd", resEnd);
+
+	        RequestDispatcher dispatcher = request.getServletContext()
+	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
+	        dispatcher.forward(request, response);
+    	}
+    	
     }
  
     // When the user enters the product information, and click Submit.
@@ -90,7 +115,7 @@ public class CreateReservationServlet extends HttpServlet {
         // If error, forward to Edit page.
         if (errorString != null) {
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/createProductView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/reservationOneView.jsp");
             dispatcher.forward(request, response);
         }
         // If everything nice.

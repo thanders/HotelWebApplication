@@ -18,10 +18,10 @@ import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/reservations" })
-public class ReservationListServlet extends HttpServlet {
+public class ReservationConfirmServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
-    public ReservationListServlet() {
+    public ReservationConfirmServlet() {
         super();
     }
  
@@ -70,7 +70,7 @@ public class ReservationListServlet extends HttpServlet {
     
         // Forward to /WEB-INF/views/userRoomsView.jsp
         RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/reservationView.jsp");
+                .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
         dispatcher.forward(request, response);
     }
  
