@@ -16,27 +16,13 @@
  
     <p style="color: red;">${errorString}</p>
  	
- 	<h3>Your reservation details (Reservation Class)</h3>
- 	
-    <table border="1" cellspacing="0" >
-       <tr>
-          <th>Reservation ID</th>
-          <th>Reserved By</th>
-
-       </tr>
-       <c:forEach items="${reservationList}" var="res" >
-          <tr>
-             <td>${res.reservationId}</td>
-             <td>${res.reservedBy}</td>
-          </tr>
-       </c:forEach>
-    </table>
+ 	Thank you for booking a room with us. The confirmation details are below:
     
-    <h3>Your personal details (Guest Class)</h3>
-    
+    <h4>Personal information</h4>
     
     <table border="1" cellspacing="0" >
     <tr>
+        <th>Reservation ID</th>
     	<th>Name</th>
     	<th>Surname</th>
     	<th>Address</th>
@@ -45,16 +31,30 @@
     	<th>Phone number</th>
 
     </tr>
-       <c:forEach items="${latestGuest}" var="guest" >
           <tr>
-             <td>${guest.guestName}</td>
-             <td>${guest.guestSurename}</td>
-             <td>${guest.guestAddress}</td>
-             <td>${guest.guestEmail}</td>
-             <td>${guest.guestCardNumber}</td>
-             <td>${guest.guestPhoneNumber}</td>
+          	<td>${reservationObj}</td>
+             <td>${guestName}</td>
+             <td>${guestSurname}</td>
+             <td>${guestAddress}</td>
+             <td>${guestEmail}</td>
+             <td>${guestCardNumber}</td>
+             <td>${guestPhoneNumber}</td>
           </tr>
-       </c:forEach>
+    </table>
+    
+    <h4>Room booking</h4>
+    
+        <table border="1" cellspacing="0" >
+    <tr>
+    	<th>Number of rooms booked</th>
+    	<th>Cost per room</th>
+    	<th>Total booking cost</th>
+    </tr>
+          <tr>
+          	<td>Test</td>
+             <td>Test</td>
+             <td>Test</td>
+          </tr>
     </table>
  
     <jsp:include page="_footer.jsp"></jsp:include>

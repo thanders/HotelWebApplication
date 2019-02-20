@@ -3,6 +3,11 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.DateFormatter;
 
 import webApp.beans.Guest;
+import webApp.beans.Reservation;
 import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
 
@@ -33,12 +40,16 @@ public class ReservationCreateServlet extends HttpServlet {
     	
     	
     	HttpSession session = request.getSession();
-    	String resStart = (String) request.getParameter("resStart");
-    	String resEnd = (String) request.getParameter("resEnd");
-    	String numPeople = request.getParameter("numPeople");
     	
-    	System.out.println("From "+ resStart + "until "+ resEnd + "" + numPeople);
     	
+    	String resStart = request.getParameter("resStart");
+    	String resEnd = request.getParameter("resEnd");
+    	String numRooms = request.getParameter("numRooms");
+    	
+
+
+    	
+    		
     	// if start and end date are null, load reservations #1
     	if (resStart == null && resEnd == null) {
             RequestDispatcher dispatcher = request.getServletContext()
@@ -48,71 +59,41 @@ public class ReservationCreateServlet extends HttpServlet {
     	
     	// if start and end date are not null, load reservations #2
     	if (resStart != null && resEnd != null) {
+    		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
+    		LocalDate start = LocalDate.parse( resStart , f ) ;
+    		LocalDate end = LocalDate.parse( resEnd , f ) ;
+    		Long duration = ChronoUnit.DAYS.between(start, end);
     		
-    		session.setAttribute("resStart", resStart);
-    		session.setAttribute("resEnd", resEnd);
-    		session.setAttribute("numPeople", numPeople);
-
+    		// format LocalDate to display on webpage
+    		DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
+    		
+    		System.out.println("Hello " + start + " " + end + " " + duration);
+    		
+    		session.setAttribute("resStart", formatWeb.format(start));
+    		session.setAttribute("resEnd", formatWeb.format(end));
+    		session.setAttribute("numRooms", numRooms);
+    		session.setAttribute("duration", duration);
+    		
 	        RequestDispatcher dispatcher = request.getServletContext()
 	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
 	        dispatcher.forward(request, response);
+    		
     	}
     	
     }
  
-    // When the user enters the product information, and click Submit.
-    // This method will be called.
+
+    // doPost is a Servlet post method handler
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-        Connection conn = SessionUtils.getStoredConnection(request);
-        
-        String guestName = (String) request.getParameter("guestName");
-        String guestSurename = (String) request.getParameter("guestSurename");
-        String guestAddress = (String) request.getParameter("guestAddress");
-        String guestEmail = (String) request.getParameter("guestEmail");
-        String guestCardNumber = (String) request.getParameter("guestCardNumber");
-        String guestPhoneNumber = (String) request.getParameter("guestPhoneNumber");
-        System.out.println("TEST Card" + " " + guestCardNumber);
 
 
-        System.out.println("int Card" + " " + guestCardNumber);
-        Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
-        
-        System.out.println(guest.toString());
-        String errorString = null;
- 
- 
-        // If error string is null, try to insert the guest object into the Guest database table
-        if (errorString == null) {
-            try {
-                DBUtils.insertGuest(conn, guest);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                errorString = e.getMessage();
-            }
-         
-        }
- 
-        // Store information to request attribute, before forward to views.
-        request.setAttribute("errorString", errorString);
-        
-        // Makes guest available for page redirection
-        request.setAttribute("guestNew", guest);
- 
-        // If error, forward to Edit page.
-        if (errorString != null) {
-            RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
-            dispatcher.forward(request, response);
-        }
-        
-        
-        else {
-            // Redirect to the product listing page.
-            response.sendRedirect(request.getContextPath() + "/reservationConfirm");
-        }
     }
+        
+        
+
+   
  
 }
