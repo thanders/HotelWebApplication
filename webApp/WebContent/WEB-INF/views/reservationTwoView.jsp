@@ -51,7 +51,7 @@
       
 
        
-      <form method="POST" action="${pageContext.request.contextPath}/createReservation">
+      <form method="POST" action="${pageContext.request.contextPath}/reservationConfirm">
        
 
       <h3>Enter your personal details to start the booking process</h3>

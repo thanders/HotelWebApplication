@@ -28,56 +28,61 @@ public class ReservationConfirmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Connection conn = SessionUtils.getStoredConnection(request);
- 
-        String errorString = null;
-        
-        // Retrieve the reservation list
-        List<Reservation> list = null;
-        try {
-            list = DBUtils.queryReservations(conn);
-            System.out.println("list created and returned successfully");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            errorString = e.getMessage();
-        }
-        
-        // Store info in request attribute, before forward to views
-        request.setAttribute("errorString", errorString);
-        request.setAttribute("reservationList", list);
-        
-        System.out.println("ReservationList retrieved");
-        System.out.println(list.toString());
-        
-        // Retrieve the reservation list
-        List<Guest> glist = null;
-        try {
-            glist = DBUtils.QueryLatestGuest(conn);
-            System.out.println("glist created and returned successfully");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            errorString = e.getMessage();
-        }
-        
-        // Store info in request attribute, before forward to views
-        request.setAttribute("errorString", errorString);
-        request.setAttribute("latestGuest", glist);
-        
-        System.out.println("Guest list retrieved");
-        System.out.println(glist.toString());
-        
-        
-    
-        // Forward to /WEB-INF/views/userRoomsView.jsp
-        RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
-        dispatcher.forward(request, response);
+
+    	
     }
  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	// Calls the doGet function
         doGet(request, response);
+        
+        String guestName = (String) request.getParameter("guestName");
+        String guestSurename = (String) request.getParameter("guestSurename");
+        String guestAddress = (String) request.getParameter("guestAddress");
+        String guestEmail = (String) request.getParameter("guestEmail");
+        String guestCardNumber = (String) request.getParameter("guestCardNumber");
+        String guestPhoneNumber = (String) request.getParameter("guestPhoneNumber");
+        
+        Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
+
+        Connection conn = SessionUtils.getStoredConnection(request);
+        String errorString = null;
+        
+        // If error string is null, try to insert the guest object into the Guest database table
+        try {
+            	
+        	// Insert the new Guest instance into the database
+        	int GuestID = DBUtils.insertGuest(conn, guest);
+
+        	// Insert the new Reservation into the database
+        	DBUtils.insertReservation(conn, GuestID);
+        	// Create an object for the new Reservation
+        	Reservation resObj = DBUtils.queryReservation(conn, GuestID);
+
+            // Store information to request attribute, before forward to views. 
+        	request.setAttribute("reservationObj", resObj.getReservationId());
+        	request.setAttribute("guestName", guest.getGuestName());
+        	request.setAttribute("guestSurname", guest.getGuestSurename());
+        	request.setAttribute("guestAddress", guest.getGuestAddress());
+        	request.setAttribute("guestEmail", guest.getGuestEmail());
+        	request.setAttribute("guestCardNumber", guest.getGuestCardNumber());
+        	request.setAttribute("guestPhoneNumber", guest.getGuestPhoneNumber());
+            request.setAttribute("errorString", errorString);
+            
+            
+	        RequestDispatcher dispatcher = request.getServletContext()
+	                .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
+	        dispatcher.forward(request, response);
+               
+       } catch (SQLException e) {
+    	   e.printStackTrace();
+    	   errorString = e.getMessage();
+       }
     }
+        
+
  
 }
