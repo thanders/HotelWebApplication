@@ -195,11 +195,7 @@ public class DBUtils {
 	        
 	        // Assign auto generated Guest key to variable and create reservation
 	        if(rs != null && rs.next()){
-	        	System.out.println("Generated Emp Id: "+rs.getInt(1));
 	        	GuestID = rs.getInt(1);
-	        	// Create a record in the Reservation table
-	            Reservation reservation = new Reservation(GuestID);
-
 	        }
 
 	        return GuestID;
