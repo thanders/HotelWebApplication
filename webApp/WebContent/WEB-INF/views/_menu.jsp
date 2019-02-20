@@ -5,15 +5,13 @@
  
    <a href="${pageContext.request.contextPath}/">Home</a>
    |
-   <a href="${pageContext.request.contextPath}/productList">Product List</a>
-   |
    <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
    |
    <a href="${pageContext.request.contextPath}/userRooms">Available Rooms</a>
    |
-   <a href="${pageContext.request.contextPath}/reservations">Reservations</a>
-   |
    <a href="${pageContext.request.contextPath}/createReservation">Make a Reservation</a>
+   |
+   <a href="${pageContext.request.contextPath}/createStarwood">Register Starwood Member</a>
    |
    <a id = "login" href="${pageContext.request.contextPath}/login">Login</a>
    |

@@ -7,15 +7,14 @@ public class Reservation implements Serializable {
 	// Class fields
 	private static final long serialVersionUID = 1L;
 	private int reservationId;
-	private String reservedBy;
+	private int GuestID;
 	
 	// empty constructor
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(int Reservation_Id, String Reserved_By) {
-		this.reservationId = Reservation_Id;
-		this.reservedBy = Reserved_By;
+	public Reservation(int GuestID) {
+		this.GuestID = GuestID;
 	}
 
 	public int getReservationId() {
@@ -26,16 +25,16 @@ public class Reservation implements Serializable {
 		this.reservationId = reservationId;
 	}
 
-	public String getReservedBy() {
-		return reservedBy;
+	public int getGuestID() {
+		return this.GuestID;
 	}
 
-	public void setReservedBy(String reservedBy) {
-		this.reservedBy = reservedBy;
+	public void setGuestID(int GuestID) {
+		this.GuestID = GuestID;
 	}
 
 	public String toString(){
-		return this.getClass().getName() +" "+ "[" + this.reservationId +" "+ this.reservedBy + "]";
+		return this.getClass().getName() +" "+ "[" + this.reservationId +" "+ this.GuestID + "]";
 	}
 	
 
