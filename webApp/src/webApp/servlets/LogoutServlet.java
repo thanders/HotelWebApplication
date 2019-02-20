@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import webApp.beans.UserAccount;
+import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/logout" })
@@ -31,7 +31,7 @@ public class LogoutServlet extends HttpServlet{
     	HttpSession session = request.getSession();
     	 
         // Check User has logged on
-        UserAccount loginedUser = SessionUtils.getLoginedUser(session);
+        Starwood loginedUser = SessionUtils.getLoginedUser(session);
         
      // Logged in
         if (loginedUser != null) {

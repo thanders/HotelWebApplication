@@ -81,9 +81,7 @@ public class Starwood implements Serializable{
 	public void setMembershipStatus(String membershipStatus) {
 		this.membershipStatus = membershipStatus;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	
 	private String surename;
 	private String address;
 	private String email;

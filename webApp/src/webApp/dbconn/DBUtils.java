@@ -11,7 +11,7 @@ import webApp.beans.*;
 
 public class DBUtils {
 	
-	   public static UserAccount findUser(Connection conn, //
+	   public static UserAccount finUser(Connection conn, //
 	            String userName, String password) throws SQLException {
 	 
 	        String sql = "Select a.User_Name, a.Password, a.Gender from User_Account a " //
@@ -33,6 +33,46 @@ public class DBUtils {
 	        return null;
 	    }
 	 
+	   public static Starwood findStarwoodMember(Connection conn, //
+	            String userName, String password) throws SQLException {
+	 
+	        String sql = "Select * from Starwood a " //
+	                + " where a.User_Name = ? and a.User_Password= ?";
+	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        pstm.setString(1, userName);
+	        pstm.setString(2, password);
+	        ResultSet rs = pstm.executeQuery();
+	 
+	        if (rs.next()) {
+	        	
+	            String name = rs.getString("Member_Name");
+	            String surname = rs.getString("Member_Surname");
+	            String address = rs.getString("Address");
+	            String email = rs.getString("Email_Address");
+	            int cardNumber = rs.getInt("Card_Number");
+	            int phoneNumber = rs.getInt("Phone_Number");
+				String membershipStatus = rs.getString("Memebership_Status");
+	            
+	            Starwood member = new Starwood();
+	            member.setUserName(userName);
+	            member.setPassword(password);
+	            
+	            member.setName(name);
+	            member.setAddress(address);
+	            member.setCardNumber(cardNumber);
+	            member.setSurename(surname);
+	            member.setEmail(email);
+	            member.setMembershipStatus(membershipStatus);
+	            member.setPhoneNumber(phoneNumber);          
+	            
+	            
+	            
+	            return member;
+	        }
+	        return null;
+	    }
+	   
 	    public static UserAccount findUser(Connection conn, String userName) throws SQLException {
 	 
 	        String sql = "Select a.User_Name, a.Password, a.Gender from User_Account a "//
@@ -54,7 +94,45 @@ public class DBUtils {
 	        }
 	        return null;
 	    }
+	    
+	    public static Starwood findStarwoodMember(Connection conn, String userName) throws SQLException {
+	   	 
+	        String sql = "Select *  from Starwood a "//
+	                + " where a.User_Name = ? ";
 	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        pstm.setString(1, userName);
+	 
+	        ResultSet rs = pstm.executeQuery();
+	 
+	        if (rs.next()) {
+	            String password = rs.getString("User_Password");
+	            String name = rs.getString("Member_Name");
+	            String surname = rs.getString("Member_Surname");
+	            String address = rs.getString("Address");
+	            String email = rs.getString("Email_Address");
+	            int cardNumber = rs.getInt("Card_Number");
+	            int phoneNumber = rs.getInt("Phone_Number");
+				String membershipStatus = rs.getString("Memebership_Status");
+	            
+	            Starwood member = new Starwood();
+	            member.setUserName(userName);
+	            member.setPassword(password);
+	            
+	            member.setName(name);
+	            member.setAddress(address);
+	            member.setCardNumber(cardNumber);
+	            member.setSurename(surname);
+	            member.setEmail(email);
+	            member.setMembershipStatus(membershipStatus);
+	            member.setPhoneNumber(phoneNumber);    
+	            
+	           
+	            return member;
+	        }
+	        return null;
+	    }
+	    	 
 	    public static List<Product> queryProduct(Connection conn) throws SQLException {
 	        String sql = "Select a.Code, a.Name, a.Price from Product a ";
 	 
