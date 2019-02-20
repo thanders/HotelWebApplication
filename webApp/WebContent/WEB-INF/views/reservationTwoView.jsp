@@ -17,22 +17,22 @@
        
       <p style="color: red;">${errorString}</p>
       
-      <b>${numRooms}</b> rooms are available between <b>${sessionScope.resStart}</b> and <b>${sessionScope.resEnd}</b>
+      <b>__________</b> rooms are available between <b>${sessionScope.resStart}</b> and <b>${sessionScope.resEnd}</b>
       
       <br/>
-      
-      <h3>Booking summary</h3>
       
      <br/> <br/>
       
       <table border="1" cellspacing="0">
       	<tr>
       	<th>Duration of stay</th>
+      	<th>Number of Rooms</th>
       	<th>Cost per night</th>
-      	<th>Total booking cost</th>
+      	<th>Total cost</th>
       	</tr>
       	<tr>
       	<td></>${duration} days</td>
+      	<td></>${numRooms}</td>
       	<td></>Test</td>
       	<td></>Test</td>
       	</tr>
