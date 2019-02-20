@@ -3,6 +3,11 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.DateFormatter;
 
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
@@ -34,12 +40,16 @@ public class ReservationCreateServlet extends HttpServlet {
     	
     	
     	HttpSession session = request.getSession();
-    	String resStart = (String) request.getParameter("resStart");
-    	String resEnd = (String) request.getParameter("resEnd");
-    	String numPeople = request.getParameter("numPeople");
     	
-    	System.out.println("From "+ resStart + "until "+ resEnd + "" + numPeople);
     	
+    	String resStart = request.getParameter("resStart");
+    	String resEnd = request.getParameter("resEnd");
+    	String numRooms = request.getParameter("numRooms");
+    	
+
+
+    	
+    		
     	// if start and end date are null, load reservations #1
     	if (resStart == null && resEnd == null) {
             RequestDispatcher dispatcher = request.getServletContext()
@@ -49,14 +59,25 @@ public class ReservationCreateServlet extends HttpServlet {
     	
     	// if start and end date are not null, load reservations #2
     	if (resStart != null && resEnd != null) {
+    		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
+    		LocalDate start = LocalDate.parse( resStart , f ) ;
+    		LocalDate end = LocalDate.parse( resEnd , f ) ;
+    		Long duration = ChronoUnit.DAYS.between(start, end);
     		
-    		session.setAttribute("resStart", resStart);
-    		session.setAttribute("resEnd", resEnd);
-    		session.setAttribute("numPeople", numPeople);
-
+    		// format LocalDate to display on webpage
+    		DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
+    		
+    		System.out.println("Hello " + start + " " + end + " " + duration);
+    		
+    		session.setAttribute("resStart", formatWeb.format(start));
+    		session.setAttribute("resEnd", formatWeb.format(end));
+    		session.setAttribute("numRooms", numRooms);
+    		session.setAttribute("duration", duration);
+    		
 	        RequestDispatcher dispatcher = request.getServletContext()
 	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
 	        dispatcher.forward(request, response);
+    		
     	}
     	
     }

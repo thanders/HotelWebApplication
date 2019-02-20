@@ -46,9 +46,9 @@
     
         <table border="1" cellspacing="0" >
     <tr>
-        <th>Number of Guests</th>
     	<th>Number of rooms booked</th>
-    	<th>Price</th>
+    	<th>Cost per room</th>
+    	<th>Total booking cost</th>
     </tr>
           <tr>
           	<td>Test</td>

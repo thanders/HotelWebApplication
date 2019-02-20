@@ -17,33 +17,22 @@
        
       <p style="color: red;">${errorString}</p>
       
-      Thanks we have different rooms available for <b>${numPeople}</b> people between <b>${sessionScope.resStart}</b> and <b>${sessionScope.resEnd}</b>
+      <b>${numRooms}</b> rooms are available between <b>${sessionScope.resStart}</b> and <b>${sessionScope.resEnd}</b>
       
-      <br/> <br/>
+      <br/>
       
       <h3>Booking summary</h3>
       
-      <table border="1" cellspacing="0">
-      	<tr>
-      	<th>Hotel rooms required</th>
-      	<th>Room capacity</th>
-      	</tr>
-      	<tr>
-      	<td></>Test</td>
-      	<td></>Test</td>
-      	</tr>
-     </table>
-     
      <br/> <br/>
       
       <table border="1" cellspacing="0">
       	<tr>
-      	<th>Nights in hotel</th>
+      	<th>Duration of stay</th>
       	<th>Cost per night</th>
       	<th>Total booking cost</th>
       	</tr>
       	<tr>
-      	<td></>Test</td>
+      	<td></>${duration} days</td>
       	<td></>Test</td>
       	<td></>Test</td>
       	</tr>

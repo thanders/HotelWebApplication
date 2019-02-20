@@ -19,7 +19,7 @@
     <form action="${pageContext.request.contextPath}/createReservation">
   	From: <input type="date" name="resStart" required> <br/> <br/>
    	Until: <input type="date" name="resEnd" required> <br/> <br/>
-   	Number of Guests: <input type="number" name="numPeople" min="1" required> <br/> <br/>
+   	Number of rooms: <input type="number" name="numRooms" min="1" required> <br/> <br/>
    	
    	<input type="submit">
    	<input type="reset" value="Reset">
