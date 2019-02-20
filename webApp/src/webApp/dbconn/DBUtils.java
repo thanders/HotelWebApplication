@@ -53,8 +53,8 @@ public class DBUtils {
 	            String surname = rs.getString("Member_Surname");
 	            String address = rs.getString("Address");
 	            String email = rs.getString("Email_Address");
-	            int cardNumber = rs.getInt("Card_Number");
-	            int phoneNumber = rs.getInt("Phone_Number");
+	            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
+	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
 				String membershipStatus = rs.getString("Memebership_Status");
 	            
 	            Starwood member = new Starwood();
@@ -114,8 +114,8 @@ public class DBUtils {
 	            String surname = rs.getString("Member_Surname");
 	            String address = rs.getString("Address");
 	            String email = rs.getString("Email_Address");
-	            int cardNumber = rs.getInt("Card_Number");
-	            int phoneNumber = rs.getInt("Phone_Number");
+	            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
+	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
 				String membershipStatus = rs.getString("Memebership_Status");
 	            
 	            Starwood member = new Starwood();
