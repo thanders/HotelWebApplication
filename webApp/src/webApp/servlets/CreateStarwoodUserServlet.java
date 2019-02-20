@@ -85,7 +85,8 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 
 		else {
 			// Redirect to the product listing page.
-//			response.sendRedirect(request.getContextPath() + "/reservationConfirm");
+			//TODO Make logged in
+			response.sendRedirect(request.getContextPath() + "/userInfo");
 			
 		}
 	}

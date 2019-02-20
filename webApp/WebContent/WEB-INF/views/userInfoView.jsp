@@ -13,10 +13,13 @@
  
     <h3>Hello: ${user.userName}</h3>
  
-    User Name: <b>${user.userName}</b>
+    Name: ${user.name}
     <br />
-    Gender: ${user.gender } <br />
- 
+    Address: ${user.address} <br />
+    
+    Membership Status: ${user.membershipStatus}
+    <br />
+     
     <jsp:include page="_footer.jsp"></jsp:include>
  
  </body>

@@ -9,6 +9,11 @@ public class Starwood implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
+	
+	public Starwood() {
+		
+	}
+	
 	public Starwood(String name, String surename, String address, String email, String cardNumber, String phoneNumber,
 			String userName, String password, String membershipStatus) {
 		super();
@@ -76,9 +81,7 @@ public class Starwood implements Serializable{
 	public void setMembershipStatus(String membershipStatus) {
 		this.membershipStatus = membershipStatus;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	
 	private String surename;
 	private String address;
 	private String email;

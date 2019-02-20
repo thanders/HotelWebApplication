@@ -29,7 +29,7 @@ public class SessionUtils {
     }
  
     // Store user info in Session.
-    public static void storeLoginedUser(HttpSession session, UserAccount loginedUser) {
+    public static void storeLoginedUser(HttpSession session, Starwood loginedUser) {
         // On the JSP can access via ${loginedUser}
         session.setAttribute("loginedUser", loginedUser);
     }
@@ -41,13 +41,13 @@ public class SessionUtils {
     }
  
     // Get the user information stored in the session.
-    public static UserAccount getLoginedUser(HttpSession session) {
-        UserAccount loginedUser = (UserAccount) session.getAttribute("loginedUser");
+    public static Starwood getLoginedUser(HttpSession session) {
+        Starwood loginedUser = (Starwood) session.getAttribute("loginedUser");
         return loginedUser;
     }
  
     // Store info in Cookie
-    public static void storeUserCookie(HttpServletResponse response, UserAccount user) {
+    public static void storeUserCookie(HttpServletResponse response, Starwood user) {
         System.out.println("Store user cookie");
         Cookie cookieUserName = new Cookie(ATT_NAME_USER_NAME, user.getUserName());
         // 1 day (Converted to seconds)
