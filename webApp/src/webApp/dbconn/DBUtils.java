@@ -3,6 +3,7 @@ package webApp.dbconn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -205,12 +206,15 @@ public class DBUtils {
 	    }
 	    
 	    // insert Reservation
-	    public static void insertReservation(Connection conn, int GuestID) throws SQLException {
-	        String sql = "Insert into Reservations(GuestID) values (?)";
+	    public static void insertReservation(Connection conn, int GuestID, LocalDate start, LocalDate end, int numberRooms) throws SQLException {
+	        String sql = "Insert into Reservations(GuestID, start, end, numberRooms) values (?, ?, ?, ?)";
 	        
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	   	 
 	        pstm.setInt(1, GuestID);
+	        pstm.setObject(2, start);
+	        pstm.setObject(3, end);
+	        pstm.setInt(4, numberRooms);
 	 
 	        pstm.executeUpdate();
 
