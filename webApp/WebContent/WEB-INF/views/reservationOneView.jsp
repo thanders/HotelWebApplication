@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
  <head>
@@ -24,11 +24,15 @@
    	<input type="submit">
    	<input type="reset" value="Reset">
 	</form>
- 
+	<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  $( function() {
+	    $( "#datepicker2" ).datepicker();
+	  } );
+  </script>
+	<jsp:include page="_footer.jsp"></jsp:include>
 
-
- 
-    <jsp:include page="_footer.jsp"></jsp:include>
- 
- </body>
+</body>
 </html>
