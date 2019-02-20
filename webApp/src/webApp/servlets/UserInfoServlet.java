@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import webApp.beans.UserAccount;
+import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/userInfo" })
@@ -32,7 +32,7 @@ public class UserInfoServlet extends HttpServlet {
         response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
  
         // Check User has logged on
-        UserAccount loginedUser = SessionUtils.getLoginedUser(session);
+        Starwood loginedUser = SessionUtils.getLoginedUser(session);
  
         // Not logged in
         if (loginedUser == null) {

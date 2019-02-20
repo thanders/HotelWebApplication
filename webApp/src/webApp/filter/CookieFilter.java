@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import webApp.beans.UserAccount;
+import webApp.beans.Starwood;
 import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
 
@@ -40,7 +40,7 @@ public class CookieFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
  
-        UserAccount userInSession = SessionUtils.getLoginedUser(session);
+        Starwood userInSession = SessionUtils.getLoginedUser(session);
         // 
         if (userInSession != null) {
             session.setAttribute("COOKIE_CHECKED", "CHECKED");
@@ -56,7 +56,7 @@ public class CookieFilter implements Filter {
         if (checked == null && conn != null) {
             String userName = SessionUtils.getUserNameInCookie(req);
             try {
-                UserAccount user = DBUtils.findUser(conn, userName);
+                Starwood user = DBUtils.findStarwoodMember(conn, userName);
                 SessionUtils.storeLoginedUser(session, user);
             } catch (SQLException e) {
                 e.printStackTrace();

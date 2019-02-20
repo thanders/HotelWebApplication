@@ -17,7 +17,7 @@
        
       <p style="color: red;">${errorString}</p>
       
-      <b>__________</b> rooms are available between <b>${sessionScope.resStart}</b> and <b>${sessionScope.resEnd}</b>
+      <b>__________</b> rooms are available between <b>${startDate}</b> and <b>${endDate}</b>
       
       <br/>
       
@@ -31,10 +31,10 @@
       	<th>Total cost</th>
       	</tr>
       	<tr>
-      	<td></>${duration} days</td>
-      	<td></>${numRooms}</td>
-      	<td></>Test</td>
-      	<td></>Test</td>
+      	<td>${duration} days</td>
+      	<td>${numRooms}</td>
+      	<td>Test</td>
+      	<td>Test</td>
       	</tr>
      </table>
       
@@ -73,7 +73,11 @@
             </tr>
             
           	<tr>
-               <td colspan="2">                   
+               <td colspan="2"> 
+               	<input type="hidden" name="startDate" value="${startDate}">
+               	<input type="hidden" name="endDate" value="${endDate}">
+               	<input type="hidden" name="duration" value="${duration}">
+               	<input type="hidden" name="numRooms" value="${numRooms}">                  
                    <input type="submit" value="Submit" />
                    <input type="reset" value="Reset">
                </td>

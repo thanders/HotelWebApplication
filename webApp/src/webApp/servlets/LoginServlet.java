@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import webApp.beans.UserAccount;
+import webApp.beans.Starwood;
 import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
 
@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
         String rememberMeStr = request.getParameter("rememberMe");
         boolean remember = "Y".equals(rememberMeStr);
  
-        UserAccount user = null;
+        Starwood user = null;
         boolean hasError = false;
         String errorString = null;
  
@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             Connection conn = SessionUtils.getStoredConnection(request);
             try {
                 // Find the user in the DB.
-                user = DBUtils.findUser(conn, userName, password);
+                user = DBUtils.findStarwoodMember(conn, userName, password);
  
                 if (user == null) {
                     hasError = true;
@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
         }
         // If error, forward to /WEB-INF/views/login.jsp
         if (hasError) {
-            user = new UserAccount();
+            user = new Starwood();
             user.setUserName(userName);
             user.setPassword(password);
  

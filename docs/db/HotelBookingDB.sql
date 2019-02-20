@@ -56,7 +56,7 @@ CREATE TABLE `Guest` (
   `Phone_Number` int(15) NOT NULL,
   `Email_Address` varchar(128) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `Guest` (
 
 LOCK TABLES `Guest` WRITE;
 /*!40000 ALTER TABLE `Guest` DISABLE KEYS */;
-INSERT INTO `Guest` VALUES (1,'Abdul','Salim','Dublin 5',1233232,852222432,'Abdulj947@gmail'),(2,'tom','thanders','test',12345,12345,'thomas.anderson@ucdconnect.ie'),(3,'hello','my','name',1232,1232,'is'),(5,'tom','anderson','anderson',1234567,1234567,'thomas.anderson@ucdconnect.ie'),(7,'tom','dingle','dangle',4234,33333,'dongle'),(8,'Test','UCD','Belview',126839,5555,'deeee'),(10,'dd','dd','dd',34322,23423,'dd'),(11,'Tom','And','test address',8898884,4848395,'12342@12311.com'),(12,'Tom','A','UCD',1111111,834206066,'thomas.anderson@ucdconnect.ie'),(13,'tom','d','dfdfd',3423421,23432421,'sddfsa'),(14,'d','ds','sdfsdfa',2342342,23211,'fdsfsa'),(15,'we','weq','werewq',2343221,23421,'qrwrqwq'),(16,'sdfdsa','adfdsa','adfdsafasa',999999,9999999,'dfdsfadsa'),(17,'cccc','xxxxx','vvvvvv',0,0,'thomas.anderson@ucdconnect.ie'),(20,'ghgf','fdgs','fgfdss',7878787,898765,'thomas.anderson@ucdconnect.ie'),(26,'ddddsss','ddddsss','ddddsss',343223423,12321122,'test@test.com'),(33,'Thomas Anderson','jfjfjdkk','36 Crannagh Castle',314344577,32123,'thomas.anderson@ucdconnect.ie');
+INSERT INTO `Guest` VALUES (3,'Tom','Test','123 Test road',50505050,55555555,'test@ucdconnect.ie');
 /*!40000 ALTER TABLE `Guest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,9 +78,15 @@ DROP TABLE IF EXISTS `Reservations`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Reservations` (
   `Reservation_Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Reserved_By` varchar(128) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`Reservation_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `GuestID` int(11) NOT NULL,
+  `start` date NOT NULL,
+  `end` date NOT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `numberRooms` int(3) NOT NULL,
+  PRIMARY KEY (`Reservation_Id`),
+  KEY `fk_GuestID_idx` (`GuestID`),
+  CONSTRAINT `fk_GuestID` FOREIGN KEY (`GuestID`) REFERENCES `Guest` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +95,7 @@ CREATE TABLE `Reservations` (
 
 LOCK TABLES `Reservations` WRITE;
 /*!40000 ALTER TABLE `Reservations` DISABLE KEYS */;
-INSERT INTO `Reservations` VALUES (2,'Tom');
+INSERT INTO `Reservations` VALUES (3,3,'2019-02-22','2019-02-22',NULL,2);
 /*!40000 ALTER TABLE `Reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,10 +113,8 @@ CREATE TABLE `Reserved_Rooms` (
   `Room_Type_ID` int(11) NOT NULL,
   `Status` varchar(45) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_ReservationID_idx` (`FK_ReservationID`),
   KEY `Room_Type_ID_idx` (`Room_Type_ID`),
-  CONSTRAINT `Room_Type_ID` FOREIGN KEY (`Room_Type_ID`) REFERENCES `Room_Type` (`room_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ReservationID` FOREIGN KEY (`FK_ReservationID`) REFERENCES `Reservations` (`Reservation_Id`) ON DELETE CASCADE
+  CONSTRAINT `Room_Type_ID` FOREIGN KEY (`Room_Type_ID`) REFERENCES `Room_Type` (`room_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -199,7 +203,7 @@ CREATE TABLE `Starwood` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Card_Number` (`Card_Number`),
   UNIQUE KEY `Phone_Number` (`Phone_Number`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,7 +212,7 @@ CREATE TABLE `Starwood` (
 
 LOCK TABLES `Starwood` WRITE;
 /*!40000 ALTER TABLE `Starwood` DISABLE KEYS */;
-INSERT INTO `Starwood` VALUES (1,'Tom','Yates','Tom.yates','Password1','Dublin 5',1233232,'Active',852222432,'Abdulj947@gmail');
+INSERT INTO `Starwood` VALUES (1,'Tom','Yates','Tom.yates','Password1','Dublin 5',1233232,'Active',852222432,'Abdulj947@gmail'),(2,'Thomas Anderson','dafafdfa','thanders','123456','36 Crannagh Castle',3335555,'88888',834206066,'thomas.anderson@ucdconnect.ie');
 /*!40000 ALTER TABLE `Starwood` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,9 +227,7 @@ CREATE TABLE `hosted_at` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `guest_id` int(11) NOT NULL,
   `occupied_room_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `guest_id` FOREIGN KEY (`id`) REFERENCES `Guest` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `occupied_room_id` FOREIGN KEY (`id`) REFERENCES `occupied_room` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -251,9 +253,7 @@ CREATE TABLE `occupied_room` (
   `check_out` date NOT NULL,
   `room_id` int(11) NOT NULL,
   `reservation_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `reservation_id` (`reservation_id`),
-  CONSTRAINT `occupied_room_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `Reservations` (`Reservation_Id`) ON DELETE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -276,4 +276,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-19 14:10:59
+-- Dump completed on 2019-02-20 18:14:13
