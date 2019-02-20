@@ -23,9 +23,9 @@
 	<br/>
 
 	<form action="${pageContext.request.contextPath}/createReservation">
-		From: <input type="date" name="resStart" required>
+		From: <input type="date" name="resStart" required id="datepicker">
 		<br /> <br />
-		Until: <input type="date" name="resEnd" required>
+		Until: <input type="date" name="resEnd" required id="datepicker2">
 		<br /> <br />
 		Number of Guests: <input type="number" name="numRooms" min="1" required> 
 		<br /> <br />
@@ -33,6 +33,14 @@
 		<input type="submit"> <input type="reset" value="Reset">
 	</form>
 
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  $( function() {
+	    $( "#datepicker2" ).datepicker();
+	  } );
+  </script>
 	<jsp:include page="_footer.jsp"></jsp:include>
 
 </body>
