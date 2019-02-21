@@ -19,6 +19,7 @@ import webApp.beans.Guest;
 import webApp.beans.Reservation;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_guests;
+import webApp.dbconn.DB_reservation;
 import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/reservationDisplay" })
@@ -61,9 +62,9 @@ public class ReservationDisplayServlet extends HttpServlet {
         	
         	// Create an object for the new Reservation
             try {
-	        	Reservation resObj = DBUtils.queryReservationRID(conn, resNumber);
+	        	Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
 	        	Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
-	        	
+	        
         	
 	        	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
 	        	

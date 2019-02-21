@@ -73,7 +73,7 @@
           	<tr>
                <td colspan="2">                  
                    <input type="submit" value="Book and Pay" />
-                   <input type="reset" value="Reset">
+                   <input type="reset" value="Reset"/>
                </td>
             </tr>
          </table>

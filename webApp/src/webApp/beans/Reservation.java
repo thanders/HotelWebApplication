@@ -18,10 +18,12 @@ public class Reservation implements Serializable {
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms) {
+	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int duration, int numberRooms) {
+		this.reservationId = reservationId;
 		this.GuestID = GuestID;
 		this.start = start;
 		this.end = end;
+		this.duration = duration;
 		this.numberRooms = numberRooms;
 		
 	}

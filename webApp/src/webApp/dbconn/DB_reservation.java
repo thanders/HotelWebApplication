@@ -17,7 +17,7 @@ public class DB_reservation {
 
 	    // Query ReservationRID
 	    public static Reservation queryReservationRID(Connection conn, int Reservation_Id) throws SQLException {
-	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms from Reservations a WHERE a.Reservation_Id = ? ";
+	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms from Reservations a WHERE a.Reservation_Id = ? ";
 	 
 	        // Connect to the database and execute the Select query
 	        PreparedStatement pstm = conn.prepareStatement(sql);
@@ -29,11 +29,12 @@ public class DB_reservation {
 		        int GuestID= rs.getInt("GuestID");
 		        LocalDate start= rs.getDate("start").toLocalDate();
 		        LocalDate end= rs.getDate("end").toLocalDate();
+		        int duration= rs.getInt("duration");
 		        int numberRooms= rs.getInt("numberRooms");
 		        
-		        // System.out.println("Reservation: "+ Reservation_Id +" " + GuestID +" " + start +" " + end +" " + numberRooms);
+		        System.out.println("Reservation: "+ Reservation_Id +" " + GuestID +" " + start +" " + end +" " + numberRooms);
 		        // Create an instance of the Reservation class
-		        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms);
+		        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, duration, numberRooms);
 		        
 		        return reservation;
 	        }
@@ -59,12 +60,8 @@ public class DB_reservation {
 			        int duration = rs.getInt("duration");
 			        int numberRooms = rs.getInt("numberRooms");
 			        
-		            Reservation reservation = new Reservation();
-		            reservation.setReservationId(Reservation_Id);
-		            reservation.setStart(start);
-		            reservation.setEnd(end);
-		            reservation.setReservationId(duration);
-		            reservation.setNumberRooms(numberRooms);
+		            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, duration, numberRooms );
+
 
 		            return reservation;
 		        }

@@ -30,6 +30,7 @@
     		<th>Number of rooms</th>
     		<th>Duration</th>
     		<th>Price</th>
+    		<th>Status</th>
     	</tr>
     	<tr>
     		<td>${guestName}</td>
@@ -37,8 +38,28 @@
     		<td>${numberRooms}</td>
     		<td>Placeholder</td>
     		<td>Placeholder</td>
+    		<td>Placeholder></td>
     	</tr>
     </table>
+    
+    <br/> <br/>
+    
+    <table border="1" cellspacing="0" >
+    	<tr>
+    		<th>Booking Date</th>
+    		<th>Status</th>
+    	</tr>
+    	<tr>
+    		<td>${bookingDate} Placeholder</td>
+    		<td>${status} Placeholder</td>
+    	</tr>
+    </table>
+    
+    <br/> <br/>
+    
+    <form>
+    <input type="submit" value="Cancel"/>
+    </form>
  
     <jsp:include page="_footer.jsp"></jsp:include>
  
