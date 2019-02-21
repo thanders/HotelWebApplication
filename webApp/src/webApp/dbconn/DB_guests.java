@@ -39,6 +39,7 @@ public class DB_guests {
 	            System.out.println("Guests:  " + guest.toString());
 	            return guest;
 	        }
+	        System.out.println("Something is wrong");
 	        return null;
 	    }
 	    

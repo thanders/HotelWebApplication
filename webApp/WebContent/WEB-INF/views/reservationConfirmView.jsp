@@ -45,11 +45,13 @@
     <table border="1" cellspacing="0" >
     	<tr>
     		<th>Booking Date</th>
+    		<th>Reservation Type</th>
     		<th>Status</th>
     	</tr>
     	<tr>
-    		<td>${bookingDate} Placeholder</td>
-    		<td>${status} Placeholder</td>
+    		<td>${bookingDate}</td>
+    		<td>${reservationType}</td>
+    		<td>${status}</td>
     	</tr>
     </table>
     

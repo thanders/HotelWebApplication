@@ -17,7 +17,7 @@ public class DB_reservation {
 
 	    // Query ReservationRID
 	    public static Reservation queryReservationRID(Connection conn, int Reservation_Id) throws SQLException {
-	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status from Reservations a WHERE a.Reservation_Id = ? ";
+	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status, a.reservationType from Reservations a WHERE a.Reservation_Id = ? ";
 	 
 	        // Connect to the database and execute the Select query
 	        PreparedStatement pstm = conn.prepareStatement(sql);
@@ -32,10 +32,11 @@ public class DB_reservation {
 		        int numberRooms= rs.getInt("numberRooms");
 		        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
 		        String status = rs.getString("status");
+		        String reservationType = rs.getString("reservationType");
 		        
 		        System.out.println("Reservation: "+ Reservation_Id +" " + GuestID +" " + start +" " + end +" " + numberRooms +" " + bookingDate + " " + status);
 		        // Create an instance of the Reservation class
-		        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status);
+		        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
 		        
 		        return reservation;
 	        }
@@ -48,7 +49,7 @@ public class DB_reservation {
 	    	// queryReservation with Guest ID
 		   public static Reservation queryReservation(Connection conn, int GuestID) throws SQLException {
 		 
-		        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms, a.bookingDate, a.status from Reservations a where a.GuestID = ?";
+		        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms, a.bookingDate, a.status, a.reservationType from Reservations a where a.GuestID = ?";
 		 
 		        PreparedStatement pstm = conn.prepareStatement(sql);
 		        pstm.setInt(1, GuestID);
@@ -61,8 +62,9 @@ public class DB_reservation {
 			        int numberRooms = rs.getInt("numberRooms");
 			        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
 			        String status = rs.getString("status");
+			        String reservationType = rs.getString("reservationType");
 			        
-		            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status);
+		            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
 
 
 		            return reservation;
@@ -73,8 +75,8 @@ public class DB_reservation {
 	    
 	    
 	    // insert Reservation
-	    public static void insertReservation(Connection conn, int GuestID, LocalDate start, LocalDate end, int numberRooms, String status) throws SQLException {
-	        String sql = "Insert into Reservations(GuestID, start, end, numberRooms, status) values (?, ?, ?, ?, ?)";
+	    public static void insertReservation(Connection conn, int GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType) throws SQLException {
+	        String sql = "Insert into Reservations(GuestID, start, end, numberRooms, status, reservationType ) values (?, ?, ?, ?, ?, ?)";
 	        
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	   	 
@@ -83,6 +85,7 @@ public class DB_reservation {
 	        pstm.setObject(3, end);
 	        pstm.setInt(4, numberRooms);
 	        pstm.setString(5, status);
+	        pstm.setString(6, reservationType);
 	 
 	        pstm.executeUpdate();
 

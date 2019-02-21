@@ -15,19 +15,22 @@ public class Reservation implements Serializable {
 	private int duration;
 	private LocalDate bookingDate;
 	private String status;
+	private String reservationType;
 	
 	
 	// empty constructor
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDate bookingDate, String status) {
+	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDate bookingDate, String status, String reservationType) {
 		this.reservationId = reservationId;
 		this.GuestID = GuestID;
 		this.start = start;
 		this.end = end;
 		this.numberRooms = numberRooms;
+		this.bookingDate = bookingDate;
 		this.status = status;
+		this.reservationType = reservationType;
 		
 	}
 
@@ -102,6 +105,14 @@ public class Reservation implements Serializable {
 
 	public void setBookingDate(LocalDate bookingDate) {
 		this.bookingDate = bookingDate;
+	}
+
+	public String getReservationType() {
+		return reservationType;
+	}
+
+	public void setReservationType(String reservationType) {
+		this.reservationType = reservationType;
 	}
 	
 

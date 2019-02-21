@@ -56,7 +56,7 @@ CREATE TABLE `Guest` (
   `Phone_Number` int(15) NOT NULL,
   `Email_Address` varchar(128) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `Guest` (
 
 LOCK TABLES `Guest` WRITE;
 /*!40000 ALTER TABLE `Guest` DISABLE KEYS */;
-INSERT INTO `Guest` VALUES (3,'Tom','Test','123 Test road',50505050,55555555,'test@ucdconnect.ie');
+INSERT INTO `Guest` VALUES (72,'Tom','Test','UCD Library',202020,12345,'tom@ucd.ie');
 /*!40000 ALTER TABLE `Guest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,10 +83,11 @@ CREATE TABLE `Reservations` (
   `end` date NOT NULL,
   `duration` int(11) DEFAULT NULL,
   `numberRooms` int(3) NOT NULL,
-  `bookingDate` datetime DEFAULT NULL,
   `status` varchar(45) COLLATE utf8_bin NOT NULL,
+  `bookingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reservationType` varchar(45) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Reservation_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE `Reservations` (
 
 LOCK TABLES `Reservations` WRITE;
 /*!40000 ALTER TABLE `Reservations` DISABLE KEYS */;
-INSERT INTO `Reservations` VALUES (5,5,'2018-05-21','2018-05-21',5,5,'2018-05-21 00:00:00','Yes');
+INSERT INTO `Reservations` VALUES (11,72,'2019-02-21','2019-02-27',NULL,2,'Paid','2019-02-21 21:34:40','Guest');
 /*!40000 ALTER TABLE `Reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-21 18:56:50
+-- Dump completed on 2019-02-21 21:36:32

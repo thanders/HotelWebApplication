@@ -63,9 +63,16 @@ public class ReservationDisplayServlet extends HttpServlet {
         	// Create an object for the new Reservation
             try {
 	        	Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
+	        	
+	        	System.out.println("WHYYY");
+	        	System.out.println("GID :  " + resObj.getGuestID());
+	        	
+	        	System.out.println("WHat what what??");
 	        	Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
+	        	
+	        	System.out.println("Hello!!"+ guestObj.toString());
 	        
-        	
+
 	        	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
 	        	
 	        	// Set attributes for Reservations data
@@ -73,6 +80,9 @@ public class ReservationDisplayServlet extends HttpServlet {
         		request.setAttribute("start", formatWeb.format(resObj.getStart()));
         		request.setAttribute("end", formatWeb.format(resObj.getEnd()));
         		request.setAttribute("numberRooms", resObj.getNumberRooms());
+            	request.setAttribute("status", resObj.getStatus());
+            	request.setAttribute("bookingDate", resObj.getBookingDate());
+            	request.setAttribute("reservationType", resObj.getReservationType());
         		// request.setAttribute("bookingDate", formatWeb.format(resObj.getBookingDate()));
         		
         		
