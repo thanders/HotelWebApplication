@@ -74,13 +74,15 @@ public class ReservationConfirmServlet extends HttpServlet {
             	
         	// Insert the new Guest instance into the database
         	int GuestID = DBUtils.insertGuest(conn, guest);
-
+        	String status = "Paid";
+        	
+        	
         	// Insert the new Reservation into the database
-        	DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms);
+        	DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms, status);
         	
         	// Create an object for the new Reservation
         	Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
-        	System.out.println( "DINGUS " + resObj.toString());
+        	System.out.println( "Test " + resObj.toString());
         	
         
 
@@ -89,6 +91,9 @@ public class ReservationConfirmServlet extends HttpServlet {
         	request.setAttribute("start", resObj.getStart());
         	request.setAttribute("numberRooms", resObj.getNumberRooms());
         	request.setAttribute("end", resObj.getEnd());
+        	request.setAttribute("status", resObj.getStatus());
+        	request.setAttribute("bookingDate", resObj.getBookingDate());
+        	
         	request.setAttribute("guestName", guest.getGuestName());
         	request.setAttribute("guestSurname", guest.getGuestSurename());
         	request.setAttribute("guestAddress", guest.getGuestAddress());

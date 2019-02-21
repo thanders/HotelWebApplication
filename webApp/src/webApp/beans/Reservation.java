@@ -13,18 +13,21 @@ public class Reservation implements Serializable {
 	private LocalDate end;
 	private int numberRooms;
 	private int duration;
+	private LocalDate bookingDate;
+	private String status;
+	
 	
 	// empty constructor
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int duration, int numberRooms) {
+	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDate bookingDate, String status) {
 		this.reservationId = reservationId;
 		this.GuestID = GuestID;
 		this.start = start;
 		this.end = end;
-		this.duration = duration;
 		this.numberRooms = numberRooms;
+		this.status = status;
 		
 	}
 
@@ -76,6 +79,14 @@ public class Reservation implements Serializable {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+	
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -83,6 +94,14 @@ public class Reservation implements Serializable {
 
 	public String toString(){
 		return this.getClass().getName() + " " + "[" + this.reservationId + " " + this.GuestID + " " + this.start + this.end + this.duration + this.numberRooms + "]";
+	}
+
+	public LocalDate getBookingDate() {
+		return bookingDate;
+	}
+
+	public void setBookingDate(LocalDate bookingDate) {
+		this.bookingDate = bookingDate;
 	}
 	
 

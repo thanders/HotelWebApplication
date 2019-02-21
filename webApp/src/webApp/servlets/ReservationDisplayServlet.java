@@ -73,6 +73,8 @@ public class ReservationDisplayServlet extends HttpServlet {
         		request.setAttribute("start", formatWeb.format(resObj.getStart()));
         		request.setAttribute("end", formatWeb.format(resObj.getEnd()));
         		request.setAttribute("numberRooms", resObj.getNumberRooms());
+        		// request.setAttribute("bookingDate", formatWeb.format(resObj.getBookingDate()));
+        		
         		
         		// Set attributes for Guest data
         		request.setAttribute("guestName", guestObj.getGuestName());

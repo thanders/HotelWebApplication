@@ -30,7 +30,6 @@
     		<th>Number of rooms</th>
     		<th>Duration</th>
     		<th>Price</th>
-    		<th>Status</th>
     	</tr>
     	<tr>
     		<td>${guestName}</td>
@@ -38,7 +37,6 @@
     		<td>${numberRooms}</td>
     		<td>Placeholder</td>
     		<td>Placeholder</td>
-    		<td>Placeholder></td>
     	</tr>
     </table>
     
