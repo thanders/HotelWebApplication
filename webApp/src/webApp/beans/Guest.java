@@ -6,18 +6,19 @@ public class Guest implements Serializable{
 
 	// Declare class fields
 	private static final long serialVersionUID = 1L;
+	private int guestID;
 	private String guestName;
 	private String guestSurename;
 	private String guestAddress;
 	private String guestEmail;
-	private String guestCardNumber;
-	private String guestPhoneNumber;
+	private int guestCardNumber;
+	private int guestPhoneNumber;
 	
 	// Empty constructor
 	public Guest() {}
 	
 	// Constructor
-	public Guest(String guestName, String guestSurename, String guestAddress, String guestEmail, String guestCardNumber, String guestPhoneNumber) {
+	public Guest(String guestName, String guestSurename, String guestAddress, String guestEmail, int guestCardNumber, int guestPhoneNumber) {
 		super();
 		this.guestName = guestName;
 		this.guestSurename = guestSurename;
@@ -60,20 +61,28 @@ public class Guest implements Serializable{
 		this.guestEmail = guestEmail;
 	}
 
-	public String getGuestCardNumber() {
+	public int getGuestCardNumber() {
 		return guestCardNumber;
 	}
 
-	public void setGuestCardNumber(String guestCardNumber) {
+	public void setGuestCardNumber(int guestCardNumber) {
 		this.guestCardNumber = guestCardNumber;
 	}
 
-	public String getGuestPhoneNumber() {
+	public int getGuestPhoneNumber() {
 		return guestPhoneNumber;
 	}
 
-	public void setGuestPhoneNumber(String guestPhoneNumber) {
+	public void setGuestPhoneNumber(int guestPhoneNumber) {
 		this.guestPhoneNumber = guestPhoneNumber;
+	}
+	
+	public int getGuestID() {
+		return guestID;
+	}
+
+	public void setGuestID(int guestID) {
+		this.guestID = guestID;
 	}
 
 	public static long getSerialversionuid() {
@@ -81,7 +90,7 @@ public class Guest implements Serializable{
 	}
 	
 	public String toString() {
-		return this.getClass().getName() +" "+ "[" + this.guestName +" "+ this.guestSurename + this.guestAddress + this.guestEmail + this.guestCardNumber + this.guestPhoneNumber + "]";
+		return this.getClass().getName() +" "+ "[" + this.guestID + this.guestName +" "+ this.guestSurename + this.guestAddress + this.guestEmail + this.guestCardNumber + this.guestPhoneNumber + "]";
 	}
 	
 	

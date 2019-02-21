@@ -19,31 +19,29 @@
       
       <b>__________</b> rooms are available between <b>${startDate}</b> and <b>${endDate}</b>
       
-      <br/>
+     <br/> <br/>
       
      <br/> <br/>
       
       <table border="1" cellspacing="0">
-      	<tr>
-      	<th>Duration of stay</th>
-      	<th>Number of Rooms</th>
-      	<th>Cost per night</th>
-      	<th>Total cost</th>
+      	<tr>	
+	    	<th>Number of rooms</th>
+	    	<th>Duration</th>
+	    	<th>Price</th>
       	</tr>
       	<tr>
-      	<td>${duration} days</td>
       	<td>${numRooms}</td>
-      	<td>Test</td>
-      	<td>Test</td>
+      	<td>${duration} days</td>
+      	<td>Placeholder</td>
       	</tr>
      </table>
       
-
-       
+	<br/> <br/>
+    Enter your personal details:
+    <br/> <br/>
+      
       <form method="POST" action="${pageContext.request.contextPath}/reservationConfirm">
        
-
-      <h3>Enter your personal details to start the booking process</h3>
          <table>
             <tr>
                <th>Name</th>
@@ -73,12 +71,8 @@
             </tr>
             
           	<tr>
-               <td colspan="2"> 
-               	<input type="hidden" name="startDate" value="${startDate}">
-               	<input type="hidden" name="endDate" value="${endDate}">
-               	<input type="hidden" name="duration" value="${duration}">
-               	<input type="hidden" name="numRooms" value="${numRooms}">                  
-                   <input type="submit" value="Submit" />
+               <td colspan="2">                  
+                   <input type="submit" value="Book and Pay" />
                    <input type="reset" value="Reset">
                </td>
             </tr>

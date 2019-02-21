@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
 import webApp.dbconn.DBUtils;
+import webApp.dbconn.DB_reservation;
 import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/reservationConfirm" })
@@ -53,15 +54,19 @@ public class ReservationConfirmServlet extends HttpServlet {
         String guestSurename = (String) request.getParameter("guestSurename");
         String guestAddress = (String) request.getParameter("guestAddress");
         String guestEmail = (String) request.getParameter("guestEmail");
-        String guestCardNumber = (String) request.getParameter("guestCardNumber");
-        String guestPhoneNumber = (String) request.getParameter("guestPhoneNumber");
+        String gCNumber = (String) request.getParameter("guestCardNumber");
+        String gPNumber = (String) request.getParameter("guestPhoneNumber");
         
-        System.out.println("Session Results: " + startObj + " " + endObj + " " + duration + "days" + " " + numRooms);
+        System.out.println("Session Results: " + startObj + " " + endObj + " " + duration + " " + numRooms);
         
+        int guestCardNumber = Integer.parseInt(gCNumber);
+        int guestPhoneNumber = Integer.parseInt(gPNumber);
         
         Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
-
+        
+        // Connect to database
         Connection conn = SessionUtils.getStoredConnection(request);
+        
         String errorString = null;
         
         // If error string is null, try to insert the guest object into the Guest database table
@@ -71,12 +76,19 @@ public class ReservationConfirmServlet extends HttpServlet {
         	int GuestID = DBUtils.insertGuest(conn, guest);
 
         	// Insert the new Reservation into the database
-        	DBUtils.insertReservation(conn, GuestID, startObj, endObj, numRooms);
+        	DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms);
+        	
         	// Create an object for the new Reservation
-        	Reservation resObj = DBUtils.queryReservation(conn, GuestID);
+        	Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
+        	System.out.println( "DINGUS " + resObj.toString());
+        	
+        
 
             // Store information to request attribute, before forward to views. 
-        	request.setAttribute("reservationObj", resObj.getReservationId());
+        	request.setAttribute("resNumber", resObj.getReservationId());
+        	request.setAttribute("start", resObj.getStart());
+        	request.setAttribute("numberRooms", resObj.getNumberRooms());
+        	request.setAttribute("end", resObj.getEnd());
         	request.setAttribute("guestName", guest.getGuestName());
         	request.setAttribute("guestSurname", guest.getGuestSurename());
         	request.setAttribute("guestAddress", guest.getGuestAddress());
@@ -85,10 +97,8 @@ public class ReservationConfirmServlet extends HttpServlet {
         	request.setAttribute("guestPhoneNumber", guest.getGuestPhoneNumber());
             request.setAttribute("errorString", errorString);
             
-            
 	        RequestDispatcher dispatcher = request.getServletContext()
-	        		
-	                .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
+	        .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
 	        dispatcher.forward(request, response);
                
        } catch (SQLException e) {

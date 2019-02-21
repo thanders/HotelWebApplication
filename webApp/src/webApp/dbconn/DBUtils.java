@@ -156,28 +156,37 @@ public class DBUtils {
 	        }
 	        return list;
 	    }
-	    // Query Reservation
-	    public static List<Reservation> queryReservations(Connection conn) throws SQLException {
-	        String sql = "Select a.Reservation_Id, a.GuestID from Reservations a ";
+	    
+	    
+	    // Query ReservationRID
+	    public static Reservation queryReservationRID(Connection conn, int Reservation_Id) throws SQLException {
+	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms from Reservations a WHERE a.Reservation_Id = ? ";
 	 
+	        // Connect to the database and execute the Select query
 	        PreparedStatement pstm = conn.prepareStatement(sql);
-	 
+	        pstm.setInt(1, Reservation_Id);
 	        ResultSet rs = pstm.executeQuery();
-	        List<Reservation> list = new ArrayList<Reservation>();
-	        while (rs.next()) {
-	            int Reservation_Id = rs.getInt("Reservation_Id");
-	            int GuestID= rs.getInt("GuestID");
-	            
-	            System.out.println("Reservation: "+ Reservation_Id +" " + GuestID);
-	            Reservation reservation = new Reservation();
-	            reservation.setReservationId(Reservation_Id);
-	            reservation.setGuestID(GuestID);
-	            list.add(reservation);
-	            
-	            System.out.println(list.toString());
+	        
+	        // Get values from the query and assign to variables
+	        if (rs.next()) {
+		        int GuestID= rs.getInt("GuestID");
+		        LocalDate start= rs.getDate("start").toLocalDate();
+		        LocalDate end= rs.getDate("end").toLocalDate();
+		        int numberRooms= rs.getInt("numberRooms");
+		        
+		        // System.out.println("Reservation: "+ Reservation_Id +" " + GuestID +" " + start +" " + end +" " + numberRooms);
+		        // Create an instance of the Reservation class
+		        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms);
+		        
+		        return reservation;
 	        }
-	        return list;
+	        
+	        return null;
+	            
+	        
 	    }
+	    
+	    
 	    
 	    	// queryReservation with Guest ID
 		   public static Reservation queryReservation(Connection conn, int GuestID) throws SQLException {
@@ -213,8 +222,8 @@ public class DBUtils {
 	            String guestName = rs.getString("Guest_Name");
 	            String Guest_Surname= rs.getString("Guest_Surname");
 	            String Address= rs.getString("Address");
-	            String Card_Number= rs.getString("Card_Number");
-	            String Phone_Number= rs.getString("Phone_Number");
+	            int Card_Number= rs.getInt("Card_Number");
+	            int Phone_Number= rs.getInt("Phone_Number");
 	            String Email_Address= rs.getString("Email_Address");
 	            
 	            Guest guest = new Guest();
@@ -262,8 +271,8 @@ public class DBUtils {
 	        pstm.setString(2, guest.getGuestSurename());
 	        pstm.setString(3, guest.getGuestAddress());
 	        pstm.setString(4, guest.getGuestEmail());
-	        pstm.setString(5, guest.getGuestCardNumber());
-	        pstm.setString(6, guest.getGuestPhoneNumber());
+	        pstm.setInt(5, guest.getGuestCardNumber());
+	        pstm.setInt(6, guest.getGuestPhoneNumber());
 	        
 	        pstm.executeUpdate();
 	        
