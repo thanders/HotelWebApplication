@@ -1,6 +1,7 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Reservation implements Serializable {
 	
@@ -8,14 +9,31 @@ public class Reservation implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int reservationId;
 	private int GuestID;
+	private LocalDate start;
+	private LocalDate end;
+	private int numberRooms;
+	private int duration;
+	private LocalDate bookingDate;
+	private String status;
+	private String reservationType;
+	
 	
 	// empty constructor
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(int GuestID) {
+	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDate bookingDate, String status, String reservationType) {
+		this.reservationId = reservationId;
 		this.GuestID = GuestID;
+		this.start = start;
+		this.end = end;
+		this.numberRooms = numberRooms;
+		this.bookingDate = bookingDate;
+		this.status = status;
+		this.reservationType = reservationType;
+		
 	}
+
 
 	public int getReservationId() {
 		return reservationId;
@@ -26,15 +44,75 @@ public class Reservation implements Serializable {
 	}
 
 	public int getGuestID() {
-		return this.GuestID;
+		return GuestID;
 	}
 
-	public void setGuestID(int GuestID) {
-		this.GuestID = GuestID;
+	public void setGuestID(int guestID) {
+		GuestID = guestID;
+	}
+
+	public LocalDate getStart() {
+		return start;
+	}
+
+	public void setStart(LocalDate start) {
+		this.start = start;
+	}
+
+	public LocalDate getEnd() {
+		return end;
+	}
+
+	public void setEnd(LocalDate end) {
+		this.end = end;
+	}
+
+	public int getNumberRooms() {
+		return numberRooms;
+	}
+
+	public void setNumberRooms(int numberRooms) {
+		this.numberRooms = numberRooms;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String toString(){
-		return this.getClass().getName() +" "+ "[" + this.reservationId +" "+ this.GuestID + "]";
+		return this.getClass().getName() + " " + "[" + this.reservationId + " " + this.GuestID + " " + this.start + this.end + this.duration + this.numberRooms + "]";
+	}
+
+	public LocalDate getBookingDate() {
+		return bookingDate;
+	}
+
+	public void setBookingDate(LocalDate bookingDate) {
+		this.bookingDate = bookingDate;
+	}
+
+	public String getReservationType() {
+		return reservationType;
+	}
+
+	public void setReservationType(String reservationType) {
+		this.reservationType = reservationType;
 	}
 	
 

@@ -156,81 +156,8 @@ public class DBUtils {
 	        }
 	        return list;
 	    }
-	    // Query Reservation
-	    public static List<Reservation> queryReservations(Connection conn) throws SQLException {
-	        String sql = "Select a.Reservation_Id, a.GuestID from Reservations a ";
-	 
-	        PreparedStatement pstm = conn.prepareStatement(sql);
-	 
-	        ResultSet rs = pstm.executeQuery();
-	        List<Reservation> list = new ArrayList<Reservation>();
-	        while (rs.next()) {
-	            int Reservation_Id = rs.getInt("Reservation_Id");
-	            int GuestID= rs.getInt("GuestID");
-	            
-	            System.out.println("Reservation: "+ Reservation_Id +" " + GuestID);
-	            Reservation reservation = new Reservation();
-	            reservation.setReservationId(Reservation_Id);
-	            reservation.setGuestID(GuestID);
-	            list.add(reservation);
-	            
-	            System.out.println(list.toString());
-	        }
-	        return list;
-	    }
 	    
-	    	// queryReservation with Guest ID
-		   public static Reservation queryReservation(Connection conn, int GuestID) throws SQLException {
-		 
-		        String sql = "Select a.Reservation_Id, a.GuestID from Reservations a where a.GuestID = ?";
-		 
-		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setInt(1, GuestID);
-		        ResultSet rs = pstm.executeQuery();
-		        // There should only be one GuestID with a reservation
-		        if (rs.next()) {
-		            int Reservation_Id = rs.getInt("Reservation_Id");
-		            
-		            Reservation reservation = new Reservation();
-		            reservation.setReservationId(Reservation_Id);
-		            reservation.setGuestID(GuestID);
-
-		            return reservation;
-		        }
-		        
-		        else { return null;}
-		        }
 	    
-	    // QueryLatestGuest
-	    public static List<Guest> QueryLatestGuest(Connection conn) throws SQLException {
-	        String sql = "Select a.Guest_Name, a.Guest_Surname, a.Address, a.Card_Number, a.Phone_Number, a.Email_Address from Guest a ORDER BY Id DESC LIMIT 1";
-	 
-	        PreparedStatement pstm = conn.prepareStatement(sql);
-	 
-	        ResultSet rs = pstm.executeQuery();
-	        List<Guest> list = new ArrayList<Guest>();
-	        while (rs.next()) {
-	            String guestName = rs.getString("Guest_Name");
-	            String Guest_Surname= rs.getString("Guest_Surname");
-	            String Address= rs.getString("Address");
-	            String Card_Number= rs.getString("Card_Number");
-	            String Phone_Number= rs.getString("Phone_Number");
-	            String Email_Address= rs.getString("Email_Address");
-	            
-	            Guest guest = new Guest();
-	            guest.setGuestName(guestName);
-	            guest.setGuestSurename(Guest_Surname);
-	            guest.setGuestAddress(Address);
-	            guest.setGuestCardNumber(Card_Number);
-	            guest.setGuestPhoneNumber(Phone_Number);
-	            guest.setGuestEmail(Email_Address);
-	            
-	            list.add(guest);
-	            
-	            System.out.println(list.toString());
-	        }
-	        return list;
-	    }
 	    
 	    // queryRoom
 	    public static List<Room> queryRoom(Connection conn) throws SQLException {
@@ -262,8 +189,8 @@ public class DBUtils {
 	        pstm.setString(2, guest.getGuestSurename());
 	        pstm.setString(3, guest.getGuestAddress());
 	        pstm.setString(4, guest.getGuestEmail());
-	        pstm.setString(5, guest.getGuestCardNumber());
-	        pstm.setString(6, guest.getGuestPhoneNumber());
+	        pstm.setInt(5, guest.getGuestCardNumber());
+	        pstm.setInt(6, guest.getGuestPhoneNumber());
 	        
 	        pstm.executeUpdate();
 	        

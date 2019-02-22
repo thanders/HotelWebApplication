@@ -56,7 +56,7 @@ CREATE TABLE `Guest` (
   `Phone_Number` int(15) NOT NULL,
   `Email_Address` varchar(128) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `Guest` (
 
 LOCK TABLES `Guest` WRITE;
 /*!40000 ALTER TABLE `Guest` DISABLE KEYS */;
-INSERT INTO `Guest` VALUES (3,'Tom','Test','123 Test road',50505050,55555555,'test@ucdconnect.ie');
+INSERT INTO `Guest` VALUES (72,'Tom','Test','UCD Library',202020,12345,'tom@ucd.ie');
 /*!40000 ALTER TABLE `Guest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,10 +83,11 @@ CREATE TABLE `Reservations` (
   `end` date NOT NULL,
   `duration` int(11) DEFAULT NULL,
   `numberRooms` int(3) NOT NULL,
-  PRIMARY KEY (`Reservation_Id`),
-  KEY `fk_GuestID_idx` (`GuestID`),
-  CONSTRAINT `fk_GuestID` FOREIGN KEY (`GuestID`) REFERENCES `Guest` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `status` varchar(45) COLLATE utf8_bin NOT NULL,
+  `bookingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reservationType` varchar(45) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`Reservation_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE `Reservations` (
 
 LOCK TABLES `Reservations` WRITE;
 /*!40000 ALTER TABLE `Reservations` DISABLE KEYS */;
-INSERT INTO `Reservations` VALUES (3,3,'2019-02-22','2019-02-22',NULL,2);
+INSERT INTO `Reservations` VALUES (11,72,'2019-02-21','2019-02-27',NULL,2,'Paid','2019-02-21 21:34:40','Guest');
 /*!40000 ALTER TABLE `Reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,9 +113,7 @@ CREATE TABLE `Reserved_Rooms` (
   `FK_ReservationID` int(11) NOT NULL,
   `Room_Type_ID` int(11) NOT NULL,
   `Status` varchar(45) CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Room_Type_ID_idx` (`Room_Type_ID`),
-  CONSTRAINT `Room_Type_ID` FOREIGN KEY (`Room_Type_ID`) REFERENCES `Room_Type` (`room_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -136,12 +135,9 @@ DROP TABLE IF EXISTS `Room`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Room` (
   `Room_Number` int(11) NOT NULL AUTO_INCREMENT,
-  `FK_Room_Type_ID` int(11) NOT NULL,
   PRIMARY KEY (`Room_Number`),
-  UNIQUE KEY `Room_Number` (`Room_Number`),
-  KEY `FK_ROOM_TYPE_ID_idx` (`FK_Room_Type_ID`),
-  CONSTRAINT `FK_ROOM_TYPE_ID` FOREIGN KEY (`FK_Room_Type_ID`) REFERENCES `Room_Type` (`room_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  UNIQUE KEY `Room_Number` (`Room_Number`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,36 +146,8 @@ CREATE TABLE `Room` (
 
 LOCK TABLES `Room` WRITE;
 /*!40000 ALTER TABLE `Room` DISABLE KEYS */;
-INSERT INTO `Room` VALUES (2,1),(1,2);
+INSERT INTO `Room` VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17),(18),(19),(20);
 /*!40000 ALTER TABLE `Room` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Room_Type`
---
-
-DROP TABLE IF EXISTS `Room_Type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Room_Type` (
-  `room_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(45) CHARACTER SET utf8 NOT NULL,
-  `max_capacity` int(11) NOT NULL,
-  `name` varchar(45) COLLATE utf8_bin NOT NULL,
-  `price` int(11) NOT NULL,
-  PRIMARY KEY (`room_type_id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Room_Type`
---
-
-LOCK TABLES `Room_Type` WRITE;
-/*!40000 ALTER TABLE `Room_Type` DISABLE KEYS */;
-INSERT INTO `Room_Type` VALUES (1,'The Presidential Suite',10,'Presidential',0),(2,'A standard room',2,'Standard',0);
-/*!40000 ALTER TABLE `Room_Type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -197,7 +165,6 @@ CREATE TABLE `Starwood` (
   `User_Password` varchar(128) COLLATE utf8_bin NOT NULL,
   `Address` varchar(280) COLLATE utf8_bin NOT NULL,
   `Card_Number` int(11) NOT NULL,
-  `Memebership_Status` varchar(128) COLLATE utf8_bin NOT NULL,
   `Phone_Number` int(11) NOT NULL,
   `Email_Address` varchar(128) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Id`),
@@ -212,59 +179,8 @@ CREATE TABLE `Starwood` (
 
 LOCK TABLES `Starwood` WRITE;
 /*!40000 ALTER TABLE `Starwood` DISABLE KEYS */;
-INSERT INTO `Starwood` VALUES (1,'Tom','Yates','Tom.yates','Password1','Dublin 5',1233232,'Active',852222432,'Abdulj947@gmail'),(2,'Thomas Anderson','dafafdfa','thanders','123456','36 Crannagh Castle',3335555,'88888',834206066,'thomas.anderson@ucdconnect.ie');
+INSERT INTO `Starwood` VALUES (1,'Tom','Yates','Tom.yates','Password1','Dublin 5',1233232,852222432,'Abdulj947@gmail'),(2,'Thomas Anderson','dafafdfa','thanders','123456','36 Crannagh Castle',3335555,834206066,'thomas.anderson@ucdconnect.ie');
 /*!40000 ALTER TABLE `Starwood` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `hosted_at`
---
-
-DROP TABLE IF EXISTS `hosted_at`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hosted_at` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `guest_id` int(11) NOT NULL,
-  `occupied_room_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hosted_at`
---
-
-LOCK TABLES `hosted_at` WRITE;
-/*!40000 ALTER TABLE `hosted_at` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hosted_at` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `occupied_room`
---
-
-DROP TABLE IF EXISTS `occupied_room`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `occupied_room` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `check_in` date NOT NULL,
-  `check_out` date NOT NULL,
-  `room_id` int(11) NOT NULL,
-  `reservation_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `occupied_room`
---
-
-LOCK TABLES `occupied_room` WRITE;
-/*!40000 ALTER TABLE `occupied_room` DISABLE KEYS */;
-INSERT INTO `occupied_room` VALUES (1,'2018-07-06','2018-10-02',2,2),(9,'2018-05-04','2018-05-04',1,2);
-/*!40000 ALTER TABLE `occupied_room` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -276,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-20 18:14:13
+-- Dump completed on 2019-02-21 21:36:32

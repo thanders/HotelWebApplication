@@ -17,20 +17,15 @@
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
 
-	<h2>Reservation (1/2)</h2>
+	<h2>Find my reservation</h2>
 
-	Select the dates you would like to book:
+	Enter your reservation number:
 	<br/>
 	<br/>
 
-	<form action="${pageContext.request.contextPath}/createReservation">
-		From: <input type="date" name="resStart" required>
-		<br /> <br />
-		Until: <input type="date" name="resEnd" required>
-		<br /> <br />
-		Number of Guests: <input type="number" name="numRooms" min="1" required> 
-		<br /> <br />
-
+	<form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
+		Reservation number: <input type="number" name="resNumber" min="1" value="${resNumber}" required>
+		<br/> <br/> 
 		<input type="submit"> <input type="reset" value="Reset">
 	</form>
 
