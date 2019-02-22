@@ -48,12 +48,10 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
-		String membershipStatus = (String) request.getParameter("membershipStatus");
 		System.out.println("TEST Card" + " " + cardNumber);
 
 		System.out.println("int Card" + " " + cardNumber);
-		Starwood member = new Starwood(name, surename, address, email, cardNumber, phoneNumber, userName, password,
-				membershipStatus);
+		Starwood member = new Starwood(name, surename, address, email, cardNumber, phoneNumber, userName, password);
 
 		System.out.println(member.toString());
 		String errorString = null;
