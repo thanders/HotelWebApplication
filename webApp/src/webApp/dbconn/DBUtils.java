@@ -55,19 +55,15 @@ public class DBUtils {
 	            String address = rs.getString("Address");
 	            String email = rs.getString("Email_Address");
 	            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
-	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
-				String membershipStatus = rs.getString("Memebership_Status");
-	            
+	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));	            
 	            Starwood member = new Starwood();
 	            member.setUserName(userName);
 	            member.setPassword(password);
-	            
 	            member.setName(name);
 	            member.setAddress(address);
 	            member.setCardNumber(cardNumber);
 	            member.setSurename(surname);
 	            member.setEmail(email);
-	            member.setMembershipStatus(membershipStatus);
 	            member.setPhoneNumber(phoneNumber);          
 	            
 	            
@@ -117,7 +113,6 @@ public class DBUtils {
 	            String email = rs.getString("Email_Address");
 	            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
 	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
-				String membershipStatus = rs.getString("Memebership_Status");
 	            
 	            Starwood member = new Starwood();
 	            member.setUserName(userName);
@@ -128,7 +123,6 @@ public class DBUtils {
 	            member.setCardNumber(cardNumber);
 	            member.setSurename(surname);
 	            member.setEmail(email);
-	            member.setMembershipStatus(membershipStatus);
 	            member.setPhoneNumber(phoneNumber);    
 	            
 	           
@@ -156,81 +150,8 @@ public class DBUtils {
 	        }
 	        return list;
 	    }
-	    // Query Reservation
-	    public static List<Reservation> queryReservations(Connection conn) throws SQLException {
-	        String sql = "Select a.Reservation_Id, a.GuestID from Reservations a ";
-	 
-	        PreparedStatement pstm = conn.prepareStatement(sql);
-	 
-	        ResultSet rs = pstm.executeQuery();
-	        List<Reservation> list = new ArrayList<Reservation>();
-	        while (rs.next()) {
-	            int Reservation_Id = rs.getInt("Reservation_Id");
-	            int GuestID= rs.getInt("GuestID");
-	            
-	            System.out.println("Reservation: "+ Reservation_Id +" " + GuestID);
-	            Reservation reservation = new Reservation();
-	            reservation.setReservationId(Reservation_Id);
-	            reservation.setGuestID(GuestID);
-	            list.add(reservation);
-	            
-	            System.out.println(list.toString());
-	        }
-	        return list;
-	    }
 	    
-	    	// queryReservation with Guest ID
-		   public static Reservation queryReservation(Connection conn, int GuestID) throws SQLException {
-		 
-		        String sql = "Select a.Reservation_Id, a.GuestID from Reservations a where a.GuestID = ?";
-		 
-		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setInt(1, GuestID);
-		        ResultSet rs = pstm.executeQuery();
-		        // There should only be one GuestID with a reservation
-		        if (rs.next()) {
-		            int Reservation_Id = rs.getInt("Reservation_Id");
-		            
-		            Reservation reservation = new Reservation();
-		            reservation.setReservationId(Reservation_Id);
-		            reservation.setGuestID(GuestID);
-
-		            return reservation;
-		        }
-		        
-		        else { return null;}
-		        }
 	    
-	    // QueryLatestGuest
-	    public static List<Guest> QueryLatestGuest(Connection conn) throws SQLException {
-	        String sql = "Select a.Guest_Name, a.Guest_Surname, a.Address, a.Card_Number, a.Phone_Number, a.Email_Address from Guest a ORDER BY Id DESC LIMIT 1";
-	 
-	        PreparedStatement pstm = conn.prepareStatement(sql);
-	 
-	        ResultSet rs = pstm.executeQuery();
-	        List<Guest> list = new ArrayList<Guest>();
-	        while (rs.next()) {
-	            String guestName = rs.getString("Guest_Name");
-	            String Guest_Surname= rs.getString("Guest_Surname");
-	            String Address= rs.getString("Address");
-	            String Card_Number= rs.getString("Card_Number");
-	            String Phone_Number= rs.getString("Phone_Number");
-	            String Email_Address= rs.getString("Email_Address");
-	            
-	            Guest guest = new Guest();
-	            guest.setGuestName(guestName);
-	            guest.setGuestSurename(Guest_Surname);
-	            guest.setGuestAddress(Address);
-	            guest.setGuestCardNumber(Card_Number);
-	            guest.setGuestPhoneNumber(Phone_Number);
-	            guest.setGuestEmail(Email_Address);
-	            
-	            list.add(guest);
-	            
-	            System.out.println(list.toString());
-	        }
-	        return list;
-	    }
 	    
 	    // queryRoom
 	    public static List<Room> queryRoom(Connection conn) throws SQLException {
@@ -262,8 +183,8 @@ public class DBUtils {
 	        pstm.setString(2, guest.getGuestSurename());
 	        pstm.setString(3, guest.getGuestAddress());
 	        pstm.setString(4, guest.getGuestEmail());
-	        pstm.setString(5, guest.getGuestCardNumber());
-	        pstm.setString(6, guest.getGuestPhoneNumber());
+	        pstm.setInt(5, guest.getGuestCardNumber());
+	        pstm.setInt(6, guest.getGuestPhoneNumber());
 	        
 	        pstm.executeUpdate();
 	        
@@ -300,7 +221,7 @@ public class DBUtils {
 	    
 	    // insertMember
 	    public static void insertMember(Connection conn, Starwood member) throws SQLException {
-	        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name, User_Password, Memebership_Status) values (?,?,?,?,?,?,?,?,?)";
+	        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name, User_Password) values (?,?,?,?,?,?,?,?)";
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	        pstm.setString(1, member.getName());
 	        pstm.setString(2, member.getSurename());
@@ -310,10 +231,9 @@ public class DBUtils {
 	        pstm.setString(6, member.getPhoneNumber());
 	        pstm.setString(7, member.getUserName());
 	        pstm.setString(8, member.getPassword());
-	        pstm.setString(9, member.getMembershipStatus());
 	        pstm.executeUpdate();
 	        System.out.println("insertMember SQL executed");
-            System.out.println(": "+  member.getName()+ "  " + member.getSurename() + "  " + member.getAddress() + "  " + member.getPhoneNumber()+ "  " +  member.getCardNumber() + "  " +   member.getUserName()+ "  " +  member.getPassword()+member.getMembershipStatus());
+            System.out.println(": "+  member.getName()+ "  " + member.getSurename() + "  " + member.getAddress() + "  " + member.getPhoneNumber()+ "  " +  member.getCardNumber() + "  " +   member.getUserName()+ "  " +  member.getPassword());
 	    }
 	 
 	    public static Product findProduct(Connection conn, String code) throws SQLException {

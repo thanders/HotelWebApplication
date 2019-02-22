@@ -59,7 +59,7 @@ public class ReservationCreateServlet extends HttpServlet {
     		
     		// set object attributes to send to confirmation servlet
     		session.setAttribute("startObj", start);
-    		session.setAttribute("endObj", start);
+    		session.setAttribute("endObj", end);
     		
     		// set String/int attributes to send to web page
     		session.setAttribute("startDate", formatWeb.format(start));

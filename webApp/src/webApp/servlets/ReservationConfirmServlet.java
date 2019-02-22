@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
 import webApp.dbconn.DBUtils;
+import webApp.dbconn.DB_reservation;
 import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/reservationConfirm" })
@@ -53,15 +52,19 @@ public class ReservationConfirmServlet extends HttpServlet {
         String guestSurename = (String) request.getParameter("guestSurename");
         String guestAddress = (String) request.getParameter("guestAddress");
         String guestEmail = (String) request.getParameter("guestEmail");
-        String guestCardNumber = (String) request.getParameter("guestCardNumber");
-        String guestPhoneNumber = (String) request.getParameter("guestPhoneNumber");
+        String gCNumber = (String) request.getParameter("guestCardNumber");
+        String gPNumber = (String) request.getParameter("guestPhoneNumber");
         
-        System.out.println("Session Results: " + startObj + " " + endObj + " " + duration + "days" + " " + numRooms);
+        System.out.println("Session Results: " + startObj + " " + endObj + " " + duration + " " + numRooms);
         
+        int guestCardNumber = Integer.parseInt(gCNumber);
+        int guestPhoneNumber = Integer.parseInt(gPNumber);
         
         Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
-
+        
+        // Connect to database
         Connection conn = SessionUtils.getStoredConnection(request);
+        
         String errorString = null;
         
         // If error string is null, try to insert the guest object into the Guest database table
@@ -69,14 +72,28 @@ public class ReservationConfirmServlet extends HttpServlet {
             	
         	// Insert the new Guest instance into the database
         	int GuestID = DBUtils.insertGuest(conn, guest);
-
+        	String status = "Paid";
+        	String reservationType = "Guest";
+        	
+        	
         	// Insert the new Reservation into the database
-        	DBUtils.insertReservation(conn, GuestID, startObj, endObj, numRooms);
+        	DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType);
+        	
         	// Create an object for the new Reservation
-        	Reservation resObj = DBUtils.queryReservation(conn, GuestID);
+        	Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
+        	System.out.println( "Test " + resObj.toString());
+        	
+        
 
             // Store information to request attribute, before forward to views. 
-        	request.setAttribute("reservationObj", resObj.getReservationId());
+        	request.setAttribute("resNumber", resObj.getReservationId());
+        	request.setAttribute("start", resObj.getStart());
+        	request.setAttribute("numberRooms", resObj.getNumberRooms());
+        	request.setAttribute("end", resObj.getEnd());
+        	request.setAttribute("status", resObj.getStatus());
+        	request.setAttribute("bookingDate", resObj.getBookingDate());
+        	request.setAttribute("reservationType", resObj.getReservationType());
+        	
         	request.setAttribute("guestName", guest.getGuestName());
         	request.setAttribute("guestSurname", guest.getGuestSurename());
         	request.setAttribute("guestAddress", guest.getGuestAddress());
@@ -85,10 +102,8 @@ public class ReservationConfirmServlet extends HttpServlet {
         	request.setAttribute("guestPhoneNumber", guest.getGuestPhoneNumber());
             request.setAttribute("errorString", errorString);
             
-            
 	        RequestDispatcher dispatcher = request.getServletContext()
-	        		
-	                .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
+	        .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
 	        dispatcher.forward(request, response);
                
        } catch (SQLException e) {
