@@ -55,19 +55,15 @@ public class DBUtils {
 	            String address = rs.getString("Address");
 	            String email = rs.getString("Email_Address");
 	            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
-	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
-				String membershipStatus = rs.getString("Memebership_Status");
-	            
+	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));	            
 	            Starwood member = new Starwood();
 	            member.setUserName(userName);
 	            member.setPassword(password);
-	            
 	            member.setName(name);
 	            member.setAddress(address);
 	            member.setCardNumber(cardNumber);
 	            member.setSurename(surname);
 	            member.setEmail(email);
-	            member.setMembershipStatus(membershipStatus);
 	            member.setPhoneNumber(phoneNumber);          
 	            
 	            
@@ -117,7 +113,6 @@ public class DBUtils {
 	            String email = rs.getString("Email_Address");
 	            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
 	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
-				String membershipStatus = rs.getString("Memebership_Status");
 	            
 	            Starwood member = new Starwood();
 	            member.setUserName(userName);
@@ -128,7 +123,6 @@ public class DBUtils {
 	            member.setCardNumber(cardNumber);
 	            member.setSurename(surname);
 	            member.setEmail(email);
-	            member.setMembershipStatus(membershipStatus);
 	            member.setPhoneNumber(phoneNumber);    
 	            
 	           
@@ -227,7 +221,7 @@ public class DBUtils {
 	    
 	    // insertMember
 	    public static void insertMember(Connection conn, Starwood member) throws SQLException {
-	        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name, User_Password, Memebership_Status) values (?,?,?,?,?,?,?,?,?)";
+	        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name, User_Password) values (?,?,?,?,?,?,?,?)";
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	        pstm.setString(1, member.getName());
 	        pstm.setString(2, member.getSurename());
@@ -237,10 +231,9 @@ public class DBUtils {
 	        pstm.setString(6, member.getPhoneNumber());
 	        pstm.setString(7, member.getUserName());
 	        pstm.setString(8, member.getPassword());
-	        pstm.setString(9, member.getMembershipStatus());
 	        pstm.executeUpdate();
 	        System.out.println("insertMember SQL executed");
-            System.out.println(": "+  member.getName()+ "  " + member.getSurename() + "  " + member.getAddress() + "  " + member.getPhoneNumber()+ "  " +  member.getCardNumber() + "  " +   member.getUserName()+ "  " +  member.getPassword()+member.getMembershipStatus());
+            System.out.println(": "+  member.getName()+ "  " + member.getSurename() + "  " + member.getAddress() + "  " + member.getPhoneNumber()+ "  " +  member.getCardNumber() + "  " +   member.getUserName()+ "  " +  member.getPassword());
 	    }
 	 
 	    public static Product findProduct(Connection conn, String code) throws SQLException {

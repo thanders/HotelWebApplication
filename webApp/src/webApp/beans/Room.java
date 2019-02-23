@@ -16,7 +16,7 @@ public class Room implements Serializable{
 		this.roomNumber = Room_Number;
 		this.fkRoomTypeId = FK_Room_Type_ID;
 	}
-
+	// Getters and Setters
 	public int getRoomNumber() {
 		return roomNumber;
 	}
@@ -34,7 +34,6 @@ public class Room implements Serializable{
 	}
 
 	
-	// Getters and Setters
 	
 
 

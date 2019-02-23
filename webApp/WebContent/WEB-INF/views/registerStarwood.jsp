@@ -50,10 +50,6 @@
                <th>Password</th>
                <td><input type="password" name="password" value="${Starwood.password}" required/></td>
             </tr>
-            <tr>
-               <th>MemberShip Status</th>
-               <td><input type="text" name="membershipStatus" value="${Starwood.membershipStatus}" required/></td>
-            </tr>
           	<tr>
                <td colspan="2">                   
                    <input type="submit" value="Submit" />

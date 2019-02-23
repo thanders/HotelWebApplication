@@ -15,7 +15,7 @@ public class Starwood implements Serializable{
 	}
 	
 	public Starwood(String name, String surename, String address, String email, String cardNumber, String phoneNumber,
-			String userName, String password, String membershipStatus) {
+			String userName, String password) {
 		super();
 		this.name = name;
 		this.surename = surename;
@@ -25,7 +25,6 @@ public class Starwood implements Serializable{
 		this.phoneNumber = phoneNumber;
 		this.userName = userName;
 		this.password = password;
-		this.membershipStatus = membershipStatus;
 	}
 	public String getName() {
 		return name;
@@ -75,12 +74,7 @@ public class Starwood implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getMembershipStatus() {
-		return membershipStatus;
-	}
-	public void setMembershipStatus(String membershipStatus) {
-		this.membershipStatus = membershipStatus;
-	}
+
 	
 	private String surename;
 	private String address;
@@ -89,9 +83,8 @@ public class Starwood implements Serializable{
 	private String phoneNumber;
 	private String userName;
 	private String password;
-	private String membershipStatus;
 
 	public String toString() {
-		return this.getClass().getName() +" "+ "[" + this.name +" "+ this.surename + this.address + this.email + this.cardNumber + this.phoneNumber + this.userName+this.password+this.membershipStatus+ "]";
+		return this.getClass().getName() +" "+ "[" + this.name +" "+ this.surename + this.address + this.email + this.cardNumber + this.phoneNumber + this.userName+this.password+ "]";
 	}
 }

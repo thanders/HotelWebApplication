@@ -2,16 +2,11 @@ package webApp.dbconn;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.time.LocalDate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
-
-
-import webApp.beans.*;
+import webApp.beans.Reservation;
 
 public class DB_reservation {
 
