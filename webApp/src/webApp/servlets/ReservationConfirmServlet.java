@@ -28,6 +28,7 @@ public class ReservationConfirmServlet extends HttpServlet {
         super();
     }
  
+    // The doGet method - is automatically called and can handle get requests
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,6 +36,8 @@ public class ReservationConfirmServlet extends HttpServlet {
     	
     }
  
+    
+    // The doPost method - is called upon receiving a post request
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,13 +52,17 @@ public class ReservationConfirmServlet extends HttpServlet {
         int duration = (int) session.getAttribute("duration");
         int numRooms = (int) session.getAttribute("numRooms");
         
-        // Use get parameter to obtain posted data from form
+        // Use get parameter to obtain POSTED data from form
         String guestName = (String) request.getParameter("guestName");
         String guestSurename = (String) request.getParameter("guestSurename");
         String guestAddress = (String) request.getParameter("guestAddress");
         String guestEmail = (String) request.getParameter("guestEmail");
         String gCNumber = (String) request.getParameter("guestCardNumber");
         String gPNumber = (String) request.getParameter("guestPhoneNumber");
+        
+
+        
+        
         
         System.out.println("Session Results: " + startObj + " " + endObj + " " + duration + " " + numRooms);
         
@@ -64,13 +71,13 @@ public class ReservationConfirmServlet extends HttpServlet {
         
         Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
         
-        // Connect to database
-        Connection conn = SessionUtils.getStoredConnection(request);
-        
         String errorString = null;
         
         // If error string is null, try to insert the guest object into the Guest database table
         try {
+        	
+            // Connect to database
+            Connection conn = SessionUtils.getStoredConnection(request);
             	
         	// Insert the new Guest instance into the database
         	int GuestID = DBUtils.insertGuest(conn, guest);

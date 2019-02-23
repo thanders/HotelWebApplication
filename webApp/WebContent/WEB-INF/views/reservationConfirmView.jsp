@@ -22,6 +22,7 @@
  	<br/> <br/>
  	The confirmation details are below:
  	<br/> <br/>
+ 	<p style="color: red;">${cantCancel}</p>
     
     <table border="1" cellspacing="0" >
     	<tr>
@@ -57,7 +58,9 @@
     
     <br/> <br/>
     
-    <form>
+    <form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
+    <input type="hidden" name="cancel" value="Cancel"/>
+    <input type="hidden" name="resNumber" value="${resNumber}"/>
     <input type="submit" value="Cancel"/>
     </form>
  

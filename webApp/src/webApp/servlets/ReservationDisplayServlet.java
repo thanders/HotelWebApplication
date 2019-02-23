@@ -59,6 +59,13 @@ public class ReservationDisplayServlet extends HttpServlet {
         	
         	// Connect to database
             Connection conn = SessionUtils.getStoredConnection(request);
+            
+            String cancel = (String) request.getParameter("cancel");
+            
+            // If cancellation button clicked (POST message)
+            if (cancel != null) {
+            	request.setAttribute("cantCancel", "24 hours has passed, can't cancel");
+            }
         	
         	// Create an object for the new Reservation
             try {
@@ -101,6 +108,9 @@ public class ReservationDisplayServlet extends HttpServlet {
          	  String errorString = e.getMessage();
          	  System.out.println(errorString);
             }
+            
+            
+            
             
         }
         

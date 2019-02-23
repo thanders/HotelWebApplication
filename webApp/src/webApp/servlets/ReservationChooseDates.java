@@ -1,9 +1,13 @@
 package webApp.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,12 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = { "/createReservation" })
-public class ReservationCreateServlet extends HttpServlet {
+import webApp.beans.Reservation;
+import webApp.cookies.SessionUtils;
+import webApp.dbconn.DB_reservation;
+import webApp.dbconn.DB_rooms;
+
+@WebServlet(urlPatterns = { "/ReservationChooseDates" })
+public class ReservationChooseDates extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
  
-    public ReservationCreateServlet() {
+    public ReservationChooseDates() {
         super();
     }
  
@@ -39,7 +48,7 @@ public class ReservationCreateServlet extends HttpServlet {
     	// if start and end date are null, load reservations #1
     	if (resStart == null && resEnd == null) {
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/reservationOneView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/ReservationChooseDates.jsp");
             dispatcher.forward(request, response);
         	}
     	
@@ -51,6 +60,23 @@ public class ReservationCreateServlet extends HttpServlet {
     		Long durationLong = ChronoUnit.DAYS.between(start, end);
     		int duration = durationLong.intValue();
     		int numRooms = Integer.parseInt(rooms);
+        	// Connect to database
+            Connection conn = SessionUtils.getStoredConnection(request);
+            
+    		// Find number of total rooms
+    		try {
+				 int totalRooms = DB_rooms.countTotalRooms(conn);
+				 System.out.println("Rooms:   "+ totalRooms);
+				 
+				 List<Reservation> allReservations = DB_reservation.queryAllReservations(conn);
+				 System.out.println("YES!"+ allReservations.toString());
+				 
+			
+						
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		
     		// format LocalDate to display on webpage
     		DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
@@ -67,11 +93,14 @@ public class ReservationCreateServlet extends HttpServlet {
     		session.setAttribute("numRooms", numRooms);
     		session.setAttribute("duration", duration);
     		
+
     		
+    		// Load the choose room view
 	        RequestDispatcher dispatcher = request.getServletContext()
 	        		
-	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
+	                .getRequestDispatcher("/WEB-INF/views/ReservationChooseRoom.jsp");
 	        dispatcher.forward(request, response);
+	        
     		
     	}
     	
