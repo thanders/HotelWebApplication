@@ -15,12 +15,13 @@
 	<jsp:include page="_menu.jsp"></jsp:include>
 
 	<h2>Reservation (1/2)</h2>
+	
 
 	Select the dates you would like to book:
 	<br/>
 	<br/>
 
-	<form action="${pageContext.request.contextPath}/ReservationChooseDates">
+	<form action="${pageContext.request.contextPath}/ReservationChooseRoom">
 		From: <input type="date" name="resStart" required>
 		<br /> <br />
 		Until: <input type="date" name="resEnd" required>

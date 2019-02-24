@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +16,10 @@ import javax.servlet.http.HttpSession;
 
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
+import webApp.beans.Room;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_reservation;
+import webApp.dbconn.DB_rooms;
 import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/reservationConfirm" })
@@ -49,6 +53,9 @@ public class ReservationConfirmServlet extends HttpServlet {
         LocalDate endObj = (LocalDate) session.getAttribute("endObj");
         int duration = (int) session.getAttribute("duration");
         int numRooms = (int) session.getAttribute("numRooms");
+        String[] choices = (String[]) session.getAttribute("choices");
+        
+
         
         // Use get parameter to obtain POSTED data from form
         String guestName = (String) request.getParameter("guestName");
@@ -57,6 +64,7 @@ public class ReservationConfirmServlet extends HttpServlet {
         String guestEmail = (String) request.getParameter("guestEmail");
         String gCNumber = (String) request.getParameter("guestCardNumber");
         String gPNumber = (String) request.getParameter("guestPhoneNumber");
+        
         
 
         
@@ -67,7 +75,9 @@ public class ReservationConfirmServlet extends HttpServlet {
         int guestCardNumber = Integer.parseInt(gCNumber);
         int guestPhoneNumber = Integer.parseInt(gPNumber);
         
+        // Create instance of Guest class
         Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
+      
         
         String errorString = null;
         
@@ -90,10 +100,36 @@ public class ReservationConfirmServlet extends HttpServlet {
         	Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
         	System.out.println( "Test " + resObj.toString());
         	
+        	int reservationNumber = resObj.getReservationId();
+        	
+            // Create instances of room class for each booked room
+            for (int i =0; i< choices.length; i++) {
+         	   String roomNumber = choices[i];
+         	   
+         	   Room bookedRoom = new Room(roomNumber);
+         	   		bookedRoom.setReservationNumber(reservationNumber);
+         	   		
+         	   	DB_rooms.insertBookedRoom(conn, bookedRoom.getRoomNumber(), bookedRoom.getReservationNumber());
+            }
+            
+            // query records of booked rooms for reservationID
+            try{List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, reservationNumber);
+            // room related set attributes
+            request.setAttribute("bookedRooms", bookedRooms);
+            }
+            catch(Exception e){
+            System.out.println("SQL ERROR...........");
+            System.out.println(e);
+            }
+            
+            
+        	
         
 
             // Store information to request attribute, before forward to views. 
-        	request.setAttribute("resNumber", resObj.getReservationId());
+            
+            // Reservation related set attributes
+        	request.setAttribute("resNumber", reservationNumber);
         	request.setAttribute("start", resObj.getStart());
         	request.setAttribute("numberRooms", resObj.getNumberRooms());
         	request.setAttribute("end", resObj.getEnd());
@@ -101,6 +137,7 @@ public class ReservationConfirmServlet extends HttpServlet {
         	request.setAttribute("bookingDate", resObj.getBookingDate());
         	request.setAttribute("reservationType", resObj.getReservationType());
         	
+        	// Guest related set attributes
         	request.setAttribute("guestName", guest.getGuestName());
         	request.setAttribute("guestSurname", guest.getGuestSurename());
         	request.setAttribute("guestAddress", guest.getGuestAddress());
@@ -108,6 +145,8 @@ public class ReservationConfirmServlet extends HttpServlet {
         	request.setAttribute("guestCardNumber", guest.getGuestCardNumber());
         	request.setAttribute("guestPhoneNumber", guest.getGuestPhoneNumber());
             request.setAttribute("errorString", errorString);
+            
+
             
 	        RequestDispatcher dispatcher = request.getServletContext()
 	        .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");

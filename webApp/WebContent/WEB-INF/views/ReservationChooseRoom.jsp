@@ -15,20 +15,23 @@
 	<jsp:include page="_menu.jsp"></jsp:include>
 
 	<h2>Reservation (2/3)</h2>
-
-	You have requested:
-	<br/><br/>
 	
-	<b>${numRooms}</b> rooms
+	Success, rooms are available between those dates.
 	
 	<br/><br/>
 	
-	From <b>${startDate}</b> until <b>${endDate}</b> (${duration} days)
+	Below is a list of available rooms from <b>${startDate}</b> until <b>${endDate}</b> (${duration} days)
 	
 	<br/>
 	<br/>
+	
+	Please choose any <b>${numRooms}</b>:
+	
+	<br/><br/>
 	
 	<form method="POST" action="${pageContext.request.contextPath}/ReservationChooseRoom">
+	
+	
 	
 	<table>
 	
@@ -36,14 +39,17 @@
 		<th> Room Number </th>
 		<th> Choice </th>
 	</tr>
+	
+	<c:forEach items="${availableRooms}" var="room" >
 	<tr>
-		<td> Placeholder </td>
-		<td> <input type="radio" name="choice" value="yes" required> </td>
+		<td> ${room.roomNumber} </td>
+		<td> <input type="checkbox" name="choices" value="${room.roomNumber}"> </td>
 	</tr>
+	</c:forEach>
 	
 	</table>
 
-	<input type="submit">
+	<input type="submit" name="submit" value="submit">
 	</form>
 	
 	

@@ -7,34 +7,28 @@ public class Room implements Serializable{
 	
 	// Fields
 	private static final long serialVersionUID = 1L;
-	private int roomNumber;
-	private int fkRoomTypeId;
+	private String roomNumber;
+	private int reservationNumber;
 	
 	// Constructor
-	public Room(int Room_Number, int FK_Room_Type_ID) {
+	public Room(String Room_Number) {
 		super();
 		this.roomNumber = Room_Number;
-		this.fkRoomTypeId = FK_Room_Type_ID;
 	}
 	// Getters and Setters
-	public int getRoomNumber() {
+	public String getRoomNumber() {
 		return roomNumber;
 	}
 
-	public void setRoomNumber(int roomNumber) {
+	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
 	}
-
-	public int getFkRoomTypeId() {
-		return fkRoomTypeId;
+	public int getReservationNumber() {
+		return reservationNumber;
 	}
-
-	public void setFkRoomTypeId(int fkRoomTypeId) {
-		this.fkRoomTypeId = fkRoomTypeId;
+	public void setReservationNumber(int reservationNumber) {
+		this.reservationNumber = reservationNumber;
 	}
 
 	
-	
-
-
 }

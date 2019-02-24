@@ -162,11 +162,11 @@ public class DBUtils {
 	        // Create an arraylist
 	        List<Room> list = new ArrayList<Room>();
 	        while (rs.next()) {
-	            int Room_Number = rs.getInt("Room_Number");
+	            String Room_Number = rs.getString("Room_Number");
 	            int FK_Room_Type_ID = rs.getInt("FK_Room_Type_ID");
 	            // Create instance of Room class
 	            System.out.println("Test "+Room_Number);
-	            Room room = new Room(Room_Number, FK_Room_Type_ID);
+	            Room room = new Room(Room_Number);
 	            // Add Room class to list
 	            list.add(room);
 	        }
