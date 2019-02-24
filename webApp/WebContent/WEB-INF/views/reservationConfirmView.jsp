@@ -22,12 +22,14 @@
  	<br/> <br/>
  	The confirmation details are below:
  	<br/> <br/>
+ 	<p style="color: red;">${cantCancel}</p>
     
     <table border="1" cellspacing="0" >
     	<tr>
     		<th>Guest Name</th>
     		<th>Guest Surname</th>
     		<th>Number of rooms</th>
+    		<th>Room numbers</th>
     		<th>Duration</th>
     		<th>Price</th>
     	</tr>
@@ -35,6 +37,7 @@
     		<td>${guestName}</td>
     		<td>${guestSurname}</td>
     		<td>${numberRooms}</td>
+    		<td><c:forEach items="${bookedRooms}" var="room" >${room.getRoomNumber()}  </c:forEach></td>
     		<td>Placeholder</td>
     		<td>Placeholder</td>
     	</tr>
@@ -57,7 +60,9 @@
     
     <br/> <br/>
     
-    <form>
+    <form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
+    <input type="hidden" name="cancel" value="Cancel"/>
+    <input type="hidden" name="resNumber" value="${resNumber}"/>
     <input type="submit" value="Cancel"/>
     </form>
  

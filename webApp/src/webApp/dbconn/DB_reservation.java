@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import webApp.beans.Reservation;
 
@@ -87,5 +89,36 @@ public class DB_reservation {
 	        System.out.println("insertReservation SQL executed");
 	        
 	    }
+	    
+	    
+    	// queryReservations
+	   public static List<Reservation> queryAllReservations(Connection conn) throws SQLException {
+	 
+	        String sql = "Select Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType from Reservations";
+	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+
+	        ResultSet rs = pstm.executeQuery();
+	        // There should only be one GuestID with a reservation
+	        
+	        List<Reservation> list = new ArrayList<Reservation>();
+	        while (rs.next()) {
+	            int Reservation_Id = rs.getInt("Reservation_Id");
+	            int GuestID = rs.getInt("GuestID");
+		        LocalDate start= rs.getDate("start").toLocalDate();
+		        LocalDate end= rs.getDate("end").toLocalDate();
+		        int numberRooms = rs.getInt("numberRooms");
+		        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
+		        String status = rs.getString("status");
+		        String reservationType = rs.getString("reservationType");
+		        
+	            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
+	            
+	            list.add(reservation);
+
+	        }
+	        
+	        return list;
+	        }
 
 }

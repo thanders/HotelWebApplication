@@ -9,7 +9,7 @@
    |
    <a href="${pageContext.request.contextPath}/userRooms">Available Rooms</a>
    |
-   <a href="${pageContext.request.contextPath}/createReservation">Make a Reservation</a>
+   <a href="${pageContext.request.contextPath}/ReservationChooseDates">Make a Reservation</a>
    |
    <a href="${pageContext.request.contextPath}/createStarwood">Register Starwood Member</a>
    |
