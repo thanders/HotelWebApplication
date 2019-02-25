@@ -16,10 +16,7 @@
     Name: ${user.name}
     <br />
     Address: ${user.address} <br />
-    
-    Membership Status: ${user.membershipStatus}
-    <br />
-     
+      
     <jsp:include page="_footer.jsp"></jsp:include>
  
  </body>
