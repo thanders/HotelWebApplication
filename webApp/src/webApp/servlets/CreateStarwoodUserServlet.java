@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import webApp.dbconn.DBUtils;
+import webApp.dbconn.DB_members;
 import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 
@@ -48,12 +48,12 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
-		String membershipStatus = (String) request.getParameter("membershipStatus");
+		  int CardNumber = Integer.parseInt(cardNumber);
+        int PhoneNumber = Integer.parseInt(phoneNumber);
 		System.out.println("TEST Card" + " " + cardNumber);
 
 		System.out.println("int Card" + " " + cardNumber);
-		Starwood member = new Starwood(name, surename, address, email, cardNumber, phoneNumber, userName, password,
-				membershipStatus);
+		Starwood member = new Starwood(name, surename, address, email, CardNumber, PhoneNumber, userName, password);
 
 		System.out.println(member.toString());
 		String errorString = null;
@@ -62,7 +62,7 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		// database table
 		if (errorString == null) {
 			try {
-				DBUtils.insertMember(conn, member);
+				DB_members.insertMember(conn, member);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				errorString = e.getMessage();

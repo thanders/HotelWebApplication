@@ -16,46 +16,55 @@
  
     <p style="color: red;">${errorString}</p>
  	
- 	Thank you for booking a room with us. The confirmation details are below:
-    
-    <h4>Personal information</h4>
+ 	Thank you for booking a room with us. Your reservation number is <b>${resNumber}</b>
+ 	<br/> <br/>
+ 	The booking is from <b>${start}</b> until <b>${end}</b>
+ 	<br/> <br/>
+ 	The confirmation details are below:
+ 	<br/> <br/>
+ 	<p style="color: red;">${cantCancel}</p>
     
     <table border="1" cellspacing="0" >
-    <tr>
-        <th>Reservation ID</th>
-    	<th>Name</th>
-    	<th>Surname</th>
-    	<th>Address</th>
-    	<th>Email</th>
-    	<th>Card number</th>
-    	<th>Phone number</th>
-
-    </tr>
-          <tr>
-          	<td>${reservationObj}</td>
-             <td>${guestName}</td>
-             <td>${guestSurname}</td>
-             <td>${guestAddress}</td>
-             <td>${guestEmail}</td>
-             <td>${guestCardNumber}</td>
-             <td>${guestPhoneNumber}</td>
-          </tr>
+    	<tr>
+    		<th>Guest Name</th>
+    		<th>Guest Surname</th>
+    		<th>Number of rooms</th>
+    		<th>Room numbers</th>
+    		<th>Duration</th>
+    		<th>Price</th>
+    	</tr>
+    	<tr>
+    		<td>${guestName}</td>
+    		<td>${guestSurname}</td>
+    		<td>${numberRooms}</td>
+    		<td><c:forEach items="${bookedRooms}" var="room" >${room.getRoomNumber()}  </c:forEach></td>
+    		<td>Placeholder</td>
+    		<td>Placeholder</td>
+    	</tr>
     </table>
     
-    <h4>Room booking</h4>
+    <br/> <br/>
     
-        <table border="1" cellspacing="0" >
-    <tr>
-    	<th>Number of rooms booked</th>
-    	<th>Cost per room</th>
-    	<th>Total booking cost</th>
-    </tr>
-          <tr>
-          	<td>Test</td>
-             <td>Test</td>
-             <td>Test</td>
-          </tr>
+    <table border="1" cellspacing="0" >
+    	<tr>
+    		<th>Booking Date</th>
+    		<th>Reservation Type</th>
+    		<th>Status</th>
+    	</tr>
+    	<tr>
+    		<td>${bookingDate}</td>
+    		<td>${reservationType}</td>
+    		<td>${status}</td>
+    	</tr>
     </table>
+    
+    <br/> <br/>
+    
+    <form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
+    <input type="hidden" name="cancel" value="Cancel"/>
+    <input type="hidden" name="resNumber" value="${resNumber}"/>
+    <input type="submit" value="Cancel"/>
+    </form>
  
     <jsp:include page="_footer.jsp"></jsp:include>
  

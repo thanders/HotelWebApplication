@@ -8,14 +8,24 @@ public class Starwood implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public Starwood(String name, String surename, String address, String email, int cardNumber, int phoneNumber) {
+		super();
+		this.name = name;
+		this.surename = surename;
+		this.address = address;
+		this.email = email;
+		this.cardNumber = cardNumber;
+		this.phoneNumber = phoneNumber;
+	}
+
 	private String name;
-	
+	private int id;
 	public Starwood() {
 		
 	}
 	
-	public Starwood(String name, String surename, String address, String email, String cardNumber, String phoneNumber,
-			String userName, String password, String membershipStatus) {
+	public Starwood(String name, String surename, String address, String email, int cardNumber, int phoneNumber,
+			String userName, String password) {
 		super();
 		this.name = name;
 		this.surename = surename;
@@ -25,7 +35,6 @@ public class Starwood implements Serializable{
 		this.phoneNumber = phoneNumber;
 		this.userName = userName;
 		this.password = password;
-		this.membershipStatus = membershipStatus;
 	}
 	public String getName() {
 		return name;
@@ -51,16 +60,16 @@ public class Starwood implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getCardNumber() {
+	public int getCardNumber() {
 		return cardNumber;
 	}
-	public void setCardNumber(String  cardNumber) {
+	public void setCardNumber(int  cardNumber) {
 		this.cardNumber = cardNumber;
 	}
-	public String getPhoneNumber() {
+	public int getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public String getUserName() {
@@ -75,23 +84,23 @@ public class Starwood implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getMembershipStatus() {
-		return membershipStatus;
+	public int getId() {
+		return id;
 	}
-	public void setMembershipStatus(String membershipStatus) {
-		this.membershipStatus = membershipStatus;
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	private String surename;
 	private String address;
 	private String email;
-	private String cardNumber;
-	private String phoneNumber;
+	private int cardNumber;
+	private int phoneNumber;
 	private String userName;
 	private String password;
-	private String membershipStatus;
 
 	public String toString() {
-		return this.getClass().getName() +" "+ "[" + this.name +" "+ this.surename + this.address + this.email + this.cardNumber + this.phoneNumber + this.userName+this.password+this.membershipStatus+ "]";
+		return this.getClass().getName() +" "+ "[" +this.id+" "+ this.name +" "+ this.surename + this.address + this.email + this.cardNumber + this.phoneNumber + this.userName+this.password+ "]";
 	}
 }

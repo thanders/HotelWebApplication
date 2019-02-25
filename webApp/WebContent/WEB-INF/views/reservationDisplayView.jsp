@@ -11,33 +11,24 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
+
 <body>
 
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
 
-	<h2>Reservation (1/2)</h2>
+	<h2>Find my reservation</h2>
 
-	Select the dates you would like to book:
-	<br />
-	<br />
+	Enter your reservation number:
+	<br/>
+	<br/>
 
-	<form action="${pageContext.request.contextPath}/createReservation">
-		From: <input type="date" name="resStart" required id="datepicker">
-		<br /> <br /> Until: <input type="date" name="resEnd" required
-			id="datepicker2"> <br /> <br /> Number of Guests: <input
-			type="number" name="numPeople" min="1" required> <br /> <br />
-
+	<form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
+		Reservation number: <input type="number" name="resNumber" min="1" value="${resNumber}" required>
+		<br/> <br/> 
 		<input type="submit"> <input type="reset" value="Reset">
 	</form>
-	<script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
-  $( function() {
-	    $( "#datepicker2" ).datepicker();
-	  } );
-  </script>
+
 	<jsp:include page="_footer.jsp"></jsp:include>
 
 </body>

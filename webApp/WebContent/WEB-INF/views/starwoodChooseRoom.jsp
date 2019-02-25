@@ -41,38 +41,12 @@
      </table>
       
 	<br/> <br/>
-    Enter your personal details:
     <br/> <br/>
       
       <form method="POST" action="${pageContext.request.contextPath}/reservationConfirm">
-       
+      
          <table>
-            <tr>
-               <th>Name</th>
-               <td><input type="text" name=guestName value="${Guest.guestName}" required/></td>
-            </tr>
-            <tr>
-               <th>Surname</th>
-               <td><input type="text" name="guestSurename" value="${Guest.guestSurename}" required/></td>
-            </tr>
-            <tr>
-               <th>Address</th>
-               <td><input type="text" name="guestAddress" value="${Guest.guestAddress}" required/></td>
-            </tr>
-            <tr>
-               <th>Email</th>
-               <td><input type="email" name="guestEmail" value="${Guest.guestEmail}" required/></td>
-            </tr>
-                        
-            <tr>
-               <th>Phone number</th>
-               <td><input type="text" name="guestPhoneNumber" value="${Guest.guestPhoneNumber}" required/></td>
-            </tr>
-
-         	<tr>
-               <th>Credit card number</th>
-               <td><input type="text" name="guestCardNumber" value="${Guest.guestCardNumber}" required/></td>
-            </tr>
+   
             
           	<tr>
                <td colspan="2">                  
