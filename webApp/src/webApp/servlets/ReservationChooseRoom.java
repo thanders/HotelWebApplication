@@ -49,56 +49,58 @@ public class ReservationChooseRoom extends HttpServlet {
     	String rooms = request.getParameter("numRooms");
     	
     	
-    	// if start and end date are not null
-    	if (resStart != null && resEnd != null) {
-    		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
-    		LocalDate start = LocalDate.parse( resStart , f ) ;
-    		LocalDate end = LocalDate.parse( resEnd , f ) ;
-    		Long durationLong = ChronoUnit.DAYS.between(start, end);
-    		int duration = durationLong.intValue();
-    		int numRooms = Integer.parseInt(rooms);
+
+    	DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
+    	LocalDate start = LocalDate.parse( resStart , f ) ;
+    	LocalDate end = LocalDate.parse( resEnd , f ) ;
+    	Long durationLong = ChronoUnit.DAYS.between(start, end);
+    	int duration = durationLong.intValue();
+    	int numRooms = Integer.parseInt(rooms);
     		
-    		// format LocalDate to display on webpage
-    		DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
+    	// format LocalDate to display on webpage
+    	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
     		
-    		System.out.println("Hello " + start + " " + end + " " + duration);
+    	System.out.println("Hello " + start + " " + end + " " + duration);
     		
-    		// set object attributes to add to session
-    		session.setAttribute("startObj", start);
-    		session.setAttribute("endObj", end);
-    		
-    		// set String/int attributes to send to web page
-    		session.setAttribute("startDate", formatWeb.format(start));
-    		session.setAttribute("endDate", formatWeb.format(end));
-    		session.setAttribute("numRooms", numRooms);
-    		session.setAttribute("duration", duration);
+    	// set object attributes to add to session
+    	session.setAttribute("startObj", start);
+    	session.setAttribute("endObj", end);
     		
     		
+    	// set String/int attributes to send to web page
+    	session.setAttribute("startDate", formatWeb.format(start));
+    	session.setAttribute("endDate", formatWeb.format(end));
+    	session.setAttribute("numRooms", numRooms);
+    	session.setAttribute("duration", duration);
+    	
     		
-    		// Find number of total rooms
-    		try {
+    		
+    		
+    	// Find number of total rooms
+    	try {
     			
-    			System.out.println("WHO?? ");
-				 int totalRooms = DB_rooms.countTotalRooms(conn);
-				 System.out.println("Rooms:   "+ totalRooms);
-				 
-			
-						
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+    		System.out.println("WHO?? ");
+			int totalRooms = DB_rooms.countTotalRooms(conn);
+			System.out.println("Rooms:   "+ totalRooms);		 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	        
     		
     	
     	
-		 // Retrieve a list of all reservations
-		 List<Reservation> allReservations = null;
-		 List<Room> availableRooms = null;
+    	// Retrieve a list of all reservations
+		List<Reservation> allReservations = null;
+		List<Room> availableRooms = null;
+		int numberAvailableRooms = 0;
+		
 		try {
 			allReservations = DB_reservation.queryAllReservations(conn);
 			 // Retrieve a list of rooms
-			availableRooms = DB_rooms.selectRooms(conn);
+			//availableRooms = DB_rooms.selectRooms(conn);
+			availableRooms = DB_rooms.selectAvailableRooms(conn, start, end);
+			numberAvailableRooms = availableRooms.size();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,6 +110,7 @@ public class ReservationChooseRoom extends HttpServlet {
 		 System.out.println("YES!"+ allReservations.toString());
 		 // set attribute for Room objects so they are accessible by the ReservationChooseRoom.jsp page
 		 session.setAttribute("availableRooms", availableRooms);
+		 session.setAttribute("numberAvailableRooms", numberAvailableRooms);
 		 
 		
 		}
@@ -118,8 +121,6 @@ public class ReservationChooseRoom extends HttpServlet {
                 .getRequestDispatcher("/WEB-INF/views/ReservationChooseRoom.jsp");
         dispatcher.forward(request, response);
         
-    	}
-		 
     }
  
 
@@ -128,9 +129,6 @@ public class ReservationChooseRoom extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-
-		System.out.println("CHOOSE ROOM NOW");
-	
 	    // Request the current session and use it to retrieve objects from Reservation step 1
 	    HttpSession session = request.getSession();
 	    LocalDate resStart = (LocalDate) session.getAttribute("startObj");
@@ -139,10 +137,26 @@ public class ReservationChooseRoom extends HttpServlet {
 	    int numRooms = (int) session.getAttribute("numRooms");
 
 	    // Get an array of chosen Hotel rooms
-	    String[] choices = request.getParameterValues("choices");
+	    String[] choices = null;
+	    choices = request.getParameterValues("choices");
+	    
+	    // Room choice form validation
+	    if(choices.length!= numRooms) {
+	    	System.out.println("dingus");
+	    	session.setAttribute("validationCount", "Hey, that's not the number of rooms you requested! Try again.");
 
-		// if start and end date are not null, load reservations booking page
-		if (resStart != null && resEnd != null) {
+	    	
+			// Load reservationBookingView
+	        RequestDispatcher dispatcher = request.getServletContext()
+	        		
+	                .getRequestDispatcher("/WEB-INF/views/ReservationChooseRoom.jsp");
+	        dispatcher.forward(request, response);
+	        }
+	    
+	    else {
+	    	
+	    	session.setAttribute("validationCount", "");
+
 			DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 	
 	    	// Connect to database
@@ -153,11 +167,7 @@ public class ReservationChooseRoom extends HttpServlet {
 				 int totalRooms = DB_rooms.countTotalRooms(conn);
 				 System.out.println("Rooms:   "+ totalRooms);
 				 
-				 
-				 
-				 
 			
-						
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -181,18 +191,14 @@ public class ReservationChooseRoom extends HttpServlet {
 		
 
 		
-		
-        RequestDispatcher dispatcher = request.getServletContext()
-        		
-                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
-        dispatcher.forward(request, response);
-        
-	}
-        
-		
-	}
-        
+			// Load reservationBookingView
+	        RequestDispatcher dispatcher = request.getServletContext()
+	        		
+	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
+	        dispatcher.forward(request, response);
+	    
+	    }
+	    
 
-   
- 
+	}
 }
