@@ -16,14 +16,9 @@
 
 	<h2>Reservation (2/3)</h2>
 	
-	Success, <b>${numberAvailableRooms}</b> rooms are available between those dates.
+	<b>${numberAvailableRooms}</b> rooms are available between those dates. <b>${startDate}</b> until <b>${endDate}</b> (${duration} days)
 	
 	<br/><br/>
-	
-	Below is a list of available rooms from <b>${startDate}</b> until <b>${endDate}</b> (${duration} days)
-	
-	<br/>
-	<br/>
 	
 	Please choose any <b>${numRooms}</b>:
 	
@@ -37,18 +32,23 @@
 	
 	<tr>
 		<th> Room Number </th>
+		<th> Capacity </th>
+		<th> Price </th>
 		<th> Choice </th>
 	</tr>
 	
 	<c:forEach items="${availableRooms}" var="room" >
 	<tr>
 		<td> ${room.roomNumber} </td>
+		<td> ${room.capacity} </td>
+		<td> ${room.price} </td>
 		<td> <input type="checkbox" name="choices" value="${room.roomNumber}"> </td>
 	</tr>
 	</c:forEach>
 	
 	</table>
 	<tr><p style="color: red;"> ${validationCount} </p></tr>
+	
 	<input type="submit" name="submit" value="submit">
 	</form>
 	

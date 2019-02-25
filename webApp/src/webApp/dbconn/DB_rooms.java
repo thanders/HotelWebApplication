@@ -115,7 +115,7 @@ public class DB_rooms {
 	    	// Select available Rooms
 		   public static List<Room> selectAvailableRooms(Connection conn, LocalDate startDate, LocalDate endDate) throws SQLException {
 		 
-		        String sql = "SELECT r.Room_Number FROM sse.Room AS r WHERE r.Room_Number NOT IN(SELECT b.roomNumber FROM sse.Reservations AS a INNER JOIN sse.Reserved_Rooms AS b ON a.Reservation_Id=b.reservationID WHERE a.start >= ? AND a.end <= ?)";
+		        String sql = "SELECT r.Room_Number, r.capacity, r.price FROM sse.Room AS r WHERE r.Room_Number NOT IN(SELECT b.roomNumber FROM sse.Reservations AS a INNER JOIN sse.Reserved_Rooms AS b ON a.Reservation_Id=b.reservationID WHERE a.start >= ? AND a.end <= ?)";
 		 
 		        PreparedStatement pstm = conn.prepareStatement(sql);
 		        pstm.setObject(1, startDate);
@@ -129,9 +129,12 @@ public class DB_rooms {
 		        while (rs.next()) {
 		        	
 					String roomNumber = rs.getString(1);
+					int roomCapacity = rs.getInt(2);
+					int roomPrice = rs.getInt(3);
 					// Create instance of Room Class
 					Room room = new Room(roomNumber);
-
+					room.setCapacity(roomCapacity);
+					room.setPrice(roomPrice);
 					list.add(room);
 				}
 				

@@ -8,7 +8,9 @@ public class Room implements Serializable{
 	// Fields
 	private static final long serialVersionUID = 1L;
 	private String roomNumber;
+	private int capacity;
 	private int reservationNumber;
+	private int price;
 	
 	// Constructor
 	public Room(String Room_Number) {
@@ -28,6 +30,18 @@ public class Room implements Serializable{
 	}
 	public void setReservationNumber(int reservationNumber) {
 		this.reservationNumber = reservationNumber;
+	}
+	public int getCapacity() {
+		return capacity;
+	}
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	

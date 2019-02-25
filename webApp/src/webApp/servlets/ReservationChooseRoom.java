@@ -142,7 +142,6 @@ public class ReservationChooseRoom extends HttpServlet {
 	    
 	    // Room choice form validation
 	    if(choices.length!= numRooms) {
-	    	System.out.println("dingus");
 	    	session.setAttribute("validationCount", "Hey, that's not the number of rooms you requested! Try again.");
 
 	    	
@@ -194,7 +193,7 @@ public class ReservationChooseRoom extends HttpServlet {
 			// Load reservationBookingView
 	        RequestDispatcher dispatcher = request.getServletContext()
 	        		
-	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
+	                .getRequestDispatcher("/WEB-INF/views/reservationBookingView.jsp");
 	        dispatcher.forward(request, response);
 	    
 	    }
