@@ -16,7 +16,7 @@
 
 	<h2>Reservation (2/3)</h2>
 	
-	Success, rooms are available between those dates.
+	Success, <b>${numberAvailableRooms}</b> rooms are available between those dates.
 	
 	<br/><br/>
 	
@@ -48,7 +48,7 @@
 	</c:forEach>
 	
 	</table>
-
+	<tr><p style="color: red;"> ${validationCount} </p></tr>
 	<input type="submit" name="submit" value="submit">
 	</form>
 	
