@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
 import webApp.beans.Room;
+import webApp.beans.Starwood;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_reservation;
 import webApp.dbconn.DB_rooms;
@@ -56,7 +57,8 @@ public class ReservationConfirmServlet extends HttpServlet {
         String[] choices = (String[]) session.getAttribute("choices");
         
 
-        
+    	if(SessionUtils.getLoginedUser(request.getSession())==null)
+    	{
         // Use get parameter to obtain POSTED data from form
         String guestName = (String) request.getParameter("guestName");
         String guestSurename = (String) request.getParameter("guestSurename");
@@ -156,6 +158,110 @@ public class ReservationConfirmServlet extends HttpServlet {
     	   e.printStackTrace();
     	   errorString = e.getMessage();
        }
+    	}
+    	else{
+    		
+    		
+    		 // Use get parameter to obtain POSTED data from form
+            String guestName = SessionUtils.getLoginedUser(request.getSession()).getName();
+            String guestSurename = SessionUtils.getLoginedUser(request.getSession()).getSurename();
+            String guestAddress = SessionUtils.getLoginedUser(request.getSession()).getAddress();
+            String guestEmail = SessionUtils.getLoginedUser(request.getSession()).getEmail();
+            int guestCardNumber = SessionUtils.getLoginedUser(request.getSession()).getCardNumber();
+            int guestPhoneNumber = SessionUtils.getLoginedUser(request.getSession()).getPhoneNumber();
+            
+            
+
+            
+            
+            
+            System.out.println("Session Results: " + startObj + " " + endObj + " " + duration + " " + numRooms);
+            
+            
+            // Create instance of Guest class
+            Starwood guest = new Starwood(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
+          
+            
+            String errorString = null;
+            
+            // If error string is null, try to insert the guest object into the Guest database table
+            try {
+            	
+                // Connect to database
+                Connection conn = SessionUtils.getStoredConnection(request);
+                	
+            	// Insert the new Guest instance into the database
+//            	int GuestID = DBUtils.insertMember(conn, guest);
+            	int GuestID = SessionUtils.getLoginedUser(request.getSession()).getId();
+            	String status = "Paid";
+            	String reservationType = "Member";
+            	
+            	
+            	// Insert the new Reservation into the database
+            	DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType);
+            	
+            	// Create an object for the new Reservation
+            	Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
+            	System.out.println( "Test " + resObj.toString());
+            	
+            	int reservationNumber = resObj.getReservationId();
+            	
+                // Create instances of room class for each booked room
+                for (int i =0; i< choices.length; i++) {
+             	   String roomNumber = choices[i];
+             	   
+             	   Room bookedRoom = new Room(roomNumber);
+             	   		bookedRoom.setReservationNumber(reservationNumber);
+             	   		
+             	   	DB_rooms.insertBookedRoom(conn, bookedRoom.getRoomNumber(), bookedRoom.getReservationNumber());
+                }
+                
+                // query records of booked rooms for reservationID
+                try{List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, reservationNumber);
+                // room related set attributes
+                request.setAttribute("bookedRooms", bookedRooms);
+                }
+                catch(Exception e){
+                System.out.println("SQL ERROR...........");
+                System.out.println(e);
+                }
+                
+                
+            	
+            
+
+                // Store information to request attribute, before forward to views. 
+                
+                // Reservation related set attributes
+            	request.setAttribute("resNumber", reservationNumber);
+            	request.setAttribute("start", resObj.getStart());
+            	request.setAttribute("numberRooms", resObj.getNumberRooms());
+            	request.setAttribute("end", resObj.getEnd());
+            	request.setAttribute("status", resObj.getStatus());
+            	request.setAttribute("bookingDate", resObj.getBookingDate());
+            	request.setAttribute("reservationType", resObj.getReservationType());
+            	
+            	// Guest related set attributes
+            	request.setAttribute("guestName", guest.getName());
+            	request.setAttribute("guestSurname", guest.getSurename());
+            	request.setAttribute("guestAddress", guest.getAddress());
+            	request.setAttribute("guestEmail", guest.getEmail());
+            	request.setAttribute("guestCardNumber", guest.getCardNumber());
+            	request.setAttribute("guestPhoneNumber", guest.getPhoneNumber());
+                request.setAttribute("errorString", errorString);
+                
+
+                
+    	        RequestDispatcher dispatcher = request.getServletContext()
+    	        .getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
+    	        dispatcher.forward(request, response);
+                   
+           } catch (SQLException e) {
+        	   e.printStackTrace();
+        	   errorString = e.getMessage();
+           }
+        	
+        }
     }
         
 

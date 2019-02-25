@@ -120,5 +120,32 @@ public class DB_reservation {
 	        
 	        return list;
 	        }
+	   public static List<Reservation> queryAllMemberReservations(Connection conn,int GuestID) throws SQLException {
+			 
+	        String sql = "Select Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType from Reservationsa where a.GuestID = ?";
+	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        pstm.setInt(1, GuestID);
+	        ResultSet rs = pstm.executeQuery();
+	        // There should only be one GuestID with a reservation
+	        
+	        List<Reservation> list = new ArrayList<Reservation>();
+	        while (rs.next()) {
+	            int Reservation_Id = rs.getInt("Reservation_Id");
+		        LocalDate start= rs.getDate("start").toLocalDate();
+		        LocalDate end= rs.getDate("end").toLocalDate();
+		        int numberRooms = rs.getInt("numberRooms");
+		        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
+		        String status = rs.getString("status");
+		        String reservationType = rs.getString("reservationType");
+		        
+	            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
+	            
+	            list.add(reservation);
+
+	        }
+	        
+	        return list;
+	        }
 
 }

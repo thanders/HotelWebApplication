@@ -8,13 +8,23 @@ public class Starwood implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public Starwood(String name, String surename, String address, String email, int cardNumber, int phoneNumber) {
+		super();
+		this.name = name;
+		this.surename = surename;
+		this.address = address;
+		this.email = email;
+		this.cardNumber = cardNumber;
+		this.phoneNumber = phoneNumber;
+	}
+
 	private String name;
-	
+	private int id;
 	public Starwood() {
 		
 	}
 	
-	public Starwood(String name, String surename, String address, String email, String cardNumber, String phoneNumber,
+	public Starwood(String name, String surename, String address, String email, int cardNumber, int phoneNumber,
 			String userName, String password) {
 		super();
 		this.name = name;
@@ -50,16 +60,16 @@ public class Starwood implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getCardNumber() {
+	public int getCardNumber() {
 		return cardNumber;
 	}
-	public void setCardNumber(String  cardNumber) {
+	public void setCardNumber(int  cardNumber) {
 		this.cardNumber = cardNumber;
 	}
-	public String getPhoneNumber() {
+	public int getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public String getUserName() {
@@ -74,17 +84,23 @@ public class Starwood implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	private String surename;
 	private String address;
 	private String email;
-	private String cardNumber;
-	private String phoneNumber;
+	private int cardNumber;
+	private int phoneNumber;
 	private String userName;
 	private String password;
 
 	public String toString() {
-		return this.getClass().getName() +" "+ "[" + this.name +" "+ this.surename + this.address + this.email + this.cardNumber + this.phoneNumber + this.userName+this.password+ "]";
+		return this.getClass().getName() +" "+ "[" +this.id+" "+ this.name +" "+ this.surename + this.address + this.email + this.cardNumber + this.phoneNumber + this.userName+this.password+ "]";
 	}
 }

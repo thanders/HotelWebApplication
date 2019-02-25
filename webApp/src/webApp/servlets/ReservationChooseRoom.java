@@ -190,15 +190,24 @@ public class ReservationChooseRoom extends HttpServlet {
 			session.setAttribute("choices", choices);
 		
 
-		
-			// Load reservationBookingView
-	        RequestDispatcher dispatcher = request.getServletContext()
+		if(SessionUtils.getLoginedUser(request.getSession())==null)
+		{
+		    RequestDispatcher dispatcher = request.getServletContext()
 	        		
 	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
 	        dispatcher.forward(request, response);
-	    
-	    }
-	    
-
+	        
+			
+		}
+		else
+		{
+		    RequestDispatcher dispatcher = request.getServletContext()
+	        		
+	                .getRequestDispatcher("/WEB-INF/views/starwoodChooseRoom.jsp");
+	        dispatcher.forward(request, response);
+	        
+		}
+		
+    
 	}
 }
