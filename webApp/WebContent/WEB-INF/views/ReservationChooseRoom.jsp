@@ -41,7 +41,9 @@
 	<tr>
 		<td> ${room.roomNumber} </td>
 		<td> ${room.capacity} </td>
-		<td> ${room.price} </td>
+		<td>
+${room.priceFormatted} 
+		</td>
 		<td> <input type="checkbox" name="choices" value="${room.roomNumber}"> </td>
 	</tr>
 	</c:forEach>

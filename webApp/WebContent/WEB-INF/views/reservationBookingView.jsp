@@ -36,7 +36,7 @@
       	<tr>
       	<td>${numRooms}</td>
       	<td> <c:forEach items="${choices}" var="choices" >${choices}  </c:forEach> </td>
-      	<td>Placeholder</td>
+      	<td>${reservationPrice}</td>
       	</tr>
      </table>
       

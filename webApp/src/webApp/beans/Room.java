@@ -1,6 +1,9 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 // A class for hotel rooms
 public class Room implements Serializable{
@@ -10,12 +13,16 @@ public class Room implements Serializable{
 	private String roomNumber;
 	private int capacity;
 	private int reservationNumber;
-	private int price;
+	private double price;
+    String pattern="\u20ac###,###.##";
+    DecimalFormat euroFormatter = new DecimalFormat(pattern);
+	private String priceFormatted;
 	
 	// Constructor
 	public Room(String Room_Number) {
 		super();
 		this.roomNumber = Room_Number;
+		
 	}
 	// Getters and Setters
 	public String getRoomNumber() {
@@ -37,11 +44,18 @@ public class Room implements Serializable{
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
+		this.priceFormatted = euroFormatter.format(price);
+	}
+	public String getPriceFormatted() {
+		return priceFormatted;
+	}
+	public void setPriceFormatted(String priceFormatted) {
+		this.priceFormatted = priceFormatted;
 	}
 
 	

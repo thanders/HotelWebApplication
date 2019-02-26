@@ -39,7 +39,7 @@
     		<td>${numberRooms}</td>
     		<td><c:forEach items="${bookedRooms}" var="room" >${room.getRoomNumber()}  </c:forEach></td>
     		<td>Placeholder</td>
-    		<td>Placeholder</td>
+    		<td>${reservationPrice}</td>
     	</tr>
     </table>
     

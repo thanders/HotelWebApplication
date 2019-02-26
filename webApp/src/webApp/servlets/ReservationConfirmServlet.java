@@ -55,6 +55,11 @@ public class ReservationConfirmServlet extends HttpServlet {
         int numRooms = (int) session.getAttribute("numRooms");
         String[] choices = (String[]) session.getAttribute("choices");
         
+        Double resPrice = (Double) session.getAttribute("resPrice");
+        
+        
+        
+        
 
         
         // Use get parameter to obtain POSTED data from form
@@ -94,13 +99,16 @@ public class ReservationConfirmServlet extends HttpServlet {
         	
         	
         	// Insert the new Reservation into the database
-        	DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType);
+        	DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType, resPrice);
         	
         	// Create an object for the new Reservation
         	Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
-        	System.out.println( "Test " + resObj.toString());
         	
         	int reservationNumber = resObj.getReservationId();
+    
+        	String price = resObj.getPriceFormatted();
+        	
+
         	
             // Create instances of room class for each booked room
             for (int i =0; i< choices.length; i++) {
@@ -110,16 +118,25 @@ public class ReservationConfirmServlet extends HttpServlet {
          	   		bookedRoom.setReservationNumber(reservationNumber);
          	   		
          	   	DB_rooms.insertBookedRoom(conn, bookedRoom.getRoomNumber(), bookedRoom.getReservationNumber());
+         	   
             }
             
             // query records of booked rooms for reservationID
-            try{List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, reservationNumber);
+            try{
+            	List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, reservationNumber);
             // room related set attributes
-            request.setAttribute("bookedRooms", bookedRooms);
+            	request.setAttribute("bookedRooms", bookedRooms);
+            	
+
+         // Update the Reservation Object variable
+        	//resObj = DB_reservation.queryReservation(conn, GuestID);
+            
+
             }
             catch(Exception e){
             System.out.println("SQL ERROR...........");
             System.out.println(e);
+            e.printStackTrace();
             }
             
             
@@ -136,6 +153,7 @@ public class ReservationConfirmServlet extends HttpServlet {
         	request.setAttribute("status", resObj.getStatus());
         	request.setAttribute("bookingDate", resObj.getBookingDate());
         	request.setAttribute("reservationType", resObj.getReservationType());
+        	request.setAttribute("reservationPrice", resObj.getPriceFormatted());
         	
         	// Guest related set attributes
         	request.setAttribute("guestName", guest.getGuestName());

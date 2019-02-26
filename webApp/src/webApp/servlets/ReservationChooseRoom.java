@@ -3,6 +3,7 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -79,9 +80,7 @@ public class ReservationChooseRoom extends HttpServlet {
     	// Find number of total rooms
     	try {
     			
-    		System.out.println("WHO?? ");
-			int totalRooms = DB_rooms.countTotalRooms(conn);
-			System.out.println("Rooms:   "+ totalRooms);		 
+			int totalRooms = DB_rooms.countTotalRooms(conn);	 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,6 +139,12 @@ public class ReservationChooseRoom extends HttpServlet {
 	    String[] choices = null;
 	    choices = request.getParameterValues("choices");
 	    
+	  // Connect to database
+        Connection conn = SessionUtils.getStoredConnection(request);
+	    
+        double resPrice = 0;
+       
+	    
 	    // Room choice form validation
 	    if(choices.length!= numRooms) {
 	    	session.setAttribute("validationCount", "Hey, that's not the number of rooms you requested! Try again.");
@@ -158,13 +163,21 @@ public class ReservationChooseRoom extends HttpServlet {
 
 			DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 	
-	    	// Connect to database
-	        Connection conn = SessionUtils.getStoredConnection(request);
-	        
+
 			// Retrieve the booked rooms from the database
 			try {
 				 int totalRooms = DB_rooms.countTotalRooms(conn);
 				 System.out.println("Rooms:   "+ totalRooms);
+				 
+				 // get roomnumber from choices then run query to get room number's price
+				 
+			        for (int i=0; i<choices.length; i++) {
+			        	String choice=choices[i];
+			        	Double price = DB_rooms.selectRoomPrice(conn, choice);
+			        	resPrice += price;
+			        	}
+			        
+			        System.out.println("PRICE???" + resPrice);
 				 
 			
 			} catch (SQLException e) {
@@ -187,9 +200,14 @@ public class ReservationChooseRoom extends HttpServlet {
 			session.setAttribute("numRooms", numRooms);
 			session.setAttribute("duration", duration);
 			session.setAttribute("choices", choices);
-		
+		    String pattern="\u20ac###,###.##";
+		    DecimalFormat euroFormatter = new DecimalFormat(pattern);
+			session.setAttribute("reservationPrice", euroFormatter.format(resPrice));
+			session.setAttribute("resPrice", resPrice);
+			
+	        
 
-		
+
 			// Load reservationBookingView
 	        RequestDispatcher dispatcher = request.getServletContext()
 	        		
