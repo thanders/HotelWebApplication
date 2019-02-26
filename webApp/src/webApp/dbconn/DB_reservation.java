@@ -122,7 +122,7 @@ public class DB_reservation {
 	        }
 	   public static List<Reservation> queryAllMemberReservations(Connection conn,int GuestID) throws SQLException {
 			 
-	        String sql = "Select Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType from Reservationsa where a.GuestID = ?";
+	        String sql = "Select Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType from Reservations a where a.GuestID = ?";
 	 
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	        pstm.setInt(1, GuestID);
