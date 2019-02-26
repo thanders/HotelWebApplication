@@ -157,7 +157,7 @@ public class ReservationChooseRoom extends HttpServlet {
 
 			session.setAttribute("validationCount", "");
 
-			DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
+			//DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 
 			// Connect to database
 			Connection conn = SessionUtils.getStoredConnection(request);
@@ -180,11 +180,11 @@ public class ReservationChooseRoom extends HttpServlet {
 
 			// set object attributes to send to confirmation servlet
 			session.setAttribute("startObj", resStart);
-			session.setAttribute("endObj", resStart);
+			session.setAttribute("endObj", resEnd);
 
 			// set String/int attributes to send to web page
 			session.setAttribute("startDate", formatWeb.format(resStart));
-			session.setAttribute("endDate", formatWeb.format(resStart));
+			session.setAttribute("endDate", formatWeb.format(resEnd));
 			session.setAttribute("numRooms", numRooms);
 			session.setAttribute("duration", duration);
 			session.setAttribute("choices", choices);
