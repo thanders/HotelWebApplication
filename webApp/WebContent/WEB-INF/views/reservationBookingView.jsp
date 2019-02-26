@@ -25,6 +25,8 @@
      <br/> <br/>
      
      You are requesting to book:
+     
+     <br/><br/>
       
       <table border="1" cellspacing="0">
       	<tr>	
@@ -73,14 +75,14 @@
                <th>Credit card number</th>
                <td><input type="text" name="guestCardNumber" value="${Guest.guestCardNumber}" required/></td>
             </tr>
-            
-          	<tr>
-               <td colspan="2">                  
-                   <input type="submit" value="Book and Pay" />
-                   <input type="reset" value="Reset"/>
-               </td>
-            </tr>
+
          </table>
+         
+         <br/><br/>
+         
+         <input type="submit" value="Book and Pay" />
+         <input type="reset" value="Reset"/>
+         
       </form>
        
       <jsp:include page="_footer.jsp"></jsp:include>
