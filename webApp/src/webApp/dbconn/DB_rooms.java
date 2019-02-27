@@ -110,10 +110,10 @@ public class DB_rooms {
 		   // select * from booking WHERE begin <= startDate AND end > = endDate
 		   // __ SELECT * FROM sse.Reservations WHERE start >= '2019-02-21' AND end <= '2019-02-26';
 		   
-		   // SELECT m.room_ID FROM Reservations AS r JOIN booking_map AS m ON b.id = m.id WHERE b.begin <= startDate AND b.end >= endDate
+		   // SELECT m.room_ID FROM Reservations�AS r JOIN booking_map AS m ON b.id = m.id WHERE b.begin <= startDate AND b.end >= endDate
 		   // SELECT b.roomNumber FROM sse.Reservations AS a INNER JOIN sse.Reserved_Rooms AS b ON a.Reservation_Id=b.reservationID WHERE a.start >= '2019-02-21' AND a.end <= '2019-02-26';
 		   
-		   // SELECT * FROM room as r WHERE r.ID NOT IN (SELECT m.room_id FROM booking as b JOIN booking_map AS m ON b.id = m.id WHERE b.begin <= startDate AND b.end >= endDate)
+		   // SELECT * FROM room as r WHERE r.ID NOT�IN (SELECT m.room_id FROM�booking as b JOIN booking_map AS m ON b.id = m.id WHERE b.begin <= startDate AND�b.end >=�endDate)
 		   // SELECT r.Room_Number FROM sse.Room AS r WHERE r.Room_Number NOT IN(SELECT b.roomNumber FROM sse.Reservations AS a INNER JOIN sse.Reserved_Rooms AS b ON a.Reservation_Id=b.reservationID WHERE a.start >= '2019-02-21' AND a.end <= '2019-02-26');
 
 		   

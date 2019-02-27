@@ -39,7 +39,7 @@ public class ReservationChooseRoom extends HttpServlet {
             throws ServletException, IOException {
     	
     	
-    	// Connect to database
+    	//�Connect to database
         Connection conn = SessionUtils.getStoredConnection(request);
         
         

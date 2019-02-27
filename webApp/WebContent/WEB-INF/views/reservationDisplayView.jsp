@@ -19,6 +19,8 @@
 
 	<h2>Find my reservation</h2>
 
+	<p style="color: red;">${errorString}</p>
+
 	Enter your reservation number:
 	<br/>
 	<br/>

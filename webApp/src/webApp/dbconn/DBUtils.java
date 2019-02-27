@@ -55,16 +55,18 @@ public class DBUtils {
 	            String address = rs.getString("Address");
 	            String email = rs.getString("Email_Address");
 	            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
-	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));	            
+	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));	
+	            int CardNumber = Integer.parseInt(cardNumber);
+	            int PhoneNumber = Integer.parseInt(phoneNumber);
 	            Starwood member = new Starwood();
 	            member.setUserName(userName);
 	            member.setPassword(password);
 	            member.setName(name);
 	            member.setAddress(address);
-	            member.setCardNumber(cardNumber);
+	            member.setCardNumber(CardNumber);
 	            member.setSurename(surname);
 	            member.setEmail(email);
-	            member.setPhoneNumber(phoneNumber);          
+	            member.setPhoneNumber(PhoneNumber);          
 	            
 	            
 	            
@@ -113,17 +115,17 @@ public class DBUtils {
 	            String email = rs.getString("Email_Address");
 	            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
 	            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
-	            
+	            int CardNumber = Integer.parseInt(cardNumber);
+	            int PhoneNumber = Integer.parseInt(phoneNumber);
 	            Starwood member = new Starwood();
 	            member.setUserName(userName);
 	            member.setPassword(password);
-	            
 	            member.setName(name);
 	            member.setAddress(address);
-	            member.setCardNumber(cardNumber);
+	            member.setCardNumber(CardNumber);
 	            member.setSurename(surname);
 	            member.setEmail(email);
-	            member.setPhoneNumber(phoneNumber);    
+	            member.setPhoneNumber(PhoneNumber);    
 	            
 	           
 	            return member;
@@ -220,20 +222,29 @@ public class DBUtils {
 	    
 	    
 	    // insertMember
-	    public static void insertMember(Connection conn, Starwood member) throws SQLException {
+	    public static int insertMember(Connection conn, Starwood member) throws SQLException {
 	        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name, User_Password) values (?,?,?,?,?,?,?,?)";
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	        pstm.setString(1, member.getName());
 	        pstm.setString(2, member.getSurename());
 	        pstm.setString(3, member.getAddress());
 	        pstm.setString(4, member.getEmail());
-	        pstm.setString(5, member.getCardNumber());
-	        pstm.setString(6, member.getPhoneNumber());
+	        pstm.setInt(5, member.getCardNumber());
+	        pstm.setInt(6, member.getPhoneNumber());
 	        pstm.setString(7, member.getUserName());
 	        pstm.setString(8, member.getPassword());
 	        pstm.executeUpdate();
 	        System.out.println("insertMember SQL executed");
             System.out.println(": "+  member.getName()+ "  " + member.getSurename() + "  " + member.getAddress() + "  " + member.getPhoneNumber()+ "  " +  member.getCardNumber() + "  " +   member.getUserName()+ "  " +  member.getPassword());
+            int ID =0;
+	        ResultSet rs = pstm.getGeneratedKeys();
+
+	        // Assign auto generated Guest key to variable and create reservation
+	        if(rs != null && rs.next()){
+	        	ID = rs.getInt(1);
+	        }
+
+	        return ID;
 	    }
 	 
 	    public static Product findProduct(Connection conn, String code) throws SQLException {

@@ -87,7 +87,7 @@ public class DB_reservation {
 	 
 	        pstm.executeUpdate();
 
-	        System.out.println("insertReservation SQL executed");
+	        System.out.println("insertReservation SQL�executed");
 	        
 	    }
 	    
