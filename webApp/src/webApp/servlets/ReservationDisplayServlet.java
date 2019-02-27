@@ -43,9 +43,7 @@ public class ReservationDisplayServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-    	
-    	
-    	
+
         // Use get parameter to obtain posted data from form
         String resNumberInt = (String) request.getParameter("resNumber");
         
@@ -67,14 +65,9 @@ public class ReservationDisplayServlet extends HttpServlet {
             try {
 	        	Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
 	        	
-	        	System.out.println("WHYYY");
 	        	System.out.println("GID :  " + resObj.getGuestID());
-	        	
-	        	System.out.println("WHat what what??");
+
 	        	Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
-	        	
-	        	System.out.println("Hello!!"+ guestObj.toString());
-	        
 
 	        	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
 	        	
@@ -104,19 +97,9 @@ public class ReservationDisplayServlet extends HttpServlet {
          	  String errorString = e.getMessage();
          	  System.out.println(errorString);
             }
-            
-            
-            
-            
+    
         }
-        
-        System.out.println("WHO??");
-        
-        
-    	
 
     }
-        
 
- 
 }

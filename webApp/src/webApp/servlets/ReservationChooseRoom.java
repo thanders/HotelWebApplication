@@ -177,7 +177,7 @@ public class ReservationChooseRoom extends HttpServlet {
 			        	resPrice += price;
 			        	}
 			        
-			        System.out.println("PRICE???" + resPrice);
+			        resPrice = resPrice * duration; 
 				 
 			
 			} catch (SQLException e) {
