@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
+import webApp.beans.Room;
 import webApp.cookies.SessionUtils;
 import webApp.dbconn.DB_guests;
 import webApp.dbconn.DB_reservation;
+import webApp.dbconn.DB_rooms;
 
 @WebServlet(urlPatterns = { "/reservationDisplay" })
 public class ReservationDisplayServlet extends HttpServlet {
@@ -71,6 +74,10 @@ public class ReservationDisplayServlet extends HttpServlet {
 
 	        	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
 	        	
+	        	List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, resNumber);
+	            // room related set attributes
+	            request.setAttribute("bookedRooms", bookedRooms);
+	            	
 	        	// Set attributes for Reservations data
         		request.setAttribute("resNumber", resNumber);
         		request.setAttribute("start", formatWeb.format(resObj.getStart()));
