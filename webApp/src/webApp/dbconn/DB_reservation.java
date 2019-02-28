@@ -87,7 +87,7 @@ public class DB_reservation {
 	 
 	        pstm.executeUpdate();
 
-	        System.out.println("insertReservation SQL executed");
+	        System.out.println("insertReservation SQLï¿½executed");
 	        
 	    }
 	    
@@ -125,7 +125,7 @@ public class DB_reservation {
 	   
 	    // insert Reservation
 	    public static void updateReservationPrice(Connection conn, int reservationID, Double price) throws SQLException {
-	        String sql = "UPDATE Reservations SET price = ? where Reservation_ID = ?";
+	        String sql = "UPDATE Reservations SETÂ price = ? where Reservation_ID = ?";
 	        
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	        pstm.setDouble(1, price);
@@ -133,7 +133,7 @@ public class DB_reservation {
 
 	        pstm.executeUpdate();
 
-	        System.out.println("insertReservation PRICE SQL executed");
+	        System.out.println("insertReservation PRICE SQLÂ executed");
 	        
 	    }
 

@@ -30,7 +30,7 @@ public class ReservationDisplayServlet extends HttpServlet {
 		super();
 	}
 
-	@Override // doGet is automatically loaded upon going to the @WebServlet URL Pattern
+	@Override // doGet is automatically loaded upon going to the @WebServlet URLï¿½Pattern
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -65,12 +65,12 @@ public class ReservationDisplayServlet extends HttpServlet {
 			int resNumber = Integer.parseInt(resNumberInt);
 			System.out.println(resNumber);
 
-			// Connect to database
+			//ï¿½Connect to database
 			Connection conn = SessionUtils.getStoredConnection(request);
 
 			String cancel = (String) request.getParameter("cancel");
 
-			// If cancellation button clicked (POST message)
+			// If cancellation button clicked (POSTï¿½message)
 			if (cancel != null) {
 				request.setAttribute("cantCancel", "24 hours has passed, can't cancel");
 			}
@@ -81,7 +81,7 @@ public class ReservationDisplayServlet extends HttpServlet {
 					Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
 
 					if(resObj!=null) {
-						System.out.println("GID :  " + resObj.getGuestID());
+						System.out.println("GIDï¿½:  " + resObj.getGuestID());
 
 						Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
 						if(guestObj!=null) {

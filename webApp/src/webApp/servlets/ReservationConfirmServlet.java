@@ -78,7 +78,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 
 
-			System.out.println("Session Results: " + startObj + " " + endObj + " " + duration + " " + numRooms);
+			System.out.println("Session Results:ï¿½" + startObj + " " + endObj + " " + duration + " " + numRooms);
 
 			int guestCardNumber = Integer.parseInt(gCNumber);
 			int guestPhoneNumber = Integer.parseInt(gPNumber);
@@ -92,7 +92,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 			// If error string is null, try to insert the guest object into the Guest database table
 			try {
 
-				// Connect to database
+				//ï¿½Connect to database
 				Connection conn = SessionUtils.getStoredConnection(request);
 
 				// Insert the new Guest instance into the database
@@ -137,7 +137,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 				}
 				catch(Exception e){
-					System.out.println("SQL ERROR...........");
+					System.out.println("SQLï¿½ERROR...........");
 					System.out.println(e);
 					e.printStackTrace();
 				}

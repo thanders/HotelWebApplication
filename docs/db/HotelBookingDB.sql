@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `Credit_Card`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Credit_Card` (
   `Card_Number` int(11) NOT NULL,
-  `Card_Owner` varchar(128) COLLATE utf8_bin NOT NULL,
+  `MemberID` int(11) NOT NULL,
   PRIMARY KEY (`Card_Number`),
   UNIQUE KEY `Card_Number` (`Card_Number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -36,7 +36,7 @@ CREATE TABLE `Credit_Card` (
 
 LOCK TABLES `Credit_Card` WRITE;
 /*!40000 ALTER TABLE `Credit_Card` DISABLE KEYS */;
-INSERT INTO `Credit_Card` VALUES (1233232,'Abdul');
+INSERT INTO `Credit_Card` VALUES (223344,2345);
 /*!40000 ALTER TABLE `Credit_Card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +56,7 @@ CREATE TABLE `Guest` (
   `Phone_Number` int(15) NOT NULL,
   `Email_Address` varchar(128) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `Guest` (
 
 LOCK TABLES `Guest` WRITE;
 /*!40000 ALTER TABLE `Guest` DISABLE KEYS */;
-INSERT INTO `Guest` VALUES (72,'Tom','Test','UCD Library',202020,12345,'tom@ucd.ie'),(100,'Computer','Science','UCD Science',22334455,5553332,'CS@ucd.ie');
+INSERT INTO `Guest` VALUES (1,'Thomas Anderson','rrreeerrr','36 Crannagh Castle',202020,834206066,'thomas.anderson@ucdconnect.ie'),(2,'Tom','Test','UCD Castle',202020,333333,'tom@ucd.com');
 /*!40000 ALTER TABLE `Guest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,8 +86,9 @@ CREATE TABLE `Reservations` (
   `status` varchar(45) COLLATE utf8_bin NOT NULL,
   `bookingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `reservationType` varchar(45) COLLATE utf8_bin NOT NULL,
+  `price` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`Reservation_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +97,7 @@ CREATE TABLE `Reservations` (
 
 LOCK TABLES `Reservations` WRITE;
 /*!40000 ALTER TABLE `Reservations` DISABLE KEYS */;
-INSERT INTO `Reservations` VALUES (11,72,'2019-02-21','2019-02-27',NULL,2,'Paid','2019-02-21 21:34:40','Guest'),(12,73,'2019-02-21','2019-02-22',NULL,1,'Paid','2019-02-21 23:16:28','Guest');
+INSERT INTO `Reservations` VALUES (75,1,'2019-02-26','2019-02-26',NULL,2,'Paid','2019-02-26 17:45:02','Guest','420.0'),(76,2,'2019-02-26','2019-02-26',NULL,2,'Paid','2019-02-26 17:45:59','Guest','420.0');
 /*!40000 ALTER TABLE `Reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,7 +113,7 @@ CREATE TABLE `Reserved_Rooms` (
   `roomNumber` varchar(45) COLLATE utf8_bin NOT NULL,
   `reservationID` varchar(45) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +122,7 @@ CREATE TABLE `Reserved_Rooms` (
 
 LOCK TABLES `Reserved_Rooms` WRITE;
 /*!40000 ALTER TABLE `Reserved_Rooms` DISABLE KEYS */;
-INSERT INTO `Reserved_Rooms` VALUES (2,'8a','22'),(6,'2a','24'),(9,'2a','25');
+INSERT INTO `Reserved_Rooms` VALUES (1,'2a','75'),(2,'3a','75'),(3,'2a','76'),(4,'3a','76');
 /*!40000 ALTER TABLE `Reserved_Rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,6 +135,8 @@ DROP TABLE IF EXISTS `Room`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Room` (
   `Room_Number` varchar(10) COLLATE utf8_bin NOT NULL,
+  `capacity` int(11) DEFAULT NULL,
+  `price` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`Room_Number`),
   UNIQUE KEY `Room_Number` (`Room_Number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -145,7 +148,7 @@ CREATE TABLE `Room` (
 
 LOCK TABLES `Room` WRITE;
 /*!40000 ALTER TABLE `Room` DISABLE KEYS */;
-INSERT INTO `Room` VALUES ('10b'),('11b'),('13b'),('14b'),('15b'),('16b'),('17b'),('18b'),('19b'),('1a'),('20c'),('23b'),('2a'),('3a'),('4a'),('5a'),('6a'),('7a'),('8a'),('9a');
+INSERT INTO `Room` VALUES ('10b',2,'120'),('11b',2,'120'),('13b',2,'120'),('14b',2,'120'),('15b',2,'120'),('16b',2,'120'),('17b',2,'120'),('18b',4,'120'),('19b',4,'120'),('1a',4,'120'),('20c',4,'120'),('23b',4,'120'),('2a',4,'120'),('3a',4,'300'),('4a',10,'300'),('5a',10,'300'),('6a',10,'300'),('7a',10,'10000'),('8a',2,'10000'),('9a',2,'300');
 /*!40000 ALTER TABLE `Room` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-24 21:18:36
+-- Dump completed on 2019-02-26 17:47:08
