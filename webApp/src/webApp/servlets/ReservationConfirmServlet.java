@@ -63,8 +63,8 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 
 
-		if(SessionUtils.getLoginedUser(request.getSession())==null)
-		{
+		// if(SessionUtils.getLoginedUser(request.getSession())==null)
+		//{
 			// Use get parameter to obtain POSTED data from form
 			String guestName = (String) request.getParameter("guestName");
 			String guestSurename = (String) request.getParameter("guestSurename");
@@ -73,12 +73,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 			String gCNumber = (String) request.getParameter("guestCardNumber");
 			String gPNumber = (String) request.getParameter("guestPhoneNumber");
 
-
-
-
-
-
-			System.out.println("Session Results:�" + startObj + " " + endObj + " " + duration + " " + numRooms);
+			System.out.println("Session Results:" + startObj + " " + endObj + " " + duration + " " + numRooms);
 
 			int guestCardNumber = Integer.parseInt(gCNumber);
 			int guestPhoneNumber = Integer.parseInt(gPNumber);
@@ -108,6 +103,8 @@ public class ReservationConfirmServlet extends HttpServlet {
 				Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
 
 				int reservationNumber = resObj.getReservationId();
+				
+				System.out.println("THIS IS THE RESERVATION NUMBER:  " +reservationNumber);
 
 				String price = resObj.getPriceFormatted();
 
@@ -177,10 +174,10 @@ public class ReservationConfirmServlet extends HttpServlet {
 				e.printStackTrace();
 				errorString = e.getMessage();
 			}
-		}
+		//}
 
 		//This part is for Starwood Members
-		else{
+		/*  else{
 
 
 			// Use get parameter to obtain POSTED data from form
@@ -281,6 +278,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 			}
 
 		}
+		*/
 	}
 
 
