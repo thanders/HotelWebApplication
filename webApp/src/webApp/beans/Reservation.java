@@ -1,6 +1,7 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 public class Reservation implements Serializable {
@@ -16,6 +17,10 @@ public class Reservation implements Serializable {
 	private LocalDate bookingDate;
 	private String status;
 	private String reservationType;
+	private Double price;
+    String pattern="\u20ac###,###.##";
+    DecimalFormat euroFormatter = new DecimalFormat(pattern);
+	private String priceFormatted;
 	
 	
 	// empty constructor
@@ -113,6 +118,23 @@ public class Reservation implements Serializable {
 
 	public void setReservationType(String reservationType) {
 		this.reservationType = reservationType;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+		this.setPriceFormatted(euroFormatter.format(price));
+	}
+
+	public String getPriceFormatted() {
+		return priceFormatted;
+	}
+
+	public void setPriceFormatted(String priceFormatted) {
+		this.priceFormatted = priceFormatted;
 	}
 	
 

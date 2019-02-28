@@ -65,5 +65,25 @@ public class DB_members{
 		        }
 		        return null;
 		    }
+		    
+		    //Method returns -1 if it doesn't find member with given username
+		    public static int getStarwoodMemberId(Connection conn, String userName) throws SQLException {
+		    	
+		    	int id = -1;
+		    	
+		    	String sql = "Select Id  from Starwood a "//
+		                + " where a.User_name = ? ";
+		 
+		        PreparedStatement pstm = conn.prepareStatement(sql);
+		        pstm.setString(1, userName);
+		 
+		        ResultSet rs = pstm.executeQuery();
+		        
+		        if (rs.next()) {
+		        	id  = rs.getInt("Id");
+		        }
+		    	
+		    	return id;
+		    }
 
 }

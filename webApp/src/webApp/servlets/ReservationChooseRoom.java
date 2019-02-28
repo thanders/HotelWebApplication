@@ -3,6 +3,7 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -38,7 +39,7 @@ public class ReservationChooseRoom extends HttpServlet {
             throws ServletException, IOException {
     	
     	
-    	// Connect to database
+    	//�Connect to database
         Connection conn = SessionUtils.getStoredConnection(request);
         
         
@@ -79,9 +80,7 @@ public class ReservationChooseRoom extends HttpServlet {
     	// Find number of total rooms
     	try {
     			
-    		System.out.println("WHO?? ");
-			int totalRooms = DB_rooms.countTotalRooms(conn);
-			System.out.println("Rooms:   "+ totalRooms);		 
+			int totalRooms = DB_rooms.countTotalRooms(conn);	 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,9 +139,14 @@ public class ReservationChooseRoom extends HttpServlet {
 	    String[] choices = null;
 	    choices = request.getParameterValues("choices");
 	    
+	  // Connect to database
+        Connection conn = SessionUtils.getStoredConnection(request);
+	    
+        double resPrice = 0;
+       
+	    
 	    // Room choice form validation
 	    if(choices.length!= numRooms) {
-	    	System.out.println("dingus");
 	    	session.setAttribute("validationCount", "Hey, that's not the number of rooms you requested! Try again.");
 
 	    	
@@ -159,13 +163,21 @@ public class ReservationChooseRoom extends HttpServlet {
 
 			DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 	
-	    	// Connect to database
-	        Connection conn = SessionUtils.getStoredConnection(request);
-	        
+
 			// Retrieve the booked rooms from the database
 			try {
 				 int totalRooms = DB_rooms.countTotalRooms(conn);
 				 System.out.println("Rooms:   "+ totalRooms);
+				 
+				 // get roomnumber from choices then run query to get room number's price
+				 
+			        for (int i=0; i<choices.length; i++) {
+			        	String choice=choices[i];
+			        	Double price = DB_rooms.selectRoomPrice(conn, choice);
+			        	resPrice += price;
+			        	}
+			        
+			        resPrice = resPrice * duration; 
 				 
 			
 			} catch (SQLException e) {
@@ -180,35 +192,39 @@ public class ReservationChooseRoom extends HttpServlet {
 			
 			// set object attributes to send to confirmation servlet
 			session.setAttribute("startObj", resStart);
-			session.setAttribute("endObj", resStart);
+			session.setAttribute("endObj", resEnd);
 			
 			// set String/int attributes to send to web page
 			session.setAttribute("startDate", formatWeb.format(resStart));
-			session.setAttribute("endDate", formatWeb.format(resStart));
+			session.setAttribute("endDate", formatWeb.format(resEnd));
 			session.setAttribute("numRooms", numRooms);
 			session.setAttribute("duration", duration);
 			session.setAttribute("choices", choices);
-		
-
-		if(SessionUtils.getLoginedUser(request.getSession())==null)
-		{
-		    RequestDispatcher dispatcher = request.getServletContext()
-	        		
-	                .getRequestDispatcher("/WEB-INF/views/reservationTwoView.jsp");
-	        dispatcher.forward(request, response);
-	        
+		    String pattern="\u20ac###,###.##";
+		    DecimalFormat euroFormatter = new DecimalFormat(pattern);
+			session.setAttribute("reservationPrice", euroFormatter.format(resPrice));
+			session.setAttribute("resPrice", resPrice);
 			
-		}
-		else
-		{
-		    RequestDispatcher dispatcher = request.getServletContext()
+	        
+
+
+			// Load reservationBookingView
+	        RequestDispatcher dispatcher = request.getServletContext()
 	        		
-	                .getRequestDispatcher("/WEB-INF/views/starwoodChooseRoom.jsp");
+	                .getRequestDispatcher("/WEB-INF/views/reservationBookingView.jsp");
 	        dispatcher.forward(request, response);
+<<<<<<< HEAD
 	        
 		}
 		
     
 	    }
     }
+=======
+	    
+	    }
+	    
+
+	}
+>>>>>>> master
 }

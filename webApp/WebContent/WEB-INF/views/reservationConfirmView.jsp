@@ -30,7 +30,6 @@
     		<th>Guest Surname</th>
     		<th>Number of rooms</th>
     		<th>Room numbers</th>
-    		<th>Duration</th>
     		<th>Price</th>
     	</tr>
     	<tr>
@@ -38,8 +37,7 @@
     		<td>${guestSurname}</td>
     		<td>${numberRooms}</td>
     		<td><c:forEach items="${bookedRooms}" var="room" >${room.getRoomNumber()}  </c:forEach></td>
-    		<td>Placeholder</td>
-    		<td>Placeholder</td>
+    		<td>${reservationPrice}</td>
     	</tr>
     </table>
     
