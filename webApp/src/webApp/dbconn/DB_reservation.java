@@ -136,5 +136,19 @@ public class DB_reservation {
 	        System.out.println("insertReservation PRICE SQL executed");
 	        
 	    }
+	    
+	    // insert Reservation
+	    public static void updateReservationStatus(Connection conn, int reservationID, String status) throws SQLException {
+	        String sql = "UPDATE Reservations SET status = ? where status = ?";
+	        
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        pstm.setString(1, status);
+	        pstm.setInt(2, reservationID);
+
+	        pstm.executeUpdate();
+
+	        System.out.println("insertReservation Status SQL executed");
+	        
+	    }
 
 }
