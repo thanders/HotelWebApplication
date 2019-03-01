@@ -93,7 +93,6 @@ public class ReservationChooseRoom extends HttpServlet {
 		List<Reservation> allReservations = null;
 		List<Room> availableRooms = null;
 		int numberAvailableRooms = 0;
-		
 		try {
 			allReservations = DB_reservation.queryAllReservations(conn);
 			 // Retrieve a list of rooms
@@ -108,8 +107,23 @@ public class ReservationChooseRoom extends HttpServlet {
 		if (allReservations != null & availableRooms != null) {
 		 System.out.println("YES!"+ allReservations.toString());
 		 // set attribute for Room objects so they are accessible by the ReservationChooseRoom.jsp page
-		 session.setAttribute("availableRooms", availableRooms);
-		 session.setAttribute("numberAvailableRooms", numberAvailableRooms);
+		 if(SessionUtils.getLoginedUser(session)==null)
+		 {
+			 session.setAttribute("availableRooms", availableRooms);
+			 session.setAttribute("numberAvailableRooms", numberAvailableRooms);
+		 }
+		 else
+		 {
+			 for(Room room : availableRooms)
+			 {
+				 room.setPrice(room.getReducedPrice());
+			 }
+			 
+			 session.setAttribute("availableRooms", availableRooms);
+			 session.setAttribute("numberAvailableRooms", numberAvailableRooms);
+			 
+		 }
+
 		 
 		
 		}
@@ -202,8 +216,20 @@ public class ReservationChooseRoom extends HttpServlet {
 			session.setAttribute("choices", choices);
 		    String pattern="\u20ac###,###.##";
 		    DecimalFormat euroFormatter = new DecimalFormat(pattern);
-			session.setAttribute("reservationPrice", euroFormatter.format(resPrice));
-			session.setAttribute("resPrice", resPrice);
+		    if(SessionUtils.getLoginedUser(session)==(null))
+		    {
+				session.setAttribute("reservationPrice", euroFormatter.format(resPrice));
+				session.setAttribute("resPrice", resPrice);
+		    	
+		    }
+		    else
+		    {
+		    	double reducedPrice = resPrice - (resPrice *0.1);
+				session.setAttribute("reservationPrice", euroFormatter.format(reducedPrice));
+				session.setAttribute("resPrice", reducedPrice);
+		    	
+		    }
+		    
 			
 	        
 
@@ -213,9 +239,15 @@ public class ReservationChooseRoom extends HttpServlet {
 	        		
 	                .getRequestDispatcher("/WEB-INF/views/reservationBookingView.jsp");
 	        dispatcher.forward(request, response);
-	    
+	        
+		}
+		
+    
 	    }
+    
+	    
+	    
 	    
 
-	}
+	
 }

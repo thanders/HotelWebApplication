@@ -17,7 +17,7 @@
 	<h2>Reservation (1/3)</h2>
 	
 
-	Select the dates you would like to book:
+	Select the dates you would like to view and specify the number of rooms:
 	<br/>
 	<br/>
 
@@ -26,7 +26,7 @@
 		<br /> <br />
 		Until: <input type="date" name="resEnd" required>
 		<br /> <br />
-		Number of Guests: <input type="number" name="numRooms" min="1" required> 
+		Number of rooms: <input type="number" name="numRooms" min="1" required> 
 		<br /> <br />
 
 		<input type="submit"> <input type="reset" value="Reset">

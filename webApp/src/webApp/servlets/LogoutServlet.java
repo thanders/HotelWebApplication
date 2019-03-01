@@ -36,7 +36,11 @@ public class LogoutServlet extends HttpServlet{
      // Logged in
         if (loginedUser != null) {
             // Redirect to home page.
-        	SessionUtils.removeLoginedUser(session);
+        	//SessionUtils.removeLoginedUser(session);
+        	
+        	// log the user out
+        	session.invalidate(); 
+        	
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }

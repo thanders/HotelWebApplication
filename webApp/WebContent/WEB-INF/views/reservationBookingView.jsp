@@ -24,7 +24,7 @@
       
      <br/> <br/>
      
-     You are requesting to book:
+     Below is an overview of this potential booking:
      
      <br/><br/>
       
@@ -43,7 +43,7 @@
      </table>
       
 	<br/> <br/>
-    Enter your personal details:
+    If you would like to pay for this booking, enter your personal details:
     <br/> <br/>
       
       <form method="POST" action="${pageContext.request.contextPath}/reservationConfirm">

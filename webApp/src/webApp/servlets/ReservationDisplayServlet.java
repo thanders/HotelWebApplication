@@ -1,4 +1,3 @@
-
 package webApp.servlets;
 
 import java.io.IOException;
@@ -24,144 +23,101 @@ import webApp.dbconn.DB_rooms;
 
 @WebServlet(urlPatterns = { "/reservationDisplay" })
 public class ReservationDisplayServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+ 
+    public ReservationDisplayServlet() {
+        super();
+    }
+ 
+    @Override // doGet is automatically loaded upon going to the @WebServlet URL Pattern
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	
+    	
+    	// Load the reservationView page
+    	RequestDispatcher dispatcher = request.getServletContext()
+        .getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
+        dispatcher.forward(request, response);
 
-	public ReservationDisplayServlet() {
-		super();
-	}
+    	
+    }
+ 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	
 
-	@Override // doGet is automatically loaded upon going to the @WebServlet URL�Pattern
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+        // Use get parameter to obtain posted data from form
+        String resNumberInt = (String) request.getParameter("resNumber");
+        
+        if (resNumberInt != null) {
+        	int resNumber = Integer.parseInt(resNumberInt);
+        	System.out.println(resNumber);
+        	
+        	// Connect to database
+            Connection conn = SessionUtils.getStoredConnection(request);
+            
+            String cancel = (String) request.getParameter("cancel");
+            
+            // If cancellation button clicked (POST message)
+            if (cancel != null) {
+            	request.setAttribute("cantCancel", "24 hours has passed, can't cancel");
+            }
+        	
+        	// Create an object for the new Reservation
+            try {
+	        	Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
+	        	
+	        	System.out.println("GID :  " + resObj.getGuestID());
 
+	        	Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
 
-		// Load the reservationView page
-		if(SessionUtils.getLoginedUser(request.getSession())!=null)
-		{
+	        	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
+	        	
+	        	List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, resNumber);
+	            // room related set attributes
+	            request.setAttribute("bookedRooms", bookedRooms);
+	            	
+	        	// Set attributes for Reservations data
+        		request.setAttribute("resNumber", resNumber);
+        		request.setAttribute("start", formatWeb.format(resObj.getStart()));
+        		request.setAttribute("end", formatWeb.format(resObj.getEnd()));
+        		request.setAttribute("numberRooms", resObj.getNumberRooms());
+            	request.setAttribute("status", resObj.getStatus());
+            	request.setAttribute("bookingDate", resObj.getBookingDate());
+            	request.setAttribute("reservationType", resObj.getReservationType());
+            	 if(SessionUtils.getLoginedUser(request.getSession()).equals(null))
+     		    {
+				request.setAttribute("reservationPrice", resObj.getPriceFormatted());
 
-			RequestDispatcher dispatcher = request.getServletContext()
-					.getRequestDispatcher("/WEB-INF/views/starwoodDisplayView.jsp");
-			dispatcher.forward(request, response);
-		}
-		else {
+     		    }
+            	 else
+            	 {
+            		double resPrice = Double.parseDouble( resObj.getPriceFormatted());
+     		    	double reducedPrice = resPrice - (resPrice *0.1);
+     		    	
+     		    	String price = Double.toString(reducedPrice);
+     		    	
+    				request.setAttribute("reservationPrice", price);
+            	 }
+        		// Set attributes for Guest data
+        		request.setAttribute("guestName", guestObj.getGuestName());
+        		request.setAttribute("guestSurname", guestObj.getGuestSurename());
+        		
+        		
+    	        RequestDispatcher dispatcher = request.getServletContext()
+    	    	.getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
+    	        dispatcher.forward(request, response);
+            }
+            
+            catch (SQLException e){
+         	   e.printStackTrace();
+         	  String errorString = e.getMessage();
+         	  System.out.println(errorString);
+            }
+    
+        }
 
-			RequestDispatcher dispatcher = request.getServletContext()
-					.getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
-			dispatcher.forward(request, response);
-		}
-
-
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-
-		// Use get parameter to obtain posted data from form
-		String resNumberInt = (String) request.getParameter("resNumber");
-
-		if (resNumberInt != null) {
-			int resNumber = Integer.parseInt(resNumberInt);
-			System.out.println(resNumber);
-
-			//�Connect to database
-			Connection conn = SessionUtils.getStoredConnection(request);
-
-			String cancel = (String) request.getParameter("cancel");
-
-			// If cancellation button clicked (POST�message)
-			if (cancel != null) {
-				request.setAttribute("cantCancel", "24 hours has passed, can't cancel");
-			}
-			if(SessionUtils.getLoginedUser(request.getSession())==null)
-			{
-				// Create an object for the new Reservation
-				try {
-					Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
-
-					if(resObj!=null) {
-						System.out.println("GID�:  " + resObj.getGuestID());
-
-						Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
-						if(guestObj!=null) {
-							DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
-
-							List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, resNumber);
-							// room related set attributes
-							request.setAttribute("bookedRooms", bookedRooms);
-
-							// Set attributes for Reservations data
-							request.setAttribute("resNumber", resNumber);
-							request.setAttribute("start", formatWeb.format(resObj.getStart()));
-							request.setAttribute("end", formatWeb.format(resObj.getEnd()));
-							request.setAttribute("numberRooms", resObj.getNumberRooms());
-							request.setAttribute("status", resObj.getStatus());
-							request.setAttribute("bookingDate", resObj.getBookingDate());
-							request.setAttribute("reservationType", resObj.getReservationType());
-							// request.setAttribute("bookingDate", formatWeb.format(resObj.getBookingDate()));
-
-
-							// Set attributes for Guest data
-							request.setAttribute("guestName", guestObj.getGuestName());
-							request.setAttribute("guestSurname", guestObj.getGuestSurename());
-
-
-							RequestDispatcher dispatcher = request.getServletContext()
-									.getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
-							dispatcher.forward(request, response);
-						}
-						else {
-							request.setAttribute("errorString", "Guest with that reservation ID doesn't exist");
-							// Forward to /WEB-INF/views/login.jsp
-							RequestDispatcher dispatcher //
-							= request.getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
-
-							dispatcher.forward(request, response);
-						}
-					}
-					else {
-						request.setAttribute("errorString", "Reservation with entered ID doesn't exist");
-						// Forward to /WEB-INF/views/login.jsp
-						RequestDispatcher dispatcher //
-						= request.getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
-
-						dispatcher.forward(request, response);
-					}
-				}
-
-				catch (SQLException e){
-					e.printStackTrace();
-					String errorString = e.getMessage();
-					System.out.println(errorString);
-				}
-			}
-			//		else
-			//		{
-			//			
-			//			//TODO: show list of reservations, let them click on reseration and link to resrvation confirmation
-			//			//for that reservation
-			//			try {
-			//				List<Reservation> resObj = DB_reservation.queryAllMemberReservations(conn,(SessionUtils.getLoginedUser(request.getSession()).getId()));
-			//				//				resObj.get(0).getBookingDate()
-			//				Starwood memberObj = DB_members.findStarwoodMember(conn, resObj.get(0).getGuestID());
-			//				request.setAttribute("guestName", memberObj.getName());
-			//				request.setAttribute("guestSurname",  memberObj.getSurename());        		
-			//				RequestDispatcher dispatcher = request.getServletContext()
-			//						.getRequestDispatcher("/WEB-INF/views/starwoodDisplayView.jsp");
-			//				dispatcher.forward(request, response);
-			//
-			//			} catch (SQLException e) {
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();
-			//			}
-			//
-			//
-			//
-			//		}
-
-		}
-
-	}
+    }
 
 }
