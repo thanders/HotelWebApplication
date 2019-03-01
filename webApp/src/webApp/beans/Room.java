@@ -15,7 +15,11 @@ public class Room implements Serializable{
 	private int capacity;
 	private int reservationNumber;
 	private double price;
-    String pattern="\u20ac###,###.##";
+    public double getReducedPrice() {
+		return price-(price*0.1);
+	}
+
+	String pattern="\u20ac###,###.##";
     DecimalFormat euroFormatter = new DecimalFormat(pattern);
 	private String priceFormatted;
 	
@@ -58,6 +62,7 @@ public class Room implements Serializable{
 	public void setPriceFormatted(String priceFormatted) {
 		this.priceFormatted = priceFormatted;
 	}
+	
 
 	
 }
