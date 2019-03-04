@@ -81,9 +81,20 @@ public class ReservationDisplayServlet extends HttpServlet {
             	request.setAttribute("status", resObj.getStatus());
             	request.setAttribute("bookingDate", resObj.getBookingDate());
             	request.setAttribute("reservationType", resObj.getReservationType());
+            	 if(SessionUtils.getLoginedUser(request.getSession()).equals(null))
+     		    {
 				request.setAttribute("reservationPrice", resObj.getPriceFormatted());
 
-        		
+     		    }
+            	 else
+            	 {
+            		double resPrice = Double.parseDouble( resObj.getPriceFormatted());
+     		    	double reducedPrice = resPrice - (resPrice *0.1);
+     		    	
+     		    	String price = Double.toString(reducedPrice);
+     		    	
+    				request.setAttribute("reservationPrice", price);
+            	 }
         		// Set attributes for Guest data
         		request.setAttribute("guestName", guestObj.getGuestName());
         		request.setAttribute("guestSurname", guestObj.getGuestSurename());
