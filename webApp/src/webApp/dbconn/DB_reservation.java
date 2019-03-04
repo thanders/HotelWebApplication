@@ -93,7 +93,7 @@ public class DB_reservation {
 		        if (rs.next()) {
 		            int Reservation_Id = rs.getInt("Reservation_Id");
 			        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();			       
-		            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
+			        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
 		            reservation.setPrice(price);
 
 		            return reservation;
@@ -122,7 +122,7 @@ public class DB_reservation {
 			        String status = rs.getString("status");
 			        //String reservationType = rs.getString("reservationType");
 			        Double price = rs.getDouble("price");
-		            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
+			        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
 		            reservation.setPrice(price);
 
 		            reservations.add(reservation);
