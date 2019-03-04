@@ -50,22 +50,26 @@ public class ReservationDisplayServlet extends HttpServlet {
         // Use get parameter to obtain posted data from form
         String resNumberInt = (String) request.getParameter("resNumber");
         
+        int resNumber = 0;
+        Reservation resObj = null;
+        Guest guestObj = null;
+        
         if (resNumberInt != null) {
-        	int resNumber = Integer.parseInt(resNumberInt);
-        	System.out.println(resNumber);
+        	resNumber = Integer.parseInt(resNumberInt);
+        	System.out.println(resNumber);}
         	
         	// Connect to database
             Connection conn = SessionUtils.getStoredConnection(request);
             
         	// Create an object for the new Reservation
             try {
-	        	Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
+	        	resObj = DB_reservation.queryReservationRID(conn, resNumber);
 	        	
 	        	System.out.println("GID :  " + resObj.getGuestID());
 	        	System.out.println("PRICE TEST :  " + resObj.getPrice());
 	        	System.out.println("PRICE String :  " + resObj.getPriceFormatted());
 
-	        	Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
+	        	guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
 
 	        	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
 	        	
@@ -81,13 +85,19 @@ public class ReservationDisplayServlet extends HttpServlet {
             	request.setAttribute("status", resObj.getStatus());
             	request.setAttribute("bookingDate", resObj.getBookingDate());
             	request.setAttribute("reservationType", resObj.getReservationType());
-            	 if(SessionUtils.getLoginedUser(request.getSession()).equals(null))
-     		    {
+            }
+    
+		    catch (SQLException e){
+		 	   e.printStackTrace();
+		 	  String errorString = e.getMessage();
+		 	  System.out.println(errorString);
+		    }
+            	
+            /* 
+            if(SessionUtils.getLoginedUser(request.getSession()).equals(null)){
 				request.setAttribute("reservationPrice", resObj.getPriceFormatted());
-
-     		    }
-            	 else
-            	 {
+            }
+            else{
             		double resPrice = Double.parseDouble( resObj.getPriceFormatted());
      		    	double reducedPrice = resPrice - (resPrice *0.1);
      		    	
@@ -95,6 +105,7 @@ public class ReservationDisplayServlet extends HttpServlet {
      		    	
     				request.setAttribute("reservationPrice", price);
             	 }
+            	 */
         		// Set attributes for Guest data
         		request.setAttribute("guestName", guestObj.getGuestName());
         		request.setAttribute("guestSurname", guestObj.getGuestSurename());
@@ -103,16 +114,9 @@ public class ReservationDisplayServlet extends HttpServlet {
     	        RequestDispatcher dispatcher = request.getServletContext()
     	    	.getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
     	        dispatcher.forward(request, response);
-            }
-            
-            catch (SQLException e){
-         	   e.printStackTrace();
-         	  String errorString = e.getMessage();
-         	  System.out.println(errorString);
-            }
+
     
         }
 
     }
 
-}
