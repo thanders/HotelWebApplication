@@ -14,7 +14,7 @@ public class DB_reservation {
 
 	    // Query ReservationRID
 	    public static Reservation queryReservationRID(Connection conn, int Reservation_Id) throws SQLException {
-	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status, a.reservationType from Reservations a WHERE a.Reservation_Id = ? ";
+	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a WHERE a.Reservation_Id = ? ";
 	 
 	        // Connect to the database and execute the Select query
 	        PreparedStatement pstm = conn.prepareStatement(sql);
@@ -30,10 +30,11 @@ public class DB_reservation {
 		        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
 		        String status = rs.getString("status");
 		        String reservationType = rs.getString("reservationType");
+		        double price= rs.getDouble("price");
 		        
-		        System.out.println("Reservation: "+ Reservation_Id +" " + GuestID +" " + start +" " + end +" " + numberRooms +" " + bookingDate + " " + status);
+		        System.out.println("Reservation: "+ Reservation_Id +" " + GuestID +" " + start +" " + end +" " + numberRooms +" " + bookingDate + " " + status + " " +price);
 		        // Create an instance of the Reservation class
-		        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
+		        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
 		        
 		        return reservation;
 	        }
@@ -61,7 +62,7 @@ public class DB_reservation {
 			        String status = rs.getString("status");
 			        String reservationType = rs.getString("reservationType");
 			        Double price = rs.getDouble("price");
-		            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
+		            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
 		            reservation.setPrice(price);
 
 		            return reservation;
@@ -95,7 +96,7 @@ public class DB_reservation {
     	// queryReservations
 	   public static List<Reservation> queryAllReservations(Connection conn) throws SQLException {
 	 
-	        String sql = "Select Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType from Reservations";
+	        String sql = "Select Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price from Reservations";
 	 
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 
@@ -112,8 +113,9 @@ public class DB_reservation {
 		        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
 		        String status = rs.getString("status");
 		        String reservationType = rs.getString("reservationType");
+		        Double price = rs.getDouble("price");
 		        
-	            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType);
+	            Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
 	            
 	            list.add(reservation);
 
@@ -138,12 +140,11 @@ public class DB_reservation {
 	    }
 	    
 	    // insert Reservation
-	    public static void updateReservationStatus(Connection conn, int reservationID, String status) throws SQLException {
-	        String sql = "UPDATE Reservations SET status = ? where status = ?";
+	    public static void updateReservationStatus(Connection conn, int reservationID) throws SQLException {
+	        String sql = "UPDATE Reservations SET status = 'cancelled' where Reservation_Id = ?";
 	        
 	        PreparedStatement pstm = conn.prepareStatement(sql);
-	        pstm.setString(1, status);
-	        pstm.setInt(2, reservationID);
+	        pstm.setInt(1, reservationID);
 
 	        pstm.executeUpdate();
 

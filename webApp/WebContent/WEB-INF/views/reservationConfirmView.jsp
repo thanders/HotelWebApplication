@@ -22,7 +22,6 @@
  	<br/> <br/>
  	The confirmation details are below:
  	<br/> <br/>
- 	<p style="color: red;">${cantCancel}</p>
     
     <table border="1" cellspacing="0" >
     	<tr>
@@ -58,10 +57,12 @@
     
     <br/> <br/>
     
-    <form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
-    <input type="hidden" name="cancel" value="Cancel"/>
+    <p style="color: blue;">${CancelMSG}</p>
+    
+    <form method="POST" action="${pageContext.request.contextPath}/reservationCancel">
+    <input type="hidden" name="cancel" value="cancel"/>
     <input type="hidden" name="resNumber" value="${resNumber}"/>
-    <input type="submit" value="Cancel"/>
+    <input type="submit" name="submit" value="Cancel reservation"/>
     </form>
  
     <jsp:include page="_footer.jsp"></jsp:include>

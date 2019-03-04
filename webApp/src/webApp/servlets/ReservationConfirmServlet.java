@@ -134,7 +134,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 				}
 				catch(Exception e){
-					System.out.println("SQL�ERROR...........");
+					System.out.println("SQL ERROR...........");
 					System.out.println(e);
 					e.printStackTrace();
 				}

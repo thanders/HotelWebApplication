@@ -21,11 +21,11 @@ import webApp.dbconn.DB_guests;
 import webApp.dbconn.DB_reservation;
 import webApp.dbconn.DB_rooms;
 
-@WebServlet(urlPatterns = { "/reservationDisplay" })
-public class ReservationDisplayServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/reservationLoad" })
+public class ReservationLoad extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
-    public ReservationDisplayServlet() {
+    public ReservationLoad() {
         super();
     }
  
@@ -34,19 +34,6 @@ public class ReservationDisplayServlet extends HttpServlet {
             throws ServletException, IOException {
     	
     	
-    	// Load the reservationView page
-    	RequestDispatcher dispatcher = request.getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
-        dispatcher.forward(request, response);
-
-    	
-    }
- 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    	
-
         // Use get parameter to obtain posted data from form
         String resNumberInt = (String) request.getParameter("resNumber");
         
@@ -57,13 +44,14 @@ public class ReservationDisplayServlet extends HttpServlet {
         	// Connect to database
             Connection conn = SessionUtils.getStoredConnection(request);
             
+            
+            
+        	
         	// Create an object for the new Reservation
             try {
 	        	Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
 	        	
 	        	System.out.println("GID :  " + resObj.getGuestID());
-	        	System.out.println("PRICE TEST :  " + resObj.getPrice());
-	        	System.out.println("PRICE String :  " + resObj.getPriceFormatted());
 
 	        	Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
 
@@ -92,15 +80,26 @@ public class ReservationDisplayServlet extends HttpServlet {
     	        RequestDispatcher dispatcher = request.getServletContext()
     	    	.getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
     	        dispatcher.forward(request, response);
+    	        
+            	}
+                catch (SQLException e){
+              	   e.printStackTrace();
+              	  String errorString = e.getMessage();
+              	  System.out.println(errorString);
+                 }
             }
-            
-            catch (SQLException e){
-         	   e.printStackTrace();
-         	  String errorString = e.getMessage();
-         	  System.out.println(errorString);
-            }
-    
-        }
+
+    	
+    }
+ 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	
+
+
+          
+
 
     }
 
