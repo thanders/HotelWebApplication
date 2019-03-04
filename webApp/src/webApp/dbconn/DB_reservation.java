@@ -14,7 +14,8 @@ public class DB_reservation {
 
 	    // Query ReservationRID
 	    public static Reservation queryReservationRID(Connection conn, int Reservation_Id) throws SQLException {
-	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a WHERE a.Reservation_Id = ? ";
+	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a WHERE a.Reservation_Id = ? "
+	        		+ "and a.reservationType = 'Guest' ";
 	 
 	        // Connect to the database and execute the Select query
 	        PreparedStatement pstm = conn.prepareStatement(sql);
