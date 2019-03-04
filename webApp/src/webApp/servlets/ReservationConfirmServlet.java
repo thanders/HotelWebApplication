@@ -63,8 +63,8 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 
 
-		// if(SessionUtils.getLoginedUser(request.getSession())==null)
-		//{
+		if(SessionUtils.getLoginedUser(request.getSession())==null)
+		{
 			// Use get parameter to obtain POSTED data from form
 			String guestName = (String) request.getParameter("guestName");
 			String guestSurename = (String) request.getParameter("guestSurename");
@@ -92,7 +92,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 				// Insert the new Guest instance into the database
 				int GuestID = DBUtils.insertGuest(conn, guest);
-				String status = "Paid";
+				String status = "Active";
 				String reservationType = "Guest";
 
 
@@ -103,7 +103,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 				Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
 
 				int reservationNumber = resObj.getReservationId();
-				
+
 				System.out.println("THIS IS THE RESERVATION NUMBER:  " +reservationNumber);
 
 				String price = resObj.getPriceFormatted();
@@ -134,7 +134,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 				}
 				catch(Exception e){
-					System.out.println("SQL�ERROR...........");
+					System.out.println("SQL ERROR...........");
 					System.out.println(e);
 					e.printStackTrace();
 				}
@@ -174,12 +174,12 @@ public class ReservationConfirmServlet extends HttpServlet {
 				e.printStackTrace();
 				errorString = e.getMessage();
 			}
-		//}
+		}
 
 		//This part is for Starwood Members
-		/*  else{
+		else{
 
-
+			System.out.println("all of these should be memmber stuff");
 			// Use get parameter to obtain POSTED data from form
 			String guestName = SessionUtils.getLoginedUser(request.getSession()).getName();
 			String guestSurename = SessionUtils.getLoginedUser(request.getSession()).getSurename();
@@ -209,7 +209,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 				Connection conn = SessionUtils.getStoredConnection(request);
 
 				int GuestID = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
-				String status = "Paid";
+				String status = "Active";
 				String reservationType = "Member";
 
 
@@ -217,7 +217,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 				DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType, resPrice);
 
 				// Create an object for the new Reservation
-				Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
+				Reservation resObj = DB_reservation.queryReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType, resPrice);
 				System.out.println( "Test " + resObj.toString());
 
 				int reservationNumber = resObj.getReservationId();
@@ -256,6 +256,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 				request.setAttribute("status", resObj.getStatus());
 				request.setAttribute("bookingDate", resObj.getBookingDate());
 				request.setAttribute("reservationType", resObj.getReservationType());
+				System.out.println(resObj.getReservationType());
 
 				// Guest related set attributes
 				request.setAttribute("guestName", guest.getName());
@@ -278,7 +279,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 			}
 
 		}
-		*/
+
 	}
 
 

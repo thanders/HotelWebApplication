@@ -9,7 +9,7 @@
   </div>
   
   <div style="display:inline-block; text-align: right; padding: 0px; margin-left: 0px; margin-top: 0px;">
-  	<a href="${pageContext.request.contextPath}/reservationDisplay">View Reservation</a>
+  	<a href="${pageContext.request.contextPath}/reservationDisplay">View Reservations</a>
   </div>
   
 </div>

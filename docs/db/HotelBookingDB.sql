@@ -97,7 +97,7 @@ CREATE TABLE `Reservations` (
 
 LOCK TABLES `Reservations` WRITE;
 /*!40000 ALTER TABLE `Reservations` DISABLE KEYS */;
-INSERT INTO `Reservations` VALUES (75,1,'2019-02-26','2019-02-26',NULL,2,'Paid','2019-02-26 17:45:02','Guest','420.0'),(76,2,'2019-02-26','2019-02-26',NULL,2,'Paid','2019-02-26 17:45:59','Guest','420.0');
+INSERT INTO `Reservations` VALUES (75,1,'2019-02-26','2019-02-26',NULL,2,'Active','2019-02-26 17:45:02','Guest','420.0'),(76,2,'2019-02-26','2019-02-26',NULL,2,'Active','2019-02-26 17:45:59','Guest','420.0');
 /*!40000 ALTER TABLE `Reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
