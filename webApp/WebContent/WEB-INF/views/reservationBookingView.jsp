@@ -6,7 +6,7 @@
 <html>
    <head>
       <meta charset="UTF-8">
-      <title>Create Product</title>
+      <title>Reservation Summary</title>
    </head>
    <body>
     
@@ -43,11 +43,12 @@
      </table>
       
 	<br/> <br/>
-    If you would like to pay for this booking, enter your personal details:
-    <br/> <br/>
+    
       
       <form method="POST" action="${pageContext.request.contextPath}/reservationConfirm">
-       
+      <c:if test="${empty sessionScope.loginedUser}">
+    	If you would like to pay for this booking, enter your personal details:
+    <br/> <br/>
          <table>
             <tr>
                <th>Name</th>
@@ -77,6 +78,9 @@
             </tr>
 
          </table>
+	</c:if>
+	
+       
          
          <br/><br/>
          

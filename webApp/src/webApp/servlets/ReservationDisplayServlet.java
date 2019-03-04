@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -16,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
 import webApp.beans.Room;
+import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 import webApp.dbconn.DB_guests;
+import webApp.dbconn.DB_members;
 import webApp.dbconn.DB_reservation;
 import webApp.dbconn.DB_rooms;
 
@@ -32,13 +35,35 @@ public class ReservationDisplayServlet extends HttpServlet {
     @Override // doGet is automatically loaded upon going to the @WebServlet URL Pattern
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
-    	
     	// Load the reservationView page
-    	RequestDispatcher dispatcher = request.getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
-        dispatcher.forward(request, response);
+    			if(SessionUtils.getLoginedUser(request.getSession())!=null)
+    			{
+    				
+    				Starwood member = SessionUtils.getLoginedUser(request.getSession());
+    				Connection conn = SessionUtils.getStoredConnection(request);
+    				List<Reservation> reservations = new ArrayList<>();
+    				
+					try {
+						int guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
+						reservations = DB_reservation.
+	    						queryReservations(conn, guestID , "Member");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					request.setAttribute("reservations", reservations);
+    				
 
+    				RequestDispatcher dispatcher = request.getServletContext()
+    						.getRequestDispatcher("/WEB-INF/views/starwoodDisplayView.jsp");
+    				dispatcher.forward(request, response);
+    			}
+    			else {
+
+    				RequestDispatcher dispatcher = request.getServletContext()
+    						.getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
+    				dispatcher.forward(request, response);
+    			}
     	
     }
  
