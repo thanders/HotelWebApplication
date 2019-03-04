@@ -25,6 +25,7 @@
     		<th>Start Date</th>
     		<th>End Date</th>
     		<th>Number of rooms</th>
+    		<th>Status</th>
     		<th>Price</th>
     	</tr>
     	<c:forEach items="${reservations}" var="reservation" > 
@@ -33,6 +34,7 @@
     		<td>${reservation.start}</td>
     		<td>${reservation.end}</td>
     		<td>${reservation.numberRooms}</td>
+    		<td>‎${reservation.status}</td>
     		<td>‎€${reservation.price}</td>
     	</tr>
     	</c:forEach>
