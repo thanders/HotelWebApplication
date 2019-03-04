@@ -8,7 +8,7 @@
    |
    <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
    |
-   <a href="${pageContext.request.contextPath}/ReservationChooseDates">View Available Rooms</a>
+   <a href="${pageContext.request.contextPath}/ReservationChooseDates">View Available Rooms & Book</a>
    |
    <a href="${pageContext.request.contextPath}/createStarwood">Register Starwood Member</a>
    <c:if test="${empty sessionScope.loginedUser}">

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -17,84 +16,44 @@ import javax.servlet.http.HttpServletResponse;
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
 import webApp.beans.Room;
-import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 import webApp.dbconn.DB_guests;
-import webApp.dbconn.DB_members;
 import webApp.dbconn.DB_reservation;
 import webApp.dbconn.DB_rooms;
 
-@WebServlet(urlPatterns = { "/reservationDisplay" })
-public class ReservationDisplayServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/reservationLoad" })
+public class ReservationLoad extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
-    public ReservationDisplayServlet() {
+    public ReservationLoad() {
         super();
     }
  
     @Override // doGet is automatically loaded upon going to the @WebServlet URL Pattern
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	// Load the reservationView page
-    			if(SessionUtils.getLoginedUser(request.getSession())!=null)
-    			{
-    				
-    				Starwood member = SessionUtils.getLoginedUser(request.getSession());
-    				Connection conn = SessionUtils.getStoredConnection(request);
-    				List<Reservation> reservations = new ArrayList<>();
-    				
-					try {
-						int guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
-						reservations = DB_reservation.
-	    						queryReservations(conn, guestID , "Member");
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					request.setAttribute("reservations", reservations);
-    				
-
-    				RequestDispatcher dispatcher = request.getServletContext()
-    						.getRequestDispatcher("/WEB-INF/views/starwoodDisplayView.jsp");
-    				dispatcher.forward(request, response);
-    			}
-    			else {
-
-    				RequestDispatcher dispatcher = request.getServletContext()
-    						.getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
-    				dispatcher.forward(request, response);
-    			}
     	
-    }
- 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
     	
-
         // Use get parameter to obtain posted data from form
         String resNumberInt = (String) request.getParameter("resNumber");
         
-        int resNumber = 0;
-        Reservation resObj = null;
-        Guest guestObj = null;
-        
         if (resNumberInt != null) {
-        	resNumber = Integer.parseInt(resNumberInt);
-        	System.out.println(resNumber);}
+        	int resNumber = Integer.parseInt(resNumberInt);
+        	System.out.println(resNumber);
         	
         	// Connect to database
             Connection conn = SessionUtils.getStoredConnection(request);
             
+            
+            
+        	
         	// Create an object for the new Reservation
             try {
-	        	resObj = DB_reservation.queryReservationRID(conn, resNumber);
+	        	Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
 	        	
 	        	System.out.println("GID :  " + resObj.getGuestID());
-	        	System.out.println("PRICE TEST :  " + resObj.getPrice());
-	        	System.out.println("PRICE String :  " + resObj.getPriceFormatted());
 
-	        	guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
+	        	Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
 
 	        	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
 	        	
@@ -110,27 +69,9 @@ public class ReservationDisplayServlet extends HttpServlet {
             	request.setAttribute("status", resObj.getStatus());
             	request.setAttribute("bookingDate", resObj.getBookingDate());
             	request.setAttribute("reservationType", resObj.getReservationType());
-            }
-    
-		    catch (SQLException e){
-		 	   e.printStackTrace();
-		 	  String errorString = e.getMessage();
-		 	  System.out.println(errorString);
-		    }
-            	
-            /* 
-            if(SessionUtils.getLoginedUser(request.getSession()).equals(null)){
 				request.setAttribute("reservationPrice", resObj.getPriceFormatted());
-            }
-            else{
-            		double resPrice = Double.parseDouble( resObj.getPriceFormatted());
-     		    	double reducedPrice = resPrice - (resPrice *0.1);
-     		    	
-     		    	String price = Double.toString(reducedPrice);
-     		    	
-    				request.setAttribute("reservationPrice", price);
-            	 }
-            	 */
+
+        		
         		// Set attributes for Guest data
         		request.setAttribute("guestName", guestObj.getGuestName());
         		request.setAttribute("guestSurname", guestObj.getGuestSurename());
@@ -139,9 +80,27 @@ public class ReservationDisplayServlet extends HttpServlet {
     	        RequestDispatcher dispatcher = request.getServletContext()
     	    	.getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
     	        dispatcher.forward(request, response);
+    	        
+            	}
+                catch (SQLException e){
+              	   e.printStackTrace();
+              	  String errorString = e.getMessage();
+              	  System.out.println(errorString);
+                 }
+            }
 
-    
-        }
+    	
+    }
+ 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	
+
+
+          
+
 
     }
 
+}
