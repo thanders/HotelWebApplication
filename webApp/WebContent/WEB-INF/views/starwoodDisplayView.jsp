@@ -12,35 +12,31 @@
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
  
-    <h2>Reservation confirmation</h2>
+    <h2>Reservations</h2>
  
     <p style="color: red;">${errorString}</p>
  	
- 	Thank you for booking a room with us. Your reservation number is <b>${resNumber}</b>
+ 	Thank you for booking a room with us. Your reservations are below:
  	<br/> <br/>
- 	The booking is from <b>${start}</b> until <b>${end}</b>
- 	<br/> <br/>
- 	The confirmation details are below:
- 	<br/> <br/>
- 	<p style="color: red;">${cantCancel}</p>
-    
-    <table border="1" cellspacing="0" >
+ 	
+    <table border="1" style="text-align:center" >
     	<tr>
-    		<th>Guest Name</th>
-    		<th>Guest Surname</th>
+    		<th>Reservation ID</th>
+    		<th>Start Date</th>
+    		<th>End Date</th>
+    		<th>Number of rooms</th>
+    		<th>Price</th>
     	</tr>
+    	<c:forEach items="${reservations}" var="reservation" > 
     	<tr>
-    		<td><c:forEach items="${List}" var="list" >
-    		<td>${guestName}</td>
-    		<td>${guestSurname}</td>    	
-    		 </c:forEach></td>
-    		
-
-
-
+    		<td>${reservation.reservationId}</td>
+    		<td>${reservation.start}</td>
+    		<td>${reservation.end}</td>
+    		<td>${reservation.numberRooms}</td>
+    		<td>‎€${reservation.price}</td>
     	</tr>
+    	</c:forEach>
     </table>
-    
     
  
     <jsp:include page="_footer.jsp"></jsp:include>

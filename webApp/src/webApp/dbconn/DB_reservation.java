@@ -14,7 +14,8 @@ public class DB_reservation {
 
 	    // Query ReservationRID
 	    public static Reservation queryReservationRID(Connection conn, int Reservation_Id) throws SQLException {
-	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a WHERE a.Reservation_Id = ? ";
+	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a WHERE a.Reservation_Id = ? "
+	        		+ "and a.reservationType = 'Guest' ";
 	 
 	        // Connect to the database and execute the Select query
 	        PreparedStatement pstm = conn.prepareStatement(sql);
@@ -70,7 +71,65 @@ public class DB_reservation {
 		        
 		        return null;
 		        }
+		   
+		// queryReservation with Guest ID
+		   public static Reservation queryReservation(Connection conn, int GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType, Double price) throws SQLException {
+		 
+		        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a "
+		        		+ "where a.GuestID = ? and a.start = ? and a.end = ? and a.numberRooms = ? and a.status = ?"
+		        		+ "and a.reservationType = ? and a.price = ?";
+		 
+		        PreparedStatement pstm = conn.prepareStatement(sql);
+		        pstm.setInt(1, GuestID);
+		        pstm.setObject(2, start);
+		        pstm.setObject(3, end);
+		        pstm.setInt(4, numberRooms);
+		        pstm.setString(5, status);
+		        pstm.setString(6, reservationType);
+		        pstm.setDouble(7, price);
+		        ResultSet rs = pstm.executeQuery();
+
+
+		        if (rs.next()) {
+		            int Reservation_Id = rs.getInt("Reservation_Id");
+			        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();			       
+			        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
+		            reservation.setPrice(price);
+
+		            return reservation;
+		        }
+		        
+		        return null;
+		        }
 	    
+		   
+		// Query Reservations for a given member with Guest ID
+		   public static List<Reservation> queryReservations(Connection conn, int GuestID, String reservationType) throws SQLException {
+		 
+		        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a where a.GuestID = ? and a.reservationType = ? ";
+		        List<Reservation> reservations = new ArrayList<>();
+		        PreparedStatement pstm = conn.prepareStatement(sql);
+		        pstm.setInt(1, GuestID);
+		        pstm.setString(2, reservationType);
+		        ResultSet rs = pstm.executeQuery();
+		        // There should only be one GuestID with a reservation
+		        while (rs.next()) {
+		            int Reservation_Id = rs.getInt("Reservation_Id");
+			        LocalDate start= rs.getDate("start").toLocalDate();
+			        LocalDate end= rs.getDate("end").toLocalDate();
+			        int numberRooms = rs.getInt("numberRooms");
+			        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
+			        String status = rs.getString("status");
+			        //String reservationType = rs.getString("reservationType");
+			        Double price = rs.getDouble("price");
+			        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
+		            reservation.setPrice(price);
+
+		            reservations.add(reservation);
+		        }
+		        
+		        return reservations;
+		        }
 	    
 	    // insert Reservation
 	    public static void insertReservation(Connection conn, int GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType, Double price) throws SQLException {
