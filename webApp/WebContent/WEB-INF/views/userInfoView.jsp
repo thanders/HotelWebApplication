@@ -16,6 +16,8 @@
     Name: ${user.name}
     <br />
     Address: ${user.address} <br />
+    <br />
+    Email: ${user.email} <br />    
    <a href="${pageContext.request.contextPath}/editDetails"> Edit details</a>
    <br>
    <a href="${pageContext.request.contextPath}/addCard"> Add Card</a>
