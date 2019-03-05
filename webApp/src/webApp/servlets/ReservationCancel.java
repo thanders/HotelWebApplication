@@ -85,6 +85,7 @@ public class ReservationCancel extends HttpServlet {
 		    resObj = DB_reservation.queryReservationRID(conn, resNumber);
 	    
 	    }
+	    
 	    else {
 	    	request.setAttribute("CancelMSG", "Cannot cancel, cancellation must be done within 24 hours of booking "+ "(Hours since booking: "+ difference+" hours)");
 	    }
