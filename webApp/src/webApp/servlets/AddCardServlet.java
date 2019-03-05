@@ -1,5 +1,5 @@
-
 package webApp.servlets;
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,22 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
 import webApp.beans.CreditCard;
-import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 
-@WebServlet(urlPatterns = { "/createStarwood" })
+@WebServlet(urlPatterns = { "/addCard" })
 
-public class CreateStarwoodUserServlet extends HttpServlet {
+public class AddCardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public CreateStarwoodUserServlet() {
+	public AddCardServlet() {
 		super();
 	}
 	  @Override
 	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 	 	        RequestDispatcher dispatcher = request.getServletContext()
-		                .getRequestDispatcher("/WEB-INF/views/registerStarwood.jsp");
+		                .getRequestDispatcher("/WEB-INF/views/addCard.jsp");
 		        dispatcher.forward(request, response); 	
 	    }
 
@@ -40,34 +39,20 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		CreditCard card = null;
 		Connection conn = SessionUtils.getStoredConnection(request);
-
-		String name = (String) request.getParameter("name");
-		String surename = (String) request.getParameter("surename");
-		String address = (String) request.getParameter("address");
-		String email = (String) request.getParameter("email");
-		String cardNumber = (String) request.getParameter("cardNumber");
-		String phoneNumber = (String) request.getParameter("phoneNumber");
-		String userName = (String) request.getParameter("userName");
-		String password = (String) request.getParameter("password");
+		String cardNumber = (String) request.getParameter("card");
+	System.out.println(cardNumber);
 		int CardNumber = Integer.parseInt(cardNumber);
-        int PhoneNumber = Integer.parseInt(phoneNumber);
-		System.out.println("TEST Card" + " " + cardNumber);
 
-		System.out.println("int Card" + " " + cardNumber);
-		Starwood member = new Starwood(name, surename, address, email, CardNumber, PhoneNumber, userName, password);
-
-		System.out.println(member.toString());
 		String errorString = null;
 
 		// If error string is null, try to insert the guest object into the Guest
 		// database table
 		if (errorString == null) {
 			try {
-				DB_members.insertMember(conn, member);
-	    		int id = DB_members.getStarwoodMemberId(conn,userName);
-				CreditCard card = new CreditCard(id, CardNumber);
+	    		int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
+	    		 card = new CreditCard(id, CardNumber);
 
 				DBUtils.insertCard(conn, card);
 			} catch (SQLException e) {
@@ -81,12 +66,11 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		request.setAttribute("errorString", errorString);
 
 		// Makes member available for page redirection
-		request.setAttribute("starwoodNew", member);
+		request.setAttribute("card", card);
 
-		// If error, forward to Edit page.
 		if (errorString != null) {
 			RequestDispatcher dispatcher = request.getServletContext()
-					.getRequestDispatcher("/WEB-INF/views/registerStarwood.jsp");
+					.getRequestDispatcher("/WEB-INF/views/addCard.jsp");
 			dispatcher.forward(request, response);
 		}
 
