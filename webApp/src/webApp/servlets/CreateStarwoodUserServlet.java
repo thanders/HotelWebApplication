@@ -11,7 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
+import webApp.beans.CreditCard;
 import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 
@@ -63,6 +66,10 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		if (errorString == null) {
 			try {
 				DB_members.insertMember(conn, member);
+	    		int id = DB_members.getStarwoodMemberId(conn,userName);
+				CreditCard card = new CreditCard(id, CardNumber);
+
+				DBUtils.insertCard(conn, card);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				errorString = e.getMessage();
