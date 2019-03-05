@@ -16,7 +16,7 @@
     Name: ${user.name}
     <br />
     Address: ${user.address} <br />
-      
+   <a href="${pageContext.request.contextPath}/editDetails"> Edit details</a>
     <jsp:include page="_footer.jsp"></jsp:include>
  
  </body>

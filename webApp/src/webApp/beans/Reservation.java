@@ -27,7 +27,7 @@ public class Reservation implements Serializable {
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDate bookingDate, String status, String reservationType) {
+	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDate bookingDate, String status, String reservationType, double price) {
 		this.reservationId = reservationId;
 		this.GuestID = GuestID;
 		this.start = start;
@@ -36,6 +36,8 @@ public class Reservation implements Serializable {
 		this.bookingDate = bookingDate;
 		this.status = status;
 		this.reservationType = reservationType;
+		this.price = price;
+		this.priceFormatted = euroFormatter.format(price);
 		
 	}
 
@@ -126,7 +128,7 @@ public class Reservation implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
-		this.setPriceFormatted(euroFormatter.format(price));
+		this.priceFormatted = euroFormatter.format(price);
 	}
 
 	public String getPriceFormatted() {
