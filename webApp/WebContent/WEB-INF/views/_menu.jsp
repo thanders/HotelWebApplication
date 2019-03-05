@@ -9,8 +9,12 @@
    <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
    |
    <a href="${pageContext.request.contextPath}/ReservationChooseDates">View Available Rooms & Book</a>
+   
+   <c:if test="${empty sessionScope.loginedUser}">
    |
    <a href="${pageContext.request.contextPath}/createStarwood">Register Starwood Member</a>
+   </c:if>
+   
    <c:if test="${empty sessionScope.loginedUser}">
     |
    <a id = "login" href="${pageContext.request.contextPath}/login">Login</a>
