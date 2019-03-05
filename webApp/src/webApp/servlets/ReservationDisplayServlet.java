@@ -97,8 +97,10 @@ public class ReservationDisplayServlet extends HttpServlet {
 
 				guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
 				if(guestObj!=null) {
-
+					
+					// Date formats:
 					DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
+					DateTimeFormatter bookingDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 					List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, resNumber);
 					// room related set attributes
@@ -110,7 +112,7 @@ public class ReservationDisplayServlet extends HttpServlet {
 					request.setAttribute("end", formatWeb.format(resObj.getEnd()));
 					request.setAttribute("numberRooms", resObj.getNumberRooms());
 					request.setAttribute("status", resObj.getStatus());
-					request.setAttribute("bookingDate", resObj.getBookingDate());
+					request.setAttribute("bookingDate", bookingDateFormat.format(resObj.getBookingDate()));
 					request.setAttribute("reservationType", resObj.getReservationType());
 
 
