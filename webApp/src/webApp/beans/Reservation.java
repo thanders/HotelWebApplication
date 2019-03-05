@@ -3,6 +3,7 @@ package webApp.beans;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Reservation implements Serializable {
 	
@@ -14,7 +15,7 @@ public class Reservation implements Serializable {
 	private LocalDate end;
 	private int numberRooms;
 	private int duration;
-	private LocalDate bookingDate;
+	private LocalDateTime bookingDate;
 	private String status;
 	private String reservationType;
 	private Double price;
@@ -27,7 +28,7 @@ public class Reservation implements Serializable {
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDate bookingDate, String status, String reservationType, double price) {
+	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDateTime bookingDate, String status, String reservationType, double price) {
 		this.reservationId = reservationId;
 		this.GuestID = GuestID;
 		this.start = start;
@@ -106,11 +107,11 @@ public class Reservation implements Serializable {
 		return this.getClass().getName() + " " + "[" + this.reservationId + " " + this.GuestID + " " + this.start + this.end + this.duration + this.numberRooms + "]";
 	}
 
-	public LocalDate getBookingDate() {
+	public LocalDateTime getBookingDate() {
 		return bookingDate;
 	}
 
-	public void setBookingDate(LocalDate bookingDate) {
+	public void setBookingDate(LocalDateTime bookingDate) {
 		this.bookingDate = bookingDate;
 	}
 
