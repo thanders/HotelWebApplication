@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -144,14 +145,15 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 
 				// Store information to request attribute, before forward to views. 
-
+				DateTimeFormatter bookingDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				
 				// Reservation related set attributes
 				request.setAttribute("resNumber", reservationNumber);
 				request.setAttribute("start", resObj.getStart());
 				request.setAttribute("numberRooms", resObj.getNumberRooms());
 				request.setAttribute("end", resObj.getEnd());
 				request.setAttribute("status", resObj.getStatus());
-				request.setAttribute("bookingDate", resObj.getBookingDate());
+				request.setAttribute("bookingDate", bookingDateFormat.format(resObj.getBookingDate()));
 				request.setAttribute("reservationType", resObj.getReservationType());
 				request.setAttribute("reservationPrice", resObj.getPriceFormatted());
 
@@ -247,14 +249,15 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 
 				// Store information to request attribute, before forward to views. 
-
+				DateTimeFormatter bookingDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				
 				// Reservation related set attributes
 				request.setAttribute("resNumber", reservationNumber);
 				request.setAttribute("start", resObj.getStart());
 				request.setAttribute("numberRooms", resObj.getNumberRooms());
 				request.setAttribute("end", resObj.getEnd());
 				request.setAttribute("status", resObj.getStatus());
-				request.setAttribute("bookingDate", resObj.getBookingDate());
+				request.setAttribute("bookingDate", bookingDateFormat.format(resObj.getBookingDate()));
 				request.setAttribute("reservationType", resObj.getReservationType());
 				System.out.println(resObj.getReservationType());
 
