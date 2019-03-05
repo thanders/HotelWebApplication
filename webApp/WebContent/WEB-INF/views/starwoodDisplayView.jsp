@@ -27,6 +27,7 @@
     		<th>Number of rooms</th>
     		<th>Status</th>
     		<th>Price</th>
+    		<th>Show Booking Confirmation</th>
     	</tr>
     	<c:forEach items="${reservations}" var="reservation" > 
     	<tr>
@@ -36,6 +37,10 @@
     		<td>${reservation.numberRooms}</td>
     		<td>‎${reservation.status}</td>
     		<td>‎€${reservation.price}</td>
+    		<td>‎<form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
+    			<input type="hidden" name="resNumber" value="${reservation.reservationId}"/>
+    			<input type="submit" value="Show confirmation" />
+    			</form></td>
     	</tr>
     	</c:forEach>
     </table>
