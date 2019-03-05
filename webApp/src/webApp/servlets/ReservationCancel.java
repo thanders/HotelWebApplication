@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -73,19 +74,19 @@ public class ReservationCancel extends HttpServlet {
 	    Reservation resObj = DB_reservation.queryReservationRID(conn, resNumber);
 	    
 	    // current date
-	    LocalDate now = LocalDate.now();
+	    LocalDateTime now = LocalDateTime.now();
 	    // Difference between current date and reservation date in days
-	    long difference = ChronoUnit.DAYS.between(resObj.getBookingDate(), now);
-	    if (difference <= 1) {
+	    long difference = ChronoUnit.HOURS.between(resObj.getBookingDate(), now);
+	    if (difference <= 24) {
 	        // Change the reservation's status to cancelled
 	        DB_reservation.updateReservationStatus(conn, resNumber);
-	        request.setAttribute("CancelMSG", "Your booking has been cancelled");
+	        request.setAttribute("CancelMSG", "Your booking has been cancelled (Hours since booking: "+ difference+" hours)");
 	        // Reload reservation object to get updated status from database:
 		    resObj = DB_reservation.queryReservationRID(conn, resNumber);
 	    
 	    }
 	    else {
-	    	request.setAttribute("CancelMSG", "Cannot cancel, 24 hours has already passsed");
+	    	request.setAttribute("CancelMSG", "Cannot cancel, cancellation must be done within 24 hours of booking "+ "(Hours since booking: "+ difference+" hours)");
 	    }
 	    
 	    Guest guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
@@ -93,6 +94,7 @@ public class ReservationCancel extends HttpServlet {
 	    // Set reservation variables
 	    
     	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
+    	DateTimeFormatter bookingDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     	
     	List<Room> bookedRooms = DB_rooms.selectBookedRooms(conn, resNumber);
         // room related set attributes
@@ -104,7 +106,7 @@ public class ReservationCancel extends HttpServlet {
 		request.setAttribute("end", formatWeb.format(resObj.getEnd()));
 		request.setAttribute("numberRooms", resObj.getNumberRooms());
     	request.setAttribute("status", resObj.getStatus());
-    	request.setAttribute("bookingDate", resObj.getBookingDate());
+    	request.setAttribute("bookingDate", bookingDateFormat.format(resObj.getBookingDate()));
     	request.setAttribute("reservationType", resObj.getReservationType());
 		request.setAttribute("reservationPrice", resObj.getPriceFormatted());
 

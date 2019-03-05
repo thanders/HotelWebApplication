@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class DB_reservation {
 		        LocalDate start= rs.getDate("start").toLocalDate();
 		        LocalDate end= rs.getDate("end").toLocalDate();
 		        int numberRooms= rs.getInt("numberRooms");
-		        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
+		        LocalDateTime bookingDate= rs.getTimestamp("bookingDate").toLocalDateTime();
 		        String status = rs.getString("status");
 		        String reservationType = rs.getString("reservationType");
 		        double price= rs.getDouble("price");
@@ -59,7 +61,7 @@ public class DB_reservation {
 			        LocalDate start= rs.getDate("start").toLocalDate();
 			        LocalDate end= rs.getDate("end").toLocalDate();
 			        int numberRooms = rs.getInt("numberRooms");
-			        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
+			        LocalDateTime bookingDate= rs.getTimestamp("bookingDate").toLocalDateTime();
 			        String status = rs.getString("status");
 			        String reservationType = rs.getString("reservationType");
 			        Double price = rs.getDouble("price");
@@ -92,7 +94,7 @@ public class DB_reservation {
 
 		        if (rs.next()) {
 		            int Reservation_Id = rs.getInt("Reservation_Id");
-			        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();			       
+			        LocalDateTime bookingDate= rs.getTimestamp("bookingDate").toLocalDateTime();			       
 			        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
 		            reservation.setPrice(price);
 
@@ -118,7 +120,7 @@ public class DB_reservation {
 			        LocalDate start= rs.getDate("start").toLocalDate();
 			        LocalDate end= rs.getDate("end").toLocalDate();
 			        int numberRooms = rs.getInt("numberRooms");
-			        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
+			        LocalDateTime bookingDate= rs.getTimestamp("bookingDate").toLocalDateTime();
 			        String status = rs.getString("status");
 			        //String reservationType = rs.getString("reservationType");
 			        Double price = rs.getDouble("price");
@@ -169,7 +171,7 @@ public class DB_reservation {
 		        LocalDate start= rs.getDate("start").toLocalDate();
 		        LocalDate end= rs.getDate("end").toLocalDate();
 		        int numberRooms = rs.getInt("numberRooms");
-		        LocalDate bookingDate= rs.getDate("bookingDate").toLocalDate();
+		        LocalDateTime bookingDate= rs.getTimestamp("bookingDate").toLocalDateTime();
 		        String status = rs.getString("status");
 		        String reservationType = rs.getString("reservationType");
 		        Double price = rs.getDouble("price");
