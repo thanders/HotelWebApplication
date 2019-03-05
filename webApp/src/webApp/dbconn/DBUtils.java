@@ -304,6 +304,14 @@ public class DBUtils {
 	 
 	        pstm.executeUpdate();
 	    }
+	    
+	    public static void insertCard(Connection conn, CreditCard card) throws SQLException {
+	        String sql = "Insert into Credit_Card(MemberID, Card_Number) values (?,?)";
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        pstm.setInt(2, card.getId());
+	        pstm.setInt(1, card.getCardNumber());
+	        pstm.executeUpdate();
+	    }
 	 
 	    public static void deleteProduct(Connection conn, String code) throws SQLException {
 	        String sql = "Delete From Product where Code= ?";

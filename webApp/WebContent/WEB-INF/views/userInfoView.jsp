@@ -17,6 +17,9 @@
     <br />
     Address: ${user.address} <br />
    <a href="${pageContext.request.contextPath}/editDetails"> Edit details</a>
+   <br>
+   <a href="${pageContext.request.contextPath}/addCard"> Add Card</a>
+    <br />
     <jsp:include page="_footer.jsp"></jsp:include>
  
  </body>
