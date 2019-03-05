@@ -92,7 +92,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 				// Insert the new Guest instance into the database
 				int GuestID = DBUtils.insertGuest(conn, guest);
-				String status = "Paid";
+				String status = "Active";
 				String reservationType = "Guest";
 
 
@@ -209,7 +209,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 				Connection conn = SessionUtils.getStoredConnection(request);
 
 				int GuestID = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
-				String status = "Paid";
+				String status = "Active";
 				String reservationType = "Member";
 
 

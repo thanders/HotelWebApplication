@@ -246,6 +246,23 @@ public class DBUtils {
 
 	        return ID;
 	    }
+	    
+	    
+	    public static void updateMember(Connection conn, Starwood member) throws SQLException {
+	        String sql = "Update Starwood set Member_Name =?, Member_Surname=? ,Address =? ,Email_Address = ? ,Phone_Number = ? ,Card_Number = ? , User_Name = ? , User_Password = ?  where Id=? ";
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	 
+	        pstm.setString(1, member.getName());
+	        pstm.setString(2, member.getSurename());
+	        pstm.setString(3, member.getAddress());
+	        pstm.setString(4, member.getEmail());
+	        pstm.setInt(5, member.getPhoneNumber());
+	        pstm.setInt(6, member.getCardNumber());
+	        pstm.setString(7, member.getUserName());
+	        pstm.setString(8, member.getPassword());
+	        pstm.setInt(9, member.getId());
+	        pstm.executeUpdate();
+	    }
 	 
 	    public static Product findProduct(Connection conn, String code) throws SQLException {
 	        String sql = "Select a.Code, a.Name, a.Price from Product a where a.Code=?";
@@ -285,6 +302,14 @@ public class DBUtils {
 	        pstm.setString(2, product.getName());
 	        pstm.setFloat(3, product.getPrice());
 	 
+	        pstm.executeUpdate();
+	    }
+	    
+	    public static void insertCard(Connection conn, CreditCard card) throws SQLException {
+	        String sql = "Insert into Credit_Card(MemberID, Card_Number) values (?,?)";
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        pstm.setInt(2, card.getId());
+	        pstm.setInt(1, card.getCardNumber());
 	        pstm.executeUpdate();
 	    }
 	 
