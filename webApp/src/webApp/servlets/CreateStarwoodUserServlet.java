@@ -48,7 +48,7 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
-		  int CardNumber = Integer.parseInt(cardNumber);
+		int CardNumber = Integer.parseInt(cardNumber);
         int PhoneNumber = Integer.parseInt(phoneNumber);
 		System.out.println("TEST Card" + " " + cardNumber);
 
