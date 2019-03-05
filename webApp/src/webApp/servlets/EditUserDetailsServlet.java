@@ -82,7 +82,7 @@ public class EditUserDetailsServlet extends HttpServlet {
         
         Starwood member= new Starwood( name,  surename,  address,  email,  CardNumber,  PhoneNumber, userName,  password) ;
         String errorString = null;
- 
+        SessionUtils.storeLoginedUser(request.getSession(), member);
         try {
     		int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
     		member.setId(id);
