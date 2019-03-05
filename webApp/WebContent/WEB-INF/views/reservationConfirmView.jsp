@@ -59,12 +59,16 @@
     
     <p style="color: blue;">${CancelMSG}</p>
     
+    <c:choose>
+    <c:when test="${status=='Active'}">
     <form method="POST" action="${pageContext.request.contextPath}/reservationCancel">
     <input type="hidden" name="cancel" value="cancel"/>
     <input type="hidden" name="resNumber" value="${resNumber}"/>
     <input type="submit" name="submit" value="Cancel reservation"/>
     </form>
- 
+ 	</c:when>
+ 	</c:choose>
+ 	
     <jsp:include page="_footer.jsp"></jsp:include>
  
  </body>
