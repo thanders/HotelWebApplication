@@ -315,12 +315,12 @@ public class DBUtils {
 	    
 	    public static void removeUserReservations(Connection conn, Starwood member) throws SQLException {
 	    	
-	    	int guestID = member.getId();
-	    	
+	    	int guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
 	    	List<Reservation> reservations = DB_reservation.
 					queryReservations(conn, guestID , "Member");
 	    	
 	    	for(Reservation r : reservations) {
+	    		System.out.println("A reservation "+ r.getReservationId()+ " :)");
 	    		
 	    		String sql = "Delete From Reservations where Reservation_Id= ?";
 	    		 
@@ -328,7 +328,7 @@ public class DBUtils {
 		        List<Room> rooms = getReservedRooms(conn, r.getReservationId());
 		        
 		        for(Room room : rooms) {
-		        	removeReservedRoom(conn,Integer.parseInt(room.getRoomNumber()));
+		        	removeReservedRoom(conn,room.getId());
 		        }
 		        
 		 
@@ -341,13 +341,13 @@ public class DBUtils {
 	        
 	    }
 	    
-	    public static void removeReservedRoom(Connection conn, int roomNumber) throws SQLException {
+	    public static void removeReservedRoom(Connection conn, int id) throws SQLException {
 	    	
-	    	String sql = "Delete From Reserved_Rooms a where a.roomNumber = ?";
+	    	String sql = "Delete From Reserved_Rooms where id = ?";
    		 
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	 
-	        pstm.setInt(1,roomNumber);
+	        pstm.setInt(1,id);
 	 
 	        pstm.executeUpdate();
 	    	
@@ -367,6 +367,7 @@ public class DBUtils {
 	        while(rs.next()) {
 	        	Room r = new Room(rs.getString("roomNumber"));
 	        	r.setReservationNumber(reservationId);
+	        	r.setId(rs.getInt("id"));
 	            rooms.add(r);
 	        }
 	    	
