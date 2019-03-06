@@ -25,8 +25,6 @@ This is a web application for a hotel reservation system.
 - Starwood members can delete their registration.
 
 
-## Requirements
+## Work Divided
+On trello board link ~ https://trello.com/invite/b/3rONPJFY/b6924afd4c73865357ae565eb06815da/hotelwebapp
 
-## How to deploy
-
-## Screenshots
