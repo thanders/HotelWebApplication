@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
+  <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <div style="background: #E0E0E0; height: 55px; padding: 5px;">
   <div style="float: left">
      <h1>Marriott International</h1>
@@ -8,9 +9,10 @@
   <div style="float: right; padding: 10px; text-align: right;">
  
      <!-- User store in session with attribute: loginedUser -->
-     Hello <b>${loginedUser.name}</b>
+     	<core:if test="${loginedUser.name!=null}">
+     		Hello <b>${loginedUser.name}</b>
+      	</core:if>
    <br/>
-     Search <input name="search">
  
   </div>
  
