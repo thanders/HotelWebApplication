@@ -2,8 +2,6 @@ package webApp.beans;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 
 // A class for hotel rooms
@@ -11,6 +9,7 @@ public class Room implements Serializable{
 	
 	// Fields
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String roomNumber;
 	private int capacity;
 	private int reservationNumber;
@@ -30,6 +29,15 @@ public class Room implements Serializable{
 		
 	}
 	// Getters and Setters
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getRoomNumber() {
 		return roomNumber;
 	}

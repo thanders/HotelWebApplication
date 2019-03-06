@@ -22,6 +22,13 @@
    <br>
    <a href="${pageContext.request.contextPath}/addCard"> Add Card</a>
     <br />
+    
+    <form method="POST" action="http://localhost:8080/MarriotWebApp/deleteUser">
+    <br>
+   <input type="submit" value="Delete Account" />
+    <br />
+    </form>
+    
     <jsp:include page="_footer.jsp"></jsp:include>
  
  </body>

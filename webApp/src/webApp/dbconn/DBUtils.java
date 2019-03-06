@@ -322,63 +322,74 @@ public class DBUtils {
 	
 	}
 	
-	public static void removeUserReservations(Connection conn, Starwood member) throws SQLException {
-
-		int guestID = member.getId();
-
-		List<Reservation> reservations = DB_reservation.queryReservations(conn, guestID, "Member");
-
-		for (Reservation r : reservations) {
-
-			String sql = "Delete From Reservations where Reservation_Id= ?";
-
-			PreparedStatement pstm = conn.prepareStatement(sql);
-			List<Room> rooms = getReservedRooms(conn, r.getReservationId());
-
-			for (Room room : rooms) {
-				removeReservedRoom(conn, Integer.parseInt(room.getRoomNumber()));
-			}
-
-			pstm.setInt(1, r.getReservationId());
-
-			pstm.executeUpdate();
-
-		}
-
-	}
-
-	public static void removeReservedRoom(Connection conn, int roomNumber) throws SQLException {
-
-		String sql = "Delete From Reserved_Rooms a where a.roomNumber = ?";
-
-		PreparedStatement pstm = conn.prepareStatement(sql);
-
-		pstm.setInt(1, roomNumber);
-
-		pstm.executeUpdate();
-
-	}
-
-	public static List<Room> getReservedRooms(Connection conn, int reservationId) throws SQLException {
-
-		List<Room> rooms = new ArrayList<>();
-		String sql = "Select *  from Reserved_Rooms a where a.reservationID = ? ";
-
-		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setInt(1, reservationId);
-
-		ResultSet rs = pstm.executeQuery();
-
-		while (rs.next()) {
-			Room r = new Room(rs.getString("roomNumber"));
-			r.setReservationNumber(reservationId);
-			rooms.add(r);
-		}
-
-		return rooms;
-
-	}
-
+	
+	    
+	 
+	  
+	    
+	   
+	    public static void removeUserReservations(Connection conn, Starwood member) throws SQLException {
+	    	
+	    	int guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
+	    	List<Reservation> reservations = DB_reservation.
+					queryReservations(conn, guestID , "Member");
+	    	
+	    	for(Reservation r : reservations) {
+	    		System.out.println("A reservation "+ r.getReservationId()+ " :)");
+	    		
+	    		String sql = "Delete From Reservations where Reservation_Id= ?";
+	    		 
+		        PreparedStatement pstm = conn.prepareStatement(sql);
+		        List<Room> rooms = getReservedRooms(conn, r.getReservationId());
+		        
+		        for(Room room : rooms) {
+		        	removeReservedRoom(conn,room.getId());
+		        }
+		        
+		 
+		        pstm.setInt(1,r.getReservationId());
+		 
+		        pstm.executeUpdate();
+	    		
+	    	}
+	    	
+	        
+	    }
+	    
+	    public static void removeReservedRoom(Connection conn, int id) throws SQLException {
+	    	
+	    	String sql = "Delete From Reserved_Rooms where id = ?";
+   		 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	 
+	        pstm.setInt(1,id);
+	 
+	        pstm.executeUpdate();
+	    	
+	    }
+	    
+	    public static List<Room> getReservedRooms(Connection conn, int reservationId) throws SQLException{
+			
+	    	List<Room> rooms = new ArrayList<>();
+	    	String sql = "Select *  from Reserved_Rooms a where a.reservationID = ? ";
+   		 
+	 
+	        PreparedStatement pstm = conn.prepareStatement(sql);
+	        pstm.setInt(1, reservationId);
+	 
+	        ResultSet rs = pstm.executeQuery();
+	 
+	        while(rs.next()) {
+	        	Room r = new Room(rs.getString("roomNumber"));
+	        	r.setReservationNumber(reservationId);
+	        	r.setId(rs.getInt("id"));
+	            rooms.add(r);
+	        }
+	    	
+	    	return rooms;
+	    	
+	    }
+	    
 	public static void updateMember(Connection conn, Starwood member) throws SQLException {
 		String sql = "Update Starwood set Member_Name =?, Member_Surname=? ,Address =? ,Email_Address = ? ,Phone_Number = ? ,Card_Number = ? , User_Name = ? , User_Password = ?  where Id=? ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
