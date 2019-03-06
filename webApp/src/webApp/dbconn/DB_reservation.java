@@ -202,11 +202,11 @@ public class DB_reservation {
 	    
 	    // insert Reservation
 	    public static void updateReservationStatus(Connection conn, int reservationID) throws SQLException {
-	        String sql = "UPDATE Reservations SET status = 'cancelled' where Reservation_Id = ?";
+	        String sql = "Update Reservations set status =? where Reservation_Id=? ";
 	        
 	        PreparedStatement pstm = conn.prepareStatement(sql);
-	        pstm.setInt(1, reservationID);
-
+	        pstm.setString(1, "Cancelled");
+	        pstm.setInt(2, reservationID);
 	        pstm.executeUpdate();
 
 	        System.out.println("insertReservation Status SQL executed");
