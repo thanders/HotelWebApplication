@@ -18,7 +18,7 @@
 	<div class="container">
 	<h2>Make a Reservation (1/3)</h2>
 	
-	This hotel has  a maximum of <b>${maxRooms}</b> rooms. The reservation system can tell you which rooms are free.
+	This hotel currently has  a maximum of <b>${maxRooms}</b> rooms. The reservation system can tell you which rooms are free.
 	<br/>
 	<br/>
 
