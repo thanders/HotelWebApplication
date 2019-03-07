@@ -12,7 +12,8 @@
       <jsp:include page="_menu.jsp"></jsp:include>
 <form method="POST" action="${pageContext.request.contextPath}/editDetails">
    
-      <h3>Enter your personal details</h3>
+      <h3>Please refill this form to update your details</h3>
+      <p style="color: red;">${errorString}</p>
          <table>
             <tr>
                <th>Name</th>
