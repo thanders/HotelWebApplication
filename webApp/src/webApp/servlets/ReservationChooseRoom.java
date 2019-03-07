@@ -230,7 +230,9 @@ public class ReservationChooseRoom extends HttpServlet {
 		    	
 		    }
 		    
+		    if(SessionUtils.getLoginedUser(request.getSession())!=null) {
 		    try {
+		    
 		    	List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()));
 		    	
 		    	request.setAttribute("cards", cards);
@@ -238,6 +240,7 @@ public class ReservationChooseRoom extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		    }
 
 
 			// Load reservationBookingView
