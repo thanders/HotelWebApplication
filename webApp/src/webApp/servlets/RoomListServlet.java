@@ -40,8 +40,7 @@ public class RoomListServlet extends HttpServlet {
         // Store info in request attribute, before forward to views
         request.setAttribute("errorString", errorString);
         request.setAttribute("roomList", list);
-        System.out.println("roomList retrieved");
-    
+        
         // Forward to /WEB-INF/views/userRoomsView.jsp
         RequestDispatcher dispatcher = request.getServletContext()
                 .getRequestDispatcher("/WEB-INF/views/userRoomsView.jsp");

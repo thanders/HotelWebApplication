@@ -1,25 +1,12 @@
 package webApp.servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.ServletException;  
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import webApp.beans.Reservation;
-import webApp.cookies.SessionUtils;
-import webApp.dbconn.DB_reservation;
-import webApp.dbconn.DB_rooms;
 
 @WebServlet(urlPatterns = { "/ReservationChooseDates" })
 public class ReservationChooseDates extends HttpServlet {

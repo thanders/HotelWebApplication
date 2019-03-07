@@ -3,14 +3,9 @@ package webApp.dbconn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import webApp.beans.Reservation;
 import webApp.beans.Room;
 
 import java.sql.ResultSet;
@@ -68,7 +63,6 @@ public class DB_rooms {
 		        while (rs.next()) {
 		        	
 					String roomNumber = rs.getString(1);
-					Double price = rs.getDouble(2);
 					// Create instance of Room Class
 					Room room = new Room(roomNumber);
 					

@@ -63,9 +63,7 @@ public class ReservationChooseRoom extends HttpServlet {
     		
     	// format LocalDate to display on webpage
     	DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
-    		
-    	System.out.println("Hello " + start + " " + end + " " + duration);
-    		
+    	
     	// set object attributes to add to session
     	session.setAttribute("startObj", start);
     	session.setAttribute("endObj", end);
@@ -108,7 +106,7 @@ public class ReservationChooseRoom extends HttpServlet {
 		}
 		
 		if (allReservations != null & availableRooms != null) {
-		 System.out.println("YES!"+ allReservations.toString());
+		
 		 // set attribute for Room objects so they are accessible by the ReservationChooseRoom.jsp page
 		 if(SessionUtils.getLoginedUser(session)==null)
 		 {
@@ -181,7 +179,7 @@ public class ReservationChooseRoom extends HttpServlet {
 			// Retrieve the booked rooms from the database
 			try {
 				 int totalRooms = DB_rooms.countTotalRooms(conn);
-				 System.out.println("Rooms:   "+ totalRooms);
+				
 				 
 				 // get roomnumber from choices then run query to get room number's price
 				 
@@ -201,8 +199,6 @@ public class ReservationChooseRoom extends HttpServlet {
 			
 			// format LocalDate to display on webpage
 			DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
-			
-			System.out.println("Hello " + resStart + " " + resStart + " " + duration);
 			
 			// set object attributes to send to confirmation servlet
 			session.setAttribute("startObj", resStart);
