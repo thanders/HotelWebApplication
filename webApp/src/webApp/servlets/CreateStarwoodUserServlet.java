@@ -26,13 +26,13 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 	public CreateStarwoodUserServlet() {
 		super();
 	}
-	  @Override
-	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	            throws ServletException, IOException {
-	 	        RequestDispatcher dispatcher = request.getServletContext()
-		                .getRequestDispatcher("/WEB-INF/views/registerStarwood.jsp");
-		        dispatcher.forward(request, response); 	
-	    }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getServletContext()
+				.getRequestDispatcher("/WEB-INF/views/registerStarwood.jsp");
+		dispatcher.forward(request, response); 	
+	}
 
 
 	// When the user enters the product information, and click Submit.
@@ -52,13 +52,10 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
 		int CardNumber = Integer.parseInt(cardNumber);
-        int PhoneNumber = Integer.parseInt(phoneNumber);
-		System.out.println("TEST Card" + " " + cardNumber);
-
-		System.out.println("int Card" + " " + cardNumber);
+		int PhoneNumber = Integer.parseInt(phoneNumber);
 		Starwood member = new Starwood(name, surename, address, email, CardNumber, PhoneNumber, userName, password);
 
-		System.out.println(member.toString());
+
 		String errorString = null;
 
 		// If error string is null, try to insert the guest object into the Guest
@@ -66,7 +63,7 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		if (errorString == null) {
 			try {
 				DB_members.insertMember(conn, member);
-	    		int id = DB_members.getStarwoodMemberId(conn,userName);
+				int id = DB_members.getStarwoodMemberId(conn,userName);
 				CreditCard card = new CreditCard(id, CardNumber);
 
 				DBUtils.insertCard(conn, card);
@@ -94,7 +91,7 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 			// Redirect to the product listing page.
 			//TODO Make logged in
 			response.sendRedirect(request.getContextPath() + "/userInfo");
-			
+
 		}
 	}
 

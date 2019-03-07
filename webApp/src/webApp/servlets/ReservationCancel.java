@@ -3,8 +3,6 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -53,7 +51,6 @@ public class ReservationCancel extends HttpServlet {
         // Use get parameter to obtain posted data from form
     	// String cancel = (String) session.getAttribute("cancel");
 
-    	String cancel = (String) request.getParameter("cancel");
     	String resNumberStr = (String) request.getParameter("resNumber");
     	
 
@@ -71,8 +68,7 @@ public class ReservationCancel extends HttpServlet {
         
         // Check if user is logged in (Starwood member) - if yes, cancel reservation
 		if(SessionUtils.getLoginedUser(session)!=null) {
-			System.out.println("User is logged in - execute cancel statement");
-			
+					
 			try {
 			Starwood member = SessionUtils.getLoginedUser(request.getSession());
 			List<Reservation> reservations = new ArrayList<>();
@@ -93,8 +89,6 @@ public class ReservationCancel extends HttpServlet {
 			
             catch (SQLException e){
           	   e.printStackTrace();
-          	  String errorString = e.getMessage();
-          	  System.out.println(errorString);
              }
             
 		    // load the reservation confirmation jsp page:
@@ -164,8 +158,6 @@ public class ReservationCancel extends HttpServlet {
 	            
 	            catch (SQLException e){
 	         	   e.printStackTrace();
-	         	  String errorString = e.getMessage();
-	         	  System.out.println(errorString);
 	            }
 	            
 	        }

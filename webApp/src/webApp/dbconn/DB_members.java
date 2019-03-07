@@ -23,8 +23,6 @@ public class DB_members{
 		        pstm.setString(7, member.getUserName());
 		        pstm.setString(8, member.getPassword());
 		        pstm.executeUpdate();
-		        System.out.println("insertMember SQL executed");
-	            System.out.println(": "+  member.getName()+ "  " + member.getSurename() + "  " + member.getAddress() + "  " + member.getPhoneNumber()+ "  " +  member.getCardNumber() + "  " +   member.getUserName()+ "  " +  member.getPassword());
 		    }
 		    
 		    

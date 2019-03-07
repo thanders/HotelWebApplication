@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ public class DB_reservation {
 		        String reservationType = rs.getString("reservationType");
 		        double price= rs.getDouble("price");
 		        
-		        System.out.println("Reservation: "+ Reservation_Id +" " + GuestID +" " + start +" " + end +" " + numberRooms +" " + bookingDate + " " + status + " " +price);
 		        // Create an instance of the Reservation class
 		        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
 		        
@@ -148,9 +146,6 @@ public class DB_reservation {
 	        pstm.setDouble(7, price);
 	 
 	        pstm.executeUpdate();
-
-	        System.out.println("insertReservation SQL�executed");
-	        
 	    }
 	    
 	    
@@ -184,23 +179,8 @@ public class DB_reservation {
 	        
 	        return list;
 	        }
-	   
-	   
-	    // insert Reservation
-	    public static void updateReservationPrice(Connection conn, int reservationID, Double price) throws SQLException {
-	        String sql = "UPDATE Reservations SET price = ? where Reservation_ID = ?";
-	        
-	        PreparedStatement pstm = conn.prepareStatement(sql);
-	        pstm.setDouble(1, price);
-	        pstm.setInt(2, reservationID);
-
-	        pstm.executeUpdate();
-
-	        System.out.println("insertReservation PRICE SQL executed");
-	        
-	    }
+	
 	    
-	    // insert Reservation
 	    public static void updateReservationStatus(Connection conn, int reservationID) throws SQLException {
 	        String sql = "Update Reservations set status =? where Reservation_Id=? ";
 	        
@@ -209,8 +189,6 @@ public class DB_reservation {
 	        pstm.setInt(2, reservationID);
 	        pstm.executeUpdate();
 
-	        System.out.println("insertReservation Status SQL executed");
-	        
 	    }
 
 }

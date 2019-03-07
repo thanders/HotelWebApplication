@@ -25,13 +25,13 @@ public class AddCardServlet extends HttpServlet {
 	public AddCardServlet() {
 		super();
 	}
-	  @Override
-	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	            throws ServletException, IOException {
-	 	        RequestDispatcher dispatcher = request.getServletContext()
-		                .getRequestDispatcher("/WEB-INF/views/addCard.jsp");
-		        dispatcher.forward(request, response); 	
-	    }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getServletContext()
+				.getRequestDispatcher("/WEB-INF/views/addCard.jsp");
+		dispatcher.forward(request, response); 	
+	}
 
 
 	// When the user enters the product information, and click Submit.
@@ -42,7 +42,6 @@ public class AddCardServlet extends HttpServlet {
 		CreditCard card = null;
 		Connection conn = SessionUtils.getStoredConnection(request);
 		String cardNumber = (String) request.getParameter("card");
-	System.out.println(cardNumber);
 		int CardNumber = Integer.parseInt(cardNumber);
 
 		String errorString = null;
@@ -51,8 +50,8 @@ public class AddCardServlet extends HttpServlet {
 		// database table
 		if (errorString == null) {
 			try {
-	    		int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
-	    		 card = new CreditCard(id, CardNumber);
+				int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
+				card = new CreditCard(id, CardNumber);
 
 				DBUtils.insertCard(conn, card);
 			} catch (SQLException e) {
@@ -78,7 +77,7 @@ public class AddCardServlet extends HttpServlet {
 			// Redirect to the product listing page.
 			//TODO Make logged in
 			response.sendRedirect(request.getContextPath() + "/userInfo");
-			
+
 		}
 	}
 

@@ -32,9 +32,6 @@ public class EditUserDetailsServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		Connection conn = SessionUtils.getStoredConnection(request);
-
-		//         String code = (String) request.getParameter("code");
-
 		Starwood member = null;
 
 		String errorString = null;
@@ -48,7 +45,6 @@ public class EditUserDetailsServlet extends HttpServlet {
 		}
 
 		// If no error.
-		// The product does not exist to edit.
 		// Redirect to productList page.
 		if (errorString != null && member == null) {
 			response.sendRedirect(request.getServletPath() + "/userInfo");
@@ -106,10 +102,9 @@ public class EditUserDetailsServlet extends HttpServlet {
 			} 
 			
 			if (address != "" ) {
-				System.out.println("here1");
+				
 				currentUser.setAddress(address);
 				DBUtils.updateMemberAddress(conn, currentUser);
-				System.out.println("here2");
 				changesString +=" " + "Address has been updated";
 			} 
 			
@@ -175,7 +170,7 @@ public class EditUserDetailsServlet extends HttpServlet {
 		request.setAttribute("errorString", errorString);
 		request.setAttribute("member", currentUser);
 		request.setAttribute("changesString", changesString);
-		System.out.println(changesString);
+		
 
 		// If error, forward to Edit page.
 		if (errorString != null) {

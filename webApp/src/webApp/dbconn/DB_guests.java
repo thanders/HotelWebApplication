@@ -31,10 +31,9 @@ public class DB_guests {
 	            Guest guest = new Guest (Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number);
 	            guest.setGuestID(GuestID);
 	            
-	            System.out.println("Guests:  " + guest.toString());
 	            return guest;
 	        }
-	        System.out.println("Something is wrong");
+	        
 	        return null;
 	    }
 	    
