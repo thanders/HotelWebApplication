@@ -11,6 +11,8 @@
 
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
+	
+	<div class="container">
 
 	<h3>Hello: ${user.name}</h3>
 	Surename: ${user.surename}
@@ -30,6 +32,8 @@
 		action="http://localhost:8080/MarriotWebApp/deleteUser">
 		<br> <input type="submit" value="Delete Account" /> <br />
 	</form>
+	
+	</div>
 
 	<jsp:include page="_footer.jsp"></jsp:include>
 

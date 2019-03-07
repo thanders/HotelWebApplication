@@ -15,6 +15,7 @@
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
 
+	<div class="container">
 	<h2>Reservation (1/3)</h2>
 	
 
@@ -33,14 +34,8 @@
 		<input type="submit"> <input type="reset" value="Reset">
 	</form>
 	
+	</div>
 	
-	<br/> <br/>
-	
-	
-	
-	
-	
-
 	<jsp:include page="_footer.jsp"></jsp:include>
 
 </body>

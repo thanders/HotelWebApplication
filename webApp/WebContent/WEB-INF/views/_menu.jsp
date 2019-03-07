@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-<div style="padding: 5px;">
+<div class="menu">
  
    <a href="${pageContext.request.contextPath}/">Home</a>
    |

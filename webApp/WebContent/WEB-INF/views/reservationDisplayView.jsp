@@ -18,6 +18,8 @@
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
 
+	<div class="container">
+
 	<h2>Find my reservation</h2>
 
 	<p style="color: red;">${errorString}</p>
@@ -31,6 +33,8 @@
 		<br/> <br/> 
 		<input type="submit"> <input type="reset" value="Reset">
 	</form>
+	
+	</div>
 
 	<jsp:include page="_footer.jsp"></jsp:include>
 

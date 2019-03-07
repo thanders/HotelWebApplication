@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
-  
+
+<footer class="footer">
 <div
   style="background: #f1f0eb; text-align: center; padding-left: 200px; padding-right: 200px; padding: 5px; margin-top: 10px;">
   
@@ -13,3 +14,5 @@
   </div>
   
 </div>
+
+</footer>
