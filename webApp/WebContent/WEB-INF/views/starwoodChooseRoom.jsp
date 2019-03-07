@@ -6,6 +6,7 @@
 <html>
    <head>
       <meta charset="UTF-8">
+      <link rel="stylesheet" type="text/css" href="style.css">
       <title>Create Product</title>
    </head>
    <body>
@@ -26,8 +27,8 @@
      
      You are requesting to book:
       
-      <table border="1" cellspacing="0">
-      	<tr>	
+      <table>
+      	<tr>
 	    	<th>Number of rooms</th>
 	    	<th>Room numbers</th>
 	    	

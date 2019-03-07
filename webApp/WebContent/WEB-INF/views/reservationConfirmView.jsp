@@ -5,6 +5,7 @@
 <html>
  <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Reservations</title>
  </head>
  <body>
@@ -25,8 +26,8 @@
     
     <table border="1" cellspacing="0" >
     	<tr>
-    		<th>Guest Name</th>
-    		<th>Guest Surname</th>
+    		<th>Name</th>
+    		<th>Surname</th>
     		<th>Number of rooms</th>
     		<th>Room numbers</th>
     		<th>Price</th>

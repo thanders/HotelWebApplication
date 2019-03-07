@@ -3,7 +3,7 @@
   <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <div style="background: #f1f0eb; height: 55px; padding: 5px;">
   <div style="float: left">
-     <h1>Welcome To Roebuck Castle Hotel</h1>
+     <h1>Welcome to Marriot Hotel UCD</h1>
   </div>
  
   <div style="float: right; padding: 10px; text-align: right;">

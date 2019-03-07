@@ -5,6 +5,7 @@
 <html>
  <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Reservations</title>
  </head>
  <body>
@@ -19,7 +20,7 @@
  	Thank you for booking a room with us. Your reservations are below:
  	<br/> <br/>
  	
-    <table border="1" style="text-align:center" >
+    <table class="viewResMembers" >
     	<tr>
     		<th>Reservation ID</th>
     		<th>Start Date</th>
@@ -37,7 +38,7 @@
     		<td>${reservation.numberRooms}</td>
     		<td>‎${reservation.status}</td>
     		<td>‎€${reservation.price}</td>
-    		<td>‎<form method="POST" action="${pageContext.request.contextPath}/reservationCancel">
+    		<td class="resMemberCancelSubmit">‎<form method="POST" action="${pageContext.request.contextPath}/reservationCancel">
     			<input type="hidden" name="resNumber" value="${reservation.reservationId}"/>
     			<input type="submit" value="Cancel" />
     			</form></td>
