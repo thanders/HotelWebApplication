@@ -14,7 +14,7 @@
       <jsp:include page="_header.jsp"></jsp:include>
       <jsp:include page="_menu.jsp"></jsp:include>
       
-      <div class="container">
+      <div class="container">
        
       <h2>Reservation (3/3)</h2>
        
@@ -31,7 +31,7 @@
      
      <br/><br/>
       
-      <table border="1" cellspacing="0">
+      <table>
       	<tr>	
 	    	<th>Number of rooms</th>
 	    	<th>Room numbers</th>

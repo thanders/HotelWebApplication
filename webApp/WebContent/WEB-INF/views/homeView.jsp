@@ -11,7 +11,7 @@
      <jsp:include page="_header.jsp"></jsp:include>
      <jsp:include page="_menu.jsp"></jsp:include>
      
-     <div class="container">
+     <div class="container">
 
 
 		<div class="cabin-image">
