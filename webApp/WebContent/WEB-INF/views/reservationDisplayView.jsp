@@ -24,7 +24,7 @@
 
 	<p style="color: red;">${errorString}</p>
 
-	Enter your reservation number:
+	Enter your reservation number (Guests only, not Starwood members):
 	<br/>
 	<br/>
 
