@@ -83,7 +83,7 @@
          </table>
 	</c:if>
 	
-	
+	<c:if test="${not empty sessionScope.loginedUser}">
 	<p >Choose a Credit Card to pay with:</p>
          <select name="CreditCard">
     <c:forEach var="d" items="${cards}">
@@ -91,6 +91,7 @@
     </c:forEach>
 		</select>
 		<br/><br/>
+		</c:if>
          <input type="submit" value="Book and Pay" />
          
       </form>
