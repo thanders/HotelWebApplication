@@ -9,10 +9,13 @@ MySQL Connector/J (the official JDBC driver for MySQL) - mysql-connector-java
 
 ### Database setup
 
-Linux:
-Log into MySQL from this repository's root directory (username root) 'mysql -u root -p'
-Create a database called sse 'CREATE database sse;'
-Execute the included SQL file to create the webApp's tables 'source docs/db/createTables.sql;'
+<b>Linux<b>:
+
+Log into MySQL from this repository's root directory (username root) `mysql -u root -p`
+
+Create a database called sse `CREATE database sse;`
+
+Execute the included SQL file to create the webApp's tables `source docs/db/createTables.sql;`
 
 ### Functionality
 
