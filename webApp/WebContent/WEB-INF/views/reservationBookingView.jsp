@@ -90,7 +90,6 @@
 		</select>
 		<br/><br/>
          <input type="submit" value="Book and Pay" />
-         <input type="reset" value="Reset"/>
          
       </form>
        
