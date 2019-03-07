@@ -12,6 +12,8 @@
  
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
+    
+    <div class="container">
  
     <h2>Reservation confirmation</h2>
  
@@ -69,6 +71,8 @@
     </form>
  	</c:when>
  	</c:choose>
+ 	
+ 	</div>
  	
     <jsp:include page="_footer.jsp"></jsp:include>
  

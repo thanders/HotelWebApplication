@@ -13,6 +13,8 @@
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
  
+ 	<div class="container">
+ 	
     <h2>Reservations</h2>
  
     <p style="color: red;">${errorString}</p>
@@ -45,6 +47,8 @@
     	</tr>
     	</c:forEach>
     </table>
+    
+    </div>
     
  
     <jsp:include page="_footer.jsp"></jsp:include>
