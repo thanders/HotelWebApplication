@@ -83,10 +83,14 @@
          </table>
 	</c:if>
 	
-       
-         
-         <br/><br/>
-         
+	
+	<p >Choose a Credit Card to pay with:</p>
+         <select name="CreditCard">
+    <c:forEach var="d" items="${cards}">
+      <option value="${d.getCardNumber()}">${d.getCardNumber()}</option>
+    </c:forEach>
+		</select>
+		<br/><br/>
          <input type="submit" value="Book and Pay" />
          <input type="reset" value="Reset"/>
          

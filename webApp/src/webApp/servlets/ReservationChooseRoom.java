@@ -17,9 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import webApp.beans.CreditCard;
 import webApp.beans.Reservation;
 import webApp.beans.Room;
 import webApp.cookies.SessionUtils;
+import webApp.dbconn.DBUtils;
+import webApp.dbconn.DB_members;
 import webApp.dbconn.DB_reservation;
 import webApp.dbconn.DB_rooms;
 
@@ -175,9 +178,6 @@ public class ReservationChooseRoom extends HttpServlet {
 	    	
 	    	session.setAttribute("validationCount", "");
 
-			DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
-	
-
 			// Retrieve the booked rooms from the database
 			try {
 				 int totalRooms = DB_rooms.countTotalRooms(conn);
@@ -230,8 +230,14 @@ public class ReservationChooseRoom extends HttpServlet {
 		    	
 		    }
 		    
-			
-	        
+		    try {
+		    	List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()));
+		    	
+		    	request.setAttribute("cards", cards);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 
 			// Load reservationBookingView
