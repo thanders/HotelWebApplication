@@ -74,18 +74,7 @@ public class ReservationChooseRoom extends HttpServlet {
     	session.setAttribute("endDate", formatWeb.format(end));
     	session.setAttribute("numRooms", numRooms);
     	session.setAttribute("duration", duration);
-    	
-    		
-    		
-    		
-    	// Find number of total rooms
-    	try {
-    			
-			int totalRooms = DB_rooms.countTotalRooms(conn);	 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	        
     		
     	
@@ -178,8 +167,7 @@ public class ReservationChooseRoom extends HttpServlet {
 
 			// Retrieve the booked rooms from the database
 			try {
-				 int totalRooms = DB_rooms.countTotalRooms(conn);
-				
+
 				 
 				 // get roomnumber from choices then run query to get room number's price
 				 

@@ -16,10 +16,13 @@
 	<jsp:include page="_menu.jsp"></jsp:include>
 
 	<div class="container">
-	<h2>Reservation (1/3)</h2>
+	<h2>Make a Reservation (1/3)</h2>
 	
+	This hotel has  a maximum of ${maxRooms} rooms. The reservation system can tell you which rooms are free.
+	<br/>
+	<br/>
 
-	Select the dates you would like to view and specify the number of rooms:
+	Select the dates you would like to view and specify the number of rooms you want to book:
 	<br/>
 	<br/>
 

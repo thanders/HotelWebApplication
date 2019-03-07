@@ -54,7 +54,6 @@ public class ReservationConfirmServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		LocalDate startObj = (LocalDate) session.getAttribute("startObj");
 		LocalDate endObj = (LocalDate) session.getAttribute("endObj");
-		int duration = (int) session.getAttribute("duration");
 		int numRooms = (int) session.getAttribute("numRooms");
 		String[] choices = (String[]) session.getAttribute("choices");
 
@@ -101,8 +100,6 @@ public class ReservationConfirmServlet extends HttpServlet {
 				Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
 
 				int reservationNumber = resObj.getReservationId();
-
-				String price = resObj.getPriceFormatted();
 
 
 
