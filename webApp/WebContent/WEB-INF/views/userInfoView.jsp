@@ -11,12 +11,13 @@
 
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
-
+	<p style="color: green;">${changesString}</p>
+	
 	<h3>Hello: ${user.name}</h3>
-	Surename: ${user.surename}
+	Surname: ${user.surename}
 	<br> Name: ${user.name}
 	<br>Address: ${user.address} 
-	<br>Card Detils: ${user.cardNumber}
+	<br>Card Details: ${user.cardNumber}
 	<br> Email: ${user.email}
 	<br> Phone Number: ${user.phoneNumber}
 	<br>
