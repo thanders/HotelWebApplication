@@ -14,7 +14,7 @@ Execute the included SQL file to create the webApp's tables `source docs/db/crea
 
 ## Project Trello board
 
-This is also effectively a diary that documents the contribution of each team member to the project.
+This is effectively a diary that documents the contribution of each team member to the project.
 <https://trello.com/invite/b/3rONPJFY/b6924afd4c73865357ae565eb06815da/hotelwebapp>
 
 
