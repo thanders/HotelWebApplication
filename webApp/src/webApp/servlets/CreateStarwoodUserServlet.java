@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
@@ -90,6 +91,9 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		else {
 			// Redirect to the product listing page.
 			//TODO Make logged in
+			HttpSession session = request.getSession();
+			SessionUtils.storeLoginedUser(session, member);
+			// Redirect to userInfo page.
 			response.sendRedirect(request.getContextPath() + "/userInfo");
 
 		}
