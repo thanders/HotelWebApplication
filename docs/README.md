@@ -1,8 +1,8 @@
-## HotelWebApplication
+## Description
 
 This is a web application for a hotel reservation system.
 
-### Java External dependencies
+## Java External dependencies
 
 JavaServer Pages Standard Tag Library - javax.servlet.jsp.jstl
 
@@ -10,7 +10,7 @@ JavaServer Pages Standard Tag Library API - javax.servlet.jsp.jstl-api
 
 MySQL Connector/J (the official JDBC driver for MySQL) - mysql-connector-java
 
-### Database setup
+## Database setup
 
 **Linux**:
 
@@ -20,7 +20,7 @@ Create a database called sse `CREATE database sse;`
 
 Execute the included SQL file to create the webApp's tables `source docs/db/createTables.sql;`
 
-### Functionality
+## Functionality
 
 - Show available rooms: users should be able to view rooms that are available between specific dates and for a certain number of guests.
  
@@ -45,4 +45,12 @@ Execute the included SQL file to create the webApp's tables `source docs/db/crea
 
 ## Work Divided
 On trello board link ~ https://trello.com/invite/b/3rONPJFY/b6924afd4c73865357ae565eb06815da/hotelwebapp
+
+## Screenshots
+
+**Reservation - Availabel rooms**
+<img src="assets/resAvailableRooms.png" alt="Reservation - Available rooms" style="height: 85%; width: 85%;"/>
+
+**Reservation - Confirmation**
+<img src="assets/resConfirmation.png" alt="Reservation - Confirmation" style="height: 85%; width: 85%;"/>
 
