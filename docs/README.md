@@ -12,6 +12,12 @@ Create a database called sse `CREATE database sse;`
 
 Execute the included SQL file to create the webApp's tables `source docs/db/createTables.sql;`
 
+## Project Trello board
+
+This is also effectively a diary that documents the contribution of each team member to the project.
+<https://trello.com/invite/b/3rONPJFY/b6924afd4c73865357ae565eb06815da/hotelwebapp>
+
+
 ## Java External dependencies
 
 JavaServer Pages Standard Tag Library - javax.servlet.jsp.jstl
@@ -51,11 +57,6 @@ The following functionality was implemented:
 - Starwood members can visualize an history of their reservations: after the login is performed successfully, Starwood members can visualize their reservations and their status (Active, Cancelled, Inactive). If an active reservation is selected, the user can cancel it.
  
 - Starwood members can delete their registration.
-
-
-## Project Trello board
-
-<https://trello.com/invite/b/3rONPJFY/b6924afd4c73865357ae565eb06815da/hotelwebapp>
 
 ## Screenshots
 
