@@ -48,7 +48,7 @@ On trello board link ~ https://trello.com/invite/b/3rONPJFY/b6924afd4c73865357ae
 
 ## Screenshots
 
-**Reservation - Availabel rooms**
+**Reservation - Available rooms**
 
 <kbd> <img src="assets/resAvailableRooms.png" alt="Reservation - Available rooms" style="height: 75%; width: 75%;"/> </kbd>
 
