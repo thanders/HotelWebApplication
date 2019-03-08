@@ -35,6 +35,7 @@ CREATE TABLE `Credit_Card` (
 
 LOCK TABLES `Credit_Card` WRITE;
 /*!40000 ALTER TABLE `Credit_Card` DISABLE KEYS */;
+INSERT INTO `Credit_Card` VALUES (12345678,22);
 /*!40000 ALTER TABLE `Credit_Card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +55,7 @@ CREATE TABLE `Guest` (
   `Phone_Number` int(15) NOT NULL,
   `Email_Address` varchar(128) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +166,7 @@ CREATE TABLE `Starwood` (
   `Phone_Number` int(11) NOT NULL,
   `Email_Address` varchar(128) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,4 +188,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-07 23:28:01
+-- Dump completed on 2019-03-08 10:11:46
