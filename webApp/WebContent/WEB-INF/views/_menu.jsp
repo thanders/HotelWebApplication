@@ -4,7 +4,7 @@
     
 <div class="menu">
  
-   <a href="${pageContext.request.contextPath}/">Home</a>
+   <a href="${pageContext.request.contextPath}/home">Home</a>
    |
    <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
    |
