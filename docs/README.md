@@ -12,7 +12,7 @@ MySQL Connector/J (the official JDBC driver for MySQL) - mysql-connector-java
 
 ### Database setup
 
-<b>Linux<b>:
+**Linux**:
 
 Log into MySQL from this repository's root directory (username root) `mysql -u root -p`
 
