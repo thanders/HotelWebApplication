@@ -3,8 +3,11 @@
 This is a web application for a hotel reservation system.
 
 ### Java External dependencies
+
 JavaServer Pages Standard Tag Library - javax.servlet.jsp.jstl
+
 JavaServer Pages Standard Tag Library API - javax.servlet.jsp.jstl-api
+
 MySQL Connector/J (the official JDBC driver for MySQL) - mysql-connector-java
 
 ### Database setup
