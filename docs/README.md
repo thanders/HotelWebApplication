@@ -17,15 +17,6 @@ Execute the included SQL file to create the webApp's tables `source docs/db/crea
 This is effectively a diary that documents the contribution of each team member to the project.
 <https://trello.com/invite/b/3rONPJFY/b6924afd4c73865357ae565eb06815da/hotelwebapp>
 
-
-## Java External dependencies
-
-JavaServer Pages Standard Tag Library - javax.servlet.jsp.jstl
-
-JavaServer Pages Standard Tag Library API - javax.servlet.jsp.jstl-api
-
-MySQL Connector/J (the official JDBC driver for MySQL) - mysql-connector-java
-
 ## Java External dependencies
 
 JavaServer Pages Standard Tag Library - javax.servlet.jsp.jstl
