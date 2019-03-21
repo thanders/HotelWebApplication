@@ -2,6 +2,8 @@
 
 This is a web application for a hotel reservation system.
 
+Related technology: Java EE, JSP, HTML and CSS. Hosted using TomCat.
+
 ## Database setup
 
 **Linux**:
