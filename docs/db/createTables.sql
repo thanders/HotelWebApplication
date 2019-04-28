@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `Credit_Card`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Credit_Card` (
-  `Card_Number` int(16) NOT NULL,
+  `Card_Number` varchar(45) COLLATE utf8_bin NOT NULL,
   `MemberID` int(11) NOT NULL,
   `CVV` int(3) NOT NULL,
   `ExpiryDate` date NOT NULL,
@@ -39,6 +39,7 @@ CREATE TABLE `Credit_Card` (
 
 LOCK TABLES `Credit_Card` WRITE;
 /*!40000 ALTER TABLE `Credit_Card` DISABLE KEYS */;
+INSERT INTO `Credit_Card` VALUES ('1234567788912345',30,188,'2019-04-29'),('1234567890123456',29,123,'2019-04-30'),('1234567899999922',29,111,'2019-04-30');
 /*!40000 ALTER TABLE `Credit_Card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,13 +55,13 @@ CREATE TABLE `Guest` (
   `Guest_Name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `Guest_Surname` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `Address` varchar(280) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `Card_Number` int(19) NOT NULL,
+  `Card_Number` varchar(45) COLLATE utf8_bin NOT NULL,
   `Phone_Number` int(15) NOT NULL,
   `Email_Address` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `CVV` int(3) NOT NULL,
   `ExpiryDate` date NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +70,7 @@ CREATE TABLE `Guest` (
 
 LOCK TABLES `Guest` WRITE;
 /*!40000 ALTER TABLE `Guest` DISABLE KEYS */;
+INSERT INTO `Guest` VALUES (8,'Abdulrahman Salim','Akinyede','43 Parslickstown Court','1234567890123456',852777322,'Abdulrahman.salim@ucdconnect.ie',123,'2019-04-29');
 /*!40000 ALTER TABLE `Guest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,6 +95,7 @@ CREATE TABLE `Members` (
 
 LOCK TABLES `Members` WRITE;
 /*!40000 ALTER TABLE `Members` DISABLE KEYS */;
+INSERT INTO `Members` VALUES ('1','1'),('aa','aa'),('aaaa','a'),('b','b'),('df','d'),('dfd','ddd'),('f','f');
 /*!40000 ALTER TABLE `Members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +118,7 @@ CREATE TABLE `Reservations` (
   `reservationType` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `price` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`Reservation_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +127,7 @@ CREATE TABLE `Reservations` (
 
 LOCK TABLES `Reservations` WRITE;
 /*!40000 ALTER TABLE `Reservations` DISABLE KEYS */;
+INSERT INTO `Reservations` VALUES (90,8,'2019-04-29','2019-04-30',NULL,1,'Active','2019-04-28 11:05:29','Guest','120.0'),(93,30,'2019-04-29','2019-04-29',NULL,1,'Active','2019-04-28 13:49:34','Member','0.0');
 /*!40000 ALTER TABLE `Reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +143,7 @@ CREATE TABLE `Reserved_Rooms` (
   `roomNumber` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `reservationID` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +152,7 @@ CREATE TABLE `Reserved_Rooms` (
 
 LOCK TABLES `Reserved_Rooms` WRITE;
 /*!40000 ALTER TABLE `Reserved_Rooms` DISABLE KEYS */;
-INSERT INTO `Reserved_Rooms` VALUES (1,'2a','75'),(2,'3a','75'),(3,'2a','76'),(4,'3a','76'),(5,'2a','77'),(6,'3a','77'),(7,'10b','78'),(8,'10b','79'),(9,'10b','80'),(10,'10b','81'),(11,'11b','82'),(12,'3a','83'),(13,'19b','84'),(14,'15b','85'),(15,'19b','85'),(16,'11b','87'),(17,'13b','87'),(18,'14b','88'),(19,'16b','88'),(20,'17b','88'),(21,'1a','89');
+INSERT INTO `Reserved_Rooms` VALUES (1,'2a','75'),(2,'3a','75'),(3,'2a','76'),(4,'3a','76'),(5,'2a','77'),(6,'3a','77'),(7,'10b','78'),(8,'10b','79'),(9,'10b','80'),(10,'10b','81'),(11,'11b','82'),(12,'3a','83'),(13,'19b','84'),(14,'15b','85'),(15,'19b','85'),(16,'11b','87'),(17,'13b','87'),(18,'14b','88'),(19,'16b','88'),(20,'17b','88'),(21,'1a','89'),(22,'11b','90'),(25,'7a','93');
 /*!40000 ALTER TABLE `Reserved_Rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,13 +195,14 @@ CREATE TABLE `Starwood` (
   `Member_Surname` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `User_Name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `Address` varchar(280) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `Card_Number` int(16) NOT NULL,
+  `Card_Number` varchar(45) COLLATE utf8_bin NOT NULL,
   `Phone_Number` int(11) NOT NULL,
   `Email_Address` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `CVV` int(3) NOT NULL,
   `ExpiryDate` date NOT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `User_Name_UNIQUE` (`User_Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,6 +211,7 @@ CREATE TABLE `Starwood` (
 
 LOCK TABLES `Starwood` WRITE;
 /*!40000 ALTER TABLE `Starwood` DISABLE KEYS */;
+INSERT INTO `Starwood` VALUES (30,'Abdulrahman Salim','a','b','43 Parslickstown Court','1234567788912345',852777322,'Abdulrahman.salim@ucdconnect.ie',188,'2019-04-29');
 /*!40000 ALTER TABLE `Starwood` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -218,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-27 22:15:24
+-- Dump completed on 2019-04-28 14:51:48
