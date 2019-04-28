@@ -45,6 +45,17 @@ public class Guest implements Serializable{
 		CVV = cVV;
 		this.expiryDate = expiryDate;
 	}
+	public Guest (String guestName, String guestSurename, String guestAddress, String guestEmail,
+			String guestCardNumber, int guestPhoneNumber) {
+		super();
+		this.guestName = guestName;
+		this.guestSurename = guestSurename;
+		this.guestAddress = guestAddress;
+		this.guestEmail = guestEmail;
+		this.guestCardNumber = guestCardNumber;
+		this.guestPhoneNumber = guestPhoneNumber;
+	
+	}
 
 	// Empty constructor
 	public Guest() {}
