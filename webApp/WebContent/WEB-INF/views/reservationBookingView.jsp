@@ -77,9 +77,17 @@
 
          	<tr>
                <th>Credit card number</th>
-               <td><input type="text" name="guestCardNumber" value="${Guest.guestCardNumber}" required/></td>
+               <td><input type="text" name="guestCardNumber" maxlength="80" value="${Guest.guestCardNumber}" pattern=".{16,16}" title="16 digits required" required/></td>
             </tr>
-
+            <tr>
+               <th> CVV number</th>
+               <td><input type="text" name="CVV" value="${Guest.CVV}" pattern=".{3,3}" title="3 digits required" required/></td>
+            </tr>
+            
+             <tr>
+               <th>Expiry Date</th>
+               <td><input type="date" name="ExpiryDate" value="${Guest.ExpiryDate}" required/></td>
+            </tr>
          </table>
 	</c:if>
 	

@@ -16,9 +16,19 @@
          <form method="POST" action="${pageContext.request.contextPath}/addCard">
             <table border="1">
                <tr>
-                  <td>Card Number</td>
-                  <td><input type="text" name="card" value="${CreditCard.cardNumber}"  /></td>
-               </tr>
+             	<tr>
+               <th>Credit card number</th>
+               <td><input type="text" name="Card" value="${CreditCard.cardNumber}" pattern=".{16,16}" title="16 digits required" required/></td>
+            </tr>
+            <tr>
+               <th> CVV number</th>
+               <td><input type="text" name="CVV" value="${CreditCard.CVV}" pattern=".{3,3}" title="3 digits required" required/></td>
+            </tr>
+            
+             <tr>
+               <th>Expiry Date</th>
+               <td><input type="date" name="ExpiryDate" value="${CreditCard.expiryDate}" required/></td>
+            </tr>
                <tr>
                <td colspan="2">                   
                    <input type="submit" value="Submit" />

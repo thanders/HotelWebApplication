@@ -58,25 +58,27 @@ public class ReservationConfirmServlet extends HttpServlet {
 		String[] choices = (String[]) session.getAttribute("choices");
 
 		Double resPrice = (Double) session.getAttribute("resPrice");
-
+		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 
 
 
 
 		if(SessionUtils.getLoginedUser(request.getSession())==null)
 		{
-			// Use get parameter to obtain POSTED data from form
 			String guestName = (String) request.getParameter("guestName");
 			String guestSurename = (String) request.getParameter("guestSurename");
 			String guestAddress = (String) request.getParameter("guestAddress");
 			String guestEmail = (String) request.getParameter("guestEmail");
-			String gCNumber = (String) request.getParameter("guestCardNumber");
+			String guestCardNumber = (String) request.getParameter("guestCardNumber");
 			String gPNumber = (String) request.getParameter("guestPhoneNumber");
-			int guestCardNumber = Integer.parseInt(gCNumber);
 			int guestPhoneNumber = Integer.parseInt(gPNumber);
-
+			String guestCardDate= (String) request.getParameter("ExpiryDate");
+			System.out.println(guestCardDate+" yes");
+			String cvvNumber = (String) request.getParameter("CVV");
+			int guestcvvNumber = Integer.parseInt(cvvNumber);
+			LocalDate expiry = LocalDate.parse( guestCardDate , f ) ;
 			// Create instance of Guest class
-			Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber);
+			Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber,guestcvvNumber,expiry);
 
 
 			String errorString = null;
@@ -176,7 +178,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 			String guestSurename = SessionUtils.getLoginedUser(request.getSession()).getSurename();
 			String guestAddress = SessionUtils.getLoginedUser(request.getSession()).getAddress();
 			String guestEmail = SessionUtils.getLoginedUser(request.getSession()).getEmail();
-			int guestCardNumber = SessionUtils.getLoginedUser(request.getSession()).getCardNumber();
+			String guestCardNumber = SessionUtils.getLoginedUser(request.getSession()).getCardNumber();
 			int guestPhoneNumber = SessionUtils.getLoginedUser(request.getSession()).getPhoneNumber();
 
 			// Create instance of Guest class

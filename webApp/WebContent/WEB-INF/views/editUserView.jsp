@@ -37,10 +37,6 @@
                <td><input type="text" name="phoneNumber" value="${Starwood.phoneNumber}" /></td>
             </tr>
 
-         	<tr>
-               <th>Credit card number</th>
-               <td><input type="text" name="cardNumber" value="${Starwood.cardNumber}" /></td>
-            </tr>
             
             <tr>
                <th>User Name</th>

@@ -4,6 +4,8 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,9 +43,15 @@ public class AddCardServlet extends HttpServlet {
 			throws ServletException, IOException {
 		CreditCard card = null;
 		Connection conn = SessionUtils.getStoredConnection(request);
-		String cardNumber = (String) request.getParameter("card");
-		int CardNumber = Integer.parseInt(cardNumber);
-
+		String cardNumber = (String) request.getParameter("Card");
+		String CVV = (String) request.getParameter("CVV");
+		int Cvv = Integer.parseInt(CVV);
+		String CardDate= (String) request.getParameter("ExpiryDate");
+		System.out.println(CardDate+" yes");
+		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
+		LocalDate expiry = LocalDate.parse( CardDate , f ) ;
+		
+		
 		String errorString = null;
 
 		// If error string is null, try to insert the guest object into the Guest
@@ -51,7 +59,7 @@ public class AddCardServlet extends HttpServlet {
 		if (errorString == null) {
 			try {
 				int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
-				card = new CreditCard(id, CardNumber);
+				card = new CreditCard(cardNumber,id,Cvv,expiry);
 
 				DBUtils.insertCard(conn, card);
 			} catch (SQLException e) {

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mysql.cj.util.StringUtils;
 
+import webApp.beans.Members;
 import webApp.beans.Starwood;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
@@ -77,12 +78,10 @@ public class EditUserDetailsServlet extends HttpServlet {
 		String errorString = null;
 		String changesString = "";
 
-
 		String name = (String) request.getParameter("name");
 		String surename = (String) request.getParameter("surename");
 		String address = (String) request.getParameter("address");
 		String email = (String) request.getParameter("email");
-		String cardNumber = (String) request.getParameter("cardNumber");
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
@@ -113,22 +112,7 @@ public class EditUserDetailsServlet extends HttpServlet {
 				DBUtils.updateMemberEmail(conn, currentUser);
 				changesString +=" " + "Email has been updated";
 			} 
-			
-			if (cardNumber != "" ) {
-				
-				if(StringUtils.isStrictlyNumeric(cardNumber)) {
-					
-					int cardNo = Integer.parseInt(cardNumber);
-					int oldNo = currentUser.getCardNumber();
-					currentUser.setCardNumber(cardNo);
-					DBUtils.updateMemberCreditCard(conn, currentUser,oldNo);
-					changesString +=" " + "Credit Card has been updated";
-					
-				}else {
-					errorString = "Please enter a number for Credit Card";
-				}
-				
-			} 
+		
 			
 			if (phoneNumber != "" ) {
 				
@@ -150,10 +134,11 @@ public class EditUserDetailsServlet extends HttpServlet {
 				DBUtils.updateMemberUsername(conn, currentUser);
 				changesString +=" " + "Username has been updated";
 			}
-			
+			//fix
 			if (password != "" ) {
-				currentUser.setPassword(password);
-				DBUtils.updateMemberPassword(conn, currentUser);
+//				currentUser.setPassword(password);
+				Members member = new Members(currentUser.getUserName(),password);
+				DBUtils.updateMember(conn, member);
 				changesString +=" " + "Password has been updated";
 			}
 			
