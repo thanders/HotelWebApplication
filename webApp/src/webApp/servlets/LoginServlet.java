@@ -3,7 +3,6 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import webApp.beans.Members;
 import webApp.beans.Starwood;
 import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
@@ -35,21 +33,6 @@ public class LoginServlet extends HttpServlet {
 		// Forward to /WEB-INF/views/loginView.jsp
 		// (Users can not access directly into JSP pages placed in WEB-INF)
 
-
-    	Enumeration e = (Enumeration) (session.getAttributeNames());
-
-        while ( e.hasMoreElements())
-        {
-            String tring;
-            if((tring = (String) e.nextElement())!=null)
-            {
-                System.out.println( tring);
-                
-            }
-
-        }
-    	 
-		
 		// Check User has logged on
 		Starwood loginedUser = SessionUtils.getLoginedUser(session);
 
@@ -81,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 		Starwood user = null;
 		boolean hasError = false;
 		String errorString = null;
-		Members userlogInDetails = null;
+		Starwood userlogInDetails = null;
 		if (userName == null || password == null || userName.length() == 0 || password.length() == 0) {
 			hasError = true;
 			errorString = "Required username and password!";
@@ -107,7 +90,7 @@ public class LoginServlet extends HttpServlet {
 			//fix
 			user = new Starwood();
 			user.setUserName(userName);
-			userlogInDetails= new Members(userName,password);
+			user.setPassword(password);
 
 
 			// Store information in request attribute, before forward.

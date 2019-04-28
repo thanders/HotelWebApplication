@@ -20,7 +20,7 @@ public class Starwood implements Serializable{
 	}
 
 	public Starwood(String name, String surename, String address, String email, String cardNumber, int phoneNumber,
-			String userName, int cVV, LocalDate expiryDate) {
+			String userName, String password, int cVV, LocalDate expiryDate) {
 		super();
 		this.name = name;
 		this.surename = surename;
@@ -31,6 +31,13 @@ public class Starwood implements Serializable{
 		this.userName = userName;
 		this.CVV = cVV;
 		this.expiryDate = expiryDate;
+		this.password = password;
+	}
+	
+	public Starwood(String userName, String password){
+		
+		this.userName = userName;
+		this.password = password;
 	}
 
 	public int getCVV() {
@@ -40,7 +47,15 @@ public class Starwood implements Serializable{
 	public void setCVV(int cVV) {
 		CVV = cVV;
 	}
+	
+	public String getPassword() {
+		return this.password;
+	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public LocalDate getExpiryDate() {
 		return expiryDate;
 	}
@@ -113,6 +128,7 @@ public class Starwood implements Serializable{
 	private String userName;
 	private int CVV;
 	private LocalDate expiryDate;
+	private String password;
 
 
 	public String toString() {
