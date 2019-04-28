@@ -28,9 +28,8 @@ public class DB_guests {
 	            String Card_Number = rs.getString("Card_Number");
 	            int Phone_Number = rs.getInt("Phone_Number");
 	            String Email_Address = rs.getString("Email_Address");
-	            int CVV = rs.getInt("CVV");
-	            LocalDate expiryDate= (LocalDate) rs.getObject("ExpiryDate");
-	            Guest guest = new Guest (Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number,CVV,expiryDate);
+
+	            Guest guest = new Guest (Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number);
 	            guest.setGuestID(GuestID);
 	            
 	            return guest;

@@ -83,6 +83,7 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				errorString = e.getMessage();
+				
 			}
 
 		}
