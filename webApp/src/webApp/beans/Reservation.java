@@ -24,6 +24,7 @@ public class Reservation implements Serializable {
 	private String priceFormatted;
 	
 	
+	
 	// empty constructor
 	public Reservation() { }
 	

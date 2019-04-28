@@ -42,10 +42,18 @@
             </tr>
 
          	<tr>
-               <td>Credit card number</td>
-               <td><input type="text" name="cardNumber" value="${Starwood.cardNumber}" required/></td>
+               <th>Credit card number</th>
+               <td><input type="text" name="CardNumber" maxlength="80" value="${Starwood.cardNumber}" pattern=".{16,16}" title="16 digits required" required/></td>
+            </tr>
+            <tr>
+               <th> CVV number</th>
+               <td><input type="text" name="CVV" value="${Starwood.CVV}" pattern=".{3,3}" title="3 digits required" required/></td>
             </tr>
             
+             <tr>
+               <th>Expiry Date</th>
+               <td><input type="date" name="ExpiryDate" value="${Starwood.ExpiryDate}" required/></td>
+            </tr>
             <tr>
                <td>User Name</td>
                <td><input type="text" name="userName" value="${Starwood.userName}" required/></td>

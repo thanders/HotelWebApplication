@@ -14,11 +14,11 @@ import webApp.beans.*;
 public class DBUtils {
 
 
-	public static Starwood findStarwoodMember(Connection conn, //
+	public static Members findMember(Connection conn, //
 			String userName, String password) throws SQLException {
 
-		String sql = "Select * from Starwood a " //
-				+ " where a.User_Name = ? and a.User_Password= ?";
+		String sql = "Select * from Members a " //
+				+ " where a.User_Name = ? and a.User_Password = ?";
 
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setString(1, userName);
@@ -26,25 +26,8 @@ public class DBUtils {
 		ResultSet rs = pstm.executeQuery();
 
 		if (rs.next()) {
-
-			String name = rs.getString("Member_Name");
-			String surname = rs.getString("Member_Surname");
-			String address = rs.getString("Address");
-			String email = rs.getString("Email_Address");
-			String cardNumber = Integer.toString(rs.getInt("Card_Number"));
-			String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
-			int CardNumber = Integer.parseInt(cardNumber);
-			int PhoneNumber = Integer.parseInt(phoneNumber);
-			Starwood member = new Starwood();
-			member.setUserName(userName);
-			member.setPassword(password);
-			member.setName(name);
-			member.setAddress(address);
-			member.setCardNumber(CardNumber);
-			member.setSurename(surname);
-			member.setEmail(email);
-			member.setPhoneNumber(PhoneNumber);
-
+			Members member = new Members(userName,password);
+	
 			return member;
 		}
 		return null;
@@ -62,21 +45,18 @@ public class DBUtils {
 		ResultSet rs = pstm.executeQuery();
 
 		if (rs.next()) {
-			String password = rs.getString("User_Password");
 			String name = rs.getString("Member_Name");
 			String surname = rs.getString("Member_Surname");
 			String address = rs.getString("Address");
 			String email = rs.getString("Email_Address");
-			String cardNumber = Integer.toString(rs.getInt("Card_Number"));
+			String cardNumber = rs.getString("Card_Number");
 			String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
-			int CardNumber = Integer.parseInt(cardNumber);
 			int PhoneNumber = Integer.parseInt(phoneNumber);
 			Starwood member = new Starwood();
 			member.setUserName(userName);
-			member.setPassword(password);
 			member.setName(name);
 			member.setAddress(address);
-			member.setCardNumber(CardNumber);
+			member.setCardNumber(cardNumber);
 			member.setSurename(surname);
 			member.setEmail(email);
 			member.setPhoneNumber(PhoneNumber);
@@ -108,7 +88,7 @@ public class DBUtils {
 
 	// insertGuest, obtain auto generated GuestID key and create Reservation
 	public static int insertGuest(Connection conn, Guest guest) throws SQLException {
-		String sql = "Insert into Guest(Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number) values (?,?,?,?,?,?)";
+		String sql = "Insert into Guest(Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number,ExpiryDate,CVV) values (?,?,?,?,?,?,?,?)";
 
 		PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -116,9 +96,10 @@ public class DBUtils {
 		pstm.setString(2, guest.getGuestSurename());
 		pstm.setString(3, guest.getGuestAddress());
 		pstm.setString(4, guest.getGuestEmail());
-		pstm.setInt(5, guest.getGuestCardNumber());
+		pstm.setString(5, guest.getGuestCardNumber());
 		pstm.setInt(6, guest.getGuestPhoneNumber());
-
+        pstm.setObject(7, guest.getExpiryDate());
+        pstm.setInt(8, guest.getCVV());
 		pstm.executeUpdate();
 
 		ResultSet rs = pstm.getGeneratedKeys();
@@ -151,16 +132,15 @@ public class DBUtils {
 
 	// insertMember
 	public static int insertMember(Connection conn, Starwood member) throws SQLException {
-		String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name, User_Password) values (?,?,?,?,?,?,?,?)";
+		String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name) values (?,?,?,?,?,?,?)";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setString(1, member.getName());
 		pstm.setString(2, member.getSurename());
 		pstm.setString(3, member.getAddress());
 		pstm.setString(4, member.getEmail());
-		pstm.setInt(5, member.getCardNumber());
+		pstm.setString(5, member.getCardNumber());
 		pstm.setInt(6, member.getPhoneNumber());
 		pstm.setString(7, member.getUserName());
-		pstm.setString(8, member.getPassword());
 		pstm.executeUpdate();
 	
 		int ID = 0;
@@ -179,7 +159,7 @@ public class DBUtils {
 		String username = member.getUserName();
 
 		String sql = "Delete From Starwood where User_Name= ?";
-
+		//TODO
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setString(1, username);
@@ -196,7 +176,7 @@ public class DBUtils {
 		ResultSet rs = pstm.executeQuery();
 		List<CreditCard> list = new ArrayList<CreditCard>();
 		while (rs.next()) {
-			int card = rs.getInt(1);
+			String card = rs.getString(1);
 			CreditCard creditCard = new CreditCard(card, id);
 			list.add(creditCard);
 		}
@@ -312,18 +292,18 @@ public class DBUtils {
 		pstm.executeUpdate();
 	}
 
-	public static void updateMemberCreditCard(Connection conn, Starwood member, int oldNo) throws SQLException {
+	public static void updateMemberCreditCard(Connection conn, Starwood member, String oldNo) throws SQLException {
 		String sql = "Update Starwood set Card_Number =?  where Id=? ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
-		pstm.setInt(1, member.getCardNumber());
+		pstm.setString(1, member.getCardNumber());
 		pstm.setInt(2, member.getId());
 
 		//Update the old card in the credit card table as well
 		String sql2 = "Update Credit_Card set Card_Number =?  where Card_Number=? ";
 		PreparedStatement pstm2 = conn.prepareStatement(sql2);
-		pstm2.setInt(1, member.getCardNumber());
-		pstm2.setInt(2, oldNo);
+		pstm2.setString(1, member.getCardNumber());
+		pstm2.setString(2, oldNo);
 		pstm2.executeUpdate();
 
 		pstm.executeUpdate();
@@ -338,20 +318,40 @@ public class DBUtils {
 		pstm.executeUpdate();
 	}
 
-	public static void updateMemberPassword(Connection conn, Starwood member) throws SQLException {
-		String sql = "Update Starwood set User_Password =?  where Id=? ";
+	public static void updateStarwoodUsername(Connection conn, Starwood member) throws SQLException {
+		String sql = "Update Starwood set where User_Name=? ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
-
+		pstm.setString(1, member.getUserName());
+		pstm.executeUpdate();
+	}
+	public static void updateMemberUsername(Connection conn, Members member) throws SQLException {
+		String sql = "Update Members set where User_Name=? ";
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		pstm.setString(1, member.getUserName());
+		pstm.executeUpdate();
+	}
+	public static void updateMember(Connection conn, Members member) throws SQLException {
+		String sql = "Update Members set User_Password=? where User_Name=? ";
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		pstm.setString(2, member.getUserName());
 		pstm.setString(1, member.getPassword());
-		pstm.setInt(2, member.getId());
+
+		pstm.executeUpdate();
+	}
+	public static void updateMemberPasword(Connection conn, Members member) throws SQLException {
+		String sql = "Update Members set where User_Name=? ";
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		pstm.setString(1, member.getUserName());
 		pstm.executeUpdate();
 	}
 
 	public static void insertCard(Connection conn, CreditCard card) throws SQLException {
-		String sql = "Insert into Credit_Card(MemberID, Card_Number) values (?,?)";
+		String sql = "Insert into Credit_Card(MemberID, Card_Number,ExpiryDate, CVV) values (?,?,?,?)";
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setInt(2, card.getId());
-		pstm.setInt(1, card.getCardNumber());
+		pstm.setInt(1, card.getId());
+		pstm.setString(2, card.getCardNumber());
+        pstm.setObject(3, card.getExpiryDate());
+        pstm.setInt(4, card.getCVV());
 		pstm.executeUpdate();
 	}
 

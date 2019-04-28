@@ -4,6 +4,8 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
 import webApp.beans.CreditCard;
+import webApp.beans.Members;
 import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 
@@ -43,20 +46,27 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		Connection conn = SessionUtils.getStoredConnection(request);
-
+		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
+		int cvvNumber=0;
 		String name = (String) request.getParameter("name");
 		String surename = (String) request.getParameter("surename");
 		String address = (String) request.getParameter("address");
 		String email = (String) request.getParameter("email");
-		String cardNumber = (String) request.getParameter("cardNumber");
+		String cardNumber = (String) request.getParameter("CardNumber");
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
-		int CardNumber = Integer.parseInt(cardNumber);
 		int PhoneNumber = Integer.parseInt(phoneNumber);
-		Starwood member = new Starwood(name, surename, address, email, CardNumber, PhoneNumber, userName, password);
+		String CardDate= (String) request.getParameter("ExpiryDate");
+		String cvv = (String) request.getParameter("CVV");
+		cvvNumber = Integer.parseInt(cvv);
+		System.out.println(cvv+" yes");
 
+		LocalDate expiry = LocalDate.parse( CardDate , f ) ;
 
+		Starwood member = new Starwood(name, surename, address, email, cardNumber, PhoneNumber, userName,cvvNumber, expiry);
+	//add db function
+		Members loginDets = new Members(userName,password);
 		String errorString = null;
 
 		// If error string is null, try to insert the guest object into the Guest
@@ -64,10 +74,13 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		if (errorString == null) {
 			try {
 				DB_members.insertMember(conn, member);
+				DB_members.insertMemberLogIn( conn,  loginDets);
+
 				int id = DB_members.getStarwoodMemberId(conn,userName);
-				CreditCard card = new CreditCard(id, CardNumber);
+				CreditCard card = new CreditCard(cardNumber, id,cvvNumber,expiry);
 
 				DBUtils.insertCard(conn, card);
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 				errorString = e.getMessage();
@@ -92,6 +105,7 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 			// Redirect to the product listing page.
 			//TODO Make logged in
 			HttpSession session = request.getSession();
+			//have a look<<<maybe logindetails>>>
 			SessionUtils.storeLoginedUser(session, member);
 			// Redirect to userInfo page.
 			response.sendRedirect(request.getContextPath() + "/userInfo");

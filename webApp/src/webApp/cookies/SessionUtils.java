@@ -37,7 +37,9 @@ public class SessionUtils {
     }
     
  // Removes user info in Session.
-    public static void removeLoginedUser(HttpSession session) {
+    public static void removeLoginedUser(HttpSession session,HttpServletResponse response) {
+    	System.out.println("hereeee");
+    	deleteUserCookie(response);
         session.removeAttribute("loginedUser");
         session.invalidate();
     }

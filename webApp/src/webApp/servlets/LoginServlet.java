@@ -3,6 +3,7 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import webApp.beans.Members;
 import webApp.beans.Starwood;
 import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
@@ -33,6 +35,21 @@ public class LoginServlet extends HttpServlet {
 		// Forward to /WEB-INF/views/loginView.jsp
 		// (Users can not access directly into JSP pages placed in WEB-INF)
 
+
+    	Enumeration e = (Enumeration) (session.getAttributeNames());
+
+        while ( e.hasMoreElements())
+        {
+            String tring;
+            if((tring = (String) e.nextElement())!=null)
+            {
+                System.out.println( tring);
+                
+            }
+
+        }
+    	 
+		
 		// Check User has logged on
 		Starwood loginedUser = SessionUtils.getLoginedUser(session);
 
@@ -43,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/userInfo");
 			return;
 		}
-
+		
 		RequestDispatcher dispatcher //
 		= this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
 
@@ -64,7 +81,7 @@ public class LoginServlet extends HttpServlet {
 		Starwood user = null;
 		boolean hasError = false;
 		String errorString = null;
-
+		Members userlogInDetails = null;
 		if (userName == null || password == null || userName.length() == 0 || password.length() == 0) {
 			hasError = true;
 			errorString = "Required username and password!";
@@ -72,9 +89,10 @@ public class LoginServlet extends HttpServlet {
 			Connection conn = SessionUtils.getStoredConnection(request);
 			try {
 				// Find the user in the DB.
-				user = DBUtils.findStarwoodMember(conn, userName, password);
-
-				if (user == null) {
+				//edit to check for username
+				user = DBUtils.findStarwoodMember(conn, userName);
+				userlogInDetails = DBUtils.findMember(conn,userName,password);
+				if (user == null && userlogInDetails ==null) {
 					hasError = true;
 					errorString = "User Name or password invalid";
 				}
@@ -86,9 +104,11 @@ public class LoginServlet extends HttpServlet {
 		}
 		// If error, forward to /WEB-INF/views/login.jsp
 		if (hasError) {
+			//fix
 			user = new Starwood();
 			user.setUserName(userName);
-			user.setPassword(password);
+			userlogInDetails= new Members(userName,password);
+
 
 			// Store information in request attribute, before forward.
 			request.setAttribute("errorString", errorString);
