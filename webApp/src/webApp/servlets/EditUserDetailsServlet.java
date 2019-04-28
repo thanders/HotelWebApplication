@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mysql.cj.util.StringUtils;
 
-import webApp.beans.Members;
 import webApp.beans.Starwood;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
@@ -130,15 +129,15 @@ public class EditUserDetailsServlet extends HttpServlet {
 			} 
 			
 			if (userName != "" ) {
+				String oldUserName = currentUser.getUserName();
 				currentUser.setUserName(userName);
-				DBUtils.updateMemberUsername(conn, currentUser);
+				DBUtils.updateMemberUsername(conn, currentUser, oldUserName);
 				changesString +=" " + "Username has been updated";
 			}
 			//fix
 			if (password != "" ) {
-//				currentUser.setPassword(password);
-				Members member = new Members(currentUser.getUserName(),password);
-				DBUtils.updateMember(conn, member);
+				currentUser.setPassword(password);				
+				DBUtils.updateMemberPasword(conn, currentUser);
 				changesString +=" " + "Password has been updated";
 			}
 			

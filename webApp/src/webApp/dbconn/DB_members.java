@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import webApp.beans.Members;
 import webApp.beans.Starwood;
 
 public class DB_members{ 
@@ -83,7 +82,7 @@ public class DB_members{
 		    	return id;
 		    }
 		    // insertMember
-		    public static void insertMemberLogIn(Connection conn, Members member) throws SQLException {
+		    public static void insertMemberLogIn(Connection conn, Starwood member) throws SQLException {
 		        String sql = "Insert into Members(User_Name, User_Password) values (?,?)";
 		        PreparedStatement pstm = conn.prepareStatement(sql);
 		        pstm.setString(1, member.getUserName());

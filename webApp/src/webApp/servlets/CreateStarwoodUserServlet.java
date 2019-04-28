@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
 import webApp.beans.CreditCard;
-import webApp.beans.Members;
 import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 
@@ -64,9 +63,9 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 
 		LocalDate expiry = LocalDate.parse( CardDate , f ) ;
 
-		Starwood member = new Starwood(name, surename, address, email, cardNumber, PhoneNumber, userName,cvvNumber, expiry);
+		Starwood member = new Starwood(name, surename, address, email, cardNumber, PhoneNumber, userName,password,cvvNumber, expiry);
 	//add db function
-		Members loginDets = new Members(userName,password);
+		
 		String errorString = null;
 
 		// If error string is null, try to insert the guest object into the Guest
@@ -74,7 +73,7 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		if (errorString == null) {
 			try {
 				DB_members.insertMember(conn, member);
-				DB_members.insertMemberLogIn( conn,  loginDets);
+				DB_members.insertMemberLogIn( conn,  member);
 
 				int id = DB_members.getStarwoodMemberId(conn,userName);
 				CreditCard card = new CreditCard(cardNumber, id,cvvNumber,expiry);

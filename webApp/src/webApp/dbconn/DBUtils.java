@@ -13,8 +13,7 @@ import webApp.beans.*;
 
 public class DBUtils {
 
-
-	public static Members findMember(Connection conn, //
+	public static Starwood findMember(Connection conn, //
 			String userName, String password) throws SQLException {
 
 		String sql = "Select * from Members a " //
@@ -26,13 +25,12 @@ public class DBUtils {
 		ResultSet rs = pstm.executeQuery();
 
 		if (rs.next()) {
-			Members member = new Members(userName,password);
-	
+			Starwood member = new Starwood(userName, password);
+
 			return member;
 		}
 		return null;
 	}
-
 
 	public static Starwood findStarwoodMember(Connection conn, String userName) throws SQLException {
 
@@ -66,8 +64,6 @@ public class DBUtils {
 		return null;
 	}
 
-
-
 	// queryRoom
 	public static List<Room> queryRoom(Connection conn) throws SQLException {
 		String sql = "Select a.Room_Number, a.FK_Room_Type_ID from Room a order by Room_Number";
@@ -98,8 +94,8 @@ public class DBUtils {
 		pstm.setString(4, guest.getGuestEmail());
 		pstm.setString(5, guest.getGuestCardNumber());
 		pstm.setInt(6, guest.getGuestPhoneNumber());
-        pstm.setObject(7, guest.getExpiryDate());
-        pstm.setInt(8, guest.getCVV());
+		pstm.setObject(7, guest.getExpiryDate());
+		pstm.setInt(8, guest.getCVV());
 		pstm.executeUpdate();
 
 		ResultSet rs = pstm.getGeneratedKeys();
@@ -142,7 +138,7 @@ public class DBUtils {
 		pstm.setInt(6, member.getPhoneNumber());
 		pstm.setString(7, member.getUserName());
 		pstm.executeUpdate();
-	
+
 		int ID = 0;
 		ResultSet rs = pstm.getGeneratedKeys();
 
@@ -159,14 +155,30 @@ public class DBUtils {
 		String username = member.getUserName();
 
 		String sql = "Delete From Starwood where User_Name= ?";
-		//TODO
+		String sql2 = "Delete From Members where User_Name= ?";
+
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setString(1, username);
 
 		removeUserReservations(conn, member);
-
+		removeCreditCards(conn, DB_members.getStarwoodMemberId(conn,username));
 		pstm.executeUpdate();
+
+		PreparedStatement pstm1 = conn.prepareStatement(sql2);
+
+		pstm1.setString(1, username);
+
+		pstm1.executeUpdate();
+	}
+
+	private static void removeCreditCards(Connection conn, int id) throws SQLException {
+		// TODO Auto-generated method stub
+		String sql = "Delete From Credit_Card where MemberID = ?";
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		pstm.setInt(1, id);
+		pstm.executeUpdate();
+
 	}
 
 	public static List<CreditCard> getCards(Connection conn, int id) throws SQLException {
@@ -184,32 +196,27 @@ public class DBUtils {
 
 	}
 
-
 	public static void removeUserReservations(Connection conn, Starwood member) throws SQLException {
 
 		int guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
-		List<Reservation> reservations = DB_reservation.
-				queryReservations(conn, guestID , "Member");
+		List<Reservation> reservations = DB_reservation.queryReservations(conn, guestID, "Member");
 
-		for(Reservation r : reservations) {
-			
+		for (Reservation r : reservations) {
 
 			String sql = "Delete From Reservations where Reservation_Id= ?";
 
 			PreparedStatement pstm = conn.prepareStatement(sql);
 			List<Room> rooms = getReservedRooms(conn, r.getReservationId());
 
-			for(Room room : rooms) {
-				removeReservedRoom(conn,room.getId());
+			for (Room room : rooms) {
+				removeReservedRoom(conn, room.getId());
 			}
 
-
-			pstm.setInt(1,r.getReservationId());
+			pstm.setInt(1, r.getReservationId());
 
 			pstm.executeUpdate();
 
 		}
-
 
 	}
 
@@ -219,24 +226,23 @@ public class DBUtils {
 
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
-		pstm.setInt(1,id);
+		pstm.setInt(1, id);
 
 		pstm.executeUpdate();
 
 	}
 
-	public static List<Room> getReservedRooms(Connection conn, int reservationId) throws SQLException{
+	public static List<Room> getReservedRooms(Connection conn, int reservationId) throws SQLException {
 
 		List<Room> rooms = new ArrayList<>();
 		String sql = "Select *  from Reserved_Rooms a where a.reservationID = ? ";
-
 
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setInt(1, reservationId);
 
 		ResultSet rs = pstm.executeQuery();
 
-		while(rs.next()) {
+		while (rs.next()) {
 			Room r = new Room(rs.getString("roomNumber"));
 			r.setReservationNumber(reservationId);
 			r.setId(rs.getInt("id"));
@@ -246,7 +252,7 @@ public class DBUtils {
 		return rooms;
 
 	}
-
+	
 
 	public static void updateMemberName(Connection conn, Starwood member) throws SQLException {
 		String sql = "Update Starwood set Member_Name =?  where Id=? ";
@@ -299,7 +305,7 @@ public class DBUtils {
 		pstm.setString(1, member.getCardNumber());
 		pstm.setInt(2, member.getId());
 
-		//Update the old card in the credit card table as well
+		// Update the old card in the credit card table as well
 		String sql2 = "Update Credit_Card set Card_Number =?  where Card_Number=? ";
 		PreparedStatement pstm2 = conn.prepareStatement(sql2);
 		pstm2.setString(1, member.getCardNumber());
@@ -309,39 +315,27 @@ public class DBUtils {
 		pstm.executeUpdate();
 	}
 
-	public static void updateMemberUsername(Connection conn, Starwood member) throws SQLException {
+	public static void updateMemberUsername(Connection conn, Starwood member, String oldUserName) throws SQLException {
 		String sql = "Update Starwood set User_Name =?  where Id=? ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setString(1, member.getUserName());
 		pstm.setInt(2, member.getId());
 		pstm.executeUpdate();
+		
+		String sql2 = "Update Members set User_Name =? where User_Name=? ";
+		PreparedStatement pstm2 = conn.prepareStatement(sql2);
+		pstm2.setString(1, member.getUserName());
+		pstm2.setString(2, oldUserName);
+		pstm2.executeUpdate();
 	}
 
-	public static void updateStarwoodUsername(Connection conn, Starwood member) throws SQLException {
-		String sql = "Update Starwood set where User_Name=? ";
+
+	public static void updateMemberPasword(Connection conn, Starwood member) throws SQLException {
+		String sql = "Update Members set User_Password =? where User_Name=? ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setString(1, member.getUserName());
-		pstm.executeUpdate();
-	}
-	public static void updateMemberUsername(Connection conn, Members member) throws SQLException {
-		String sql = "Update Members set where User_Name=? ";
-		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setString(1, member.getUserName());
-		pstm.executeUpdate();
-	}
-	public static void updateMember(Connection conn, Members member) throws SQLException {
-		String sql = "Update Members set User_Password=? where User_Name=? ";
-		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setString(2, member.getUserName());
 		pstm.setString(1, member.getPassword());
-
-		pstm.executeUpdate();
-	}
-	public static void updateMemberPasword(Connection conn, Members member) throws SQLException {
-		String sql = "Update Members set where User_Name=? ";
-		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setString(1, member.getUserName());
+		pstm.setString(2, member.getUserName());
 		pstm.executeUpdate();
 	}
 
@@ -350,8 +344,8 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setInt(1, card.getId());
 		pstm.setString(2, card.getCardNumber());
-        pstm.setObject(3, card.getExpiryDate());
-        pstm.setInt(4, card.getCVV());
+		pstm.setObject(3, card.getExpiryDate());
+		pstm.setInt(4, card.getCVV());
 		pstm.executeUpdate();
 	}
 
