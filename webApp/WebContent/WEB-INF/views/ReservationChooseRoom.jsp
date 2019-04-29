@@ -23,9 +23,12 @@
 	
 	<br/><br/>
 	
-	Please choose any <b>${numRooms}</b>:
-	
 	<br/><br/>
+
+		Please choose any <b>${numRooms}</b>:
+	<br/><br/>
+	
+
 	
 	<form method="POST" action="${pageContext.request.contextPath}/ReservationChooseRoom">
 	

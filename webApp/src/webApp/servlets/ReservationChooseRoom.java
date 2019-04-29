@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -59,17 +60,19 @@ public class ReservationChooseRoom extends HttpServlet {
 		LocalDate now = LocalDate.now();
 		Long durationLong = ChronoUnit.DAYS.between(start, end);
 
-		Long durationFromToday = ChronoUnit.DAYS.between(now, start);
+		Period period = Period.between(now, start);
+		int durationFromToday = period.getDays();
+		    
 		System.out.println("INPUT:  "+durationLong);
-		//System.out.println("Duration:  "+durationFromToday.intValue());
+		System.out.println("Duration:  "+durationFromToday);
 		//System.out.println(start.compareTo(now));
 		
 		// If duration less than 1 day
-		if (durationLong < 0) {
+		if (durationLong < 0 || durationFromToday < 0) {
 			
 			request.setAttribute("durationMSG", "That's not a valid date range. Duration must be positive and from today onwards");
 			request.setAttribute("durationVisit", durationLong);
-			request.setAttribute("durationFromToday", start.compareTo(now));
+			request.setAttribute("durationFromToday", durationFromToday);
 			  
 			// load the initial reservation page:
 	    	RequestDispatcher dispatcher = request.getServletContext()
@@ -81,7 +84,7 @@ public class ReservationChooseRoom extends HttpServlet {
 		else {
 			int duration = durationLong.intValue();
 			int numRooms = Integer.parseInt(rooms);
-	
+
 			// format LocalDate to display on webpage
 			DateTimeFormatter formatWeb = DateTimeFormatter.ofPattern("EEEE, dd MMMM, yyyy");
 	
@@ -89,16 +92,11 @@ public class ReservationChooseRoom extends HttpServlet {
 			session.setAttribute("startObj", start);
 			session.setAttribute("endObj", end);
 	
-	
 			// set String/int attributes to send to web page
 			session.setAttribute("startDate", formatWeb.format(start));
 			session.setAttribute("endDate", formatWeb.format(end));
 			session.setAttribute("numRooms", numRooms);
 			session.setAttribute("duration", duration);
-	
-	
-	
-	
 	
 			// Retrieve a list of all reservations
 			List<Reservation> allReservations = null;
