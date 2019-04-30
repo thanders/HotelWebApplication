@@ -1,6 +1,7 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Starwood implements Serializable{
 
@@ -8,7 +9,7 @@ public class Starwood implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public Starwood(String name, String surename, String address, String email, int cardNumber, int phoneNumber) {
+	public Starwood(String name, String surename, String address, String email, String cardNumber, int phoneNumber) {
 		super();
 		this.name = name;
 		this.surename = surename;
@@ -18,14 +19,8 @@ public class Starwood implements Serializable{
 		this.phoneNumber = phoneNumber;
 	}
 
-	private String name;
-	private int id;
-	public Starwood() {
-		
-	}
-	
-	public Starwood(String name, String surename, String address, String email, int cardNumber, int phoneNumber,
-			String userName, String password) {
+	public Starwood(String name, String surename, String address, String email, String cardNumber, int phoneNumber,
+			String userName, String password, int cVV, LocalDate expiryDate) {
 		super();
 		this.name = name;
 		this.surename = surename;
@@ -34,8 +29,47 @@ public class Starwood implements Serializable{
 		this.cardNumber = cardNumber;
 		this.phoneNumber = phoneNumber;
 		this.userName = userName;
+		this.CVV = cVV;
+		this.expiryDate = expiryDate;
 		this.password = password;
 	}
+	
+	public Starwood(String userName, String password){
+		
+		this.userName = userName;
+		this.password = password;
+	}
+
+	public int getCVV() {
+		return CVV;
+	}
+
+	public void setCVV(int cVV) {
+		CVV = cVV;
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public LocalDate getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(LocalDate expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	private String name;
+	private int id;
+	public Starwood() {
+		
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -60,10 +94,10 @@ public class Starwood implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getCardNumber() {
+	public String getCardNumber() {
 		return cardNumber;
 	}
-	public void setCardNumber(int  cardNumber) {
+	public void setCardNumber(String  cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 	public int getPhoneNumber() {
@@ -78,12 +112,6 @@ public class Starwood implements Serializable{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public int getId() {
 		return id;
 	}
@@ -95,12 +123,15 @@ public class Starwood implements Serializable{
 	private String surename;
 	private String address;
 	private String email;
-	private int cardNumber;
+	private String cardNumber;
 	private int phoneNumber;
 	private String userName;
+	private int CVV;
+	private LocalDate expiryDate;
 	private String password;
 
+
 	public String toString() {
-		return this.getClass().getName() +" "+ "[" +this.id+" "+ this.name +" "+ this.surename + this.address + this.email + this.cardNumber + this.phoneNumber + this.userName+this.password+ "]";
+		return this.getClass().getName() +" "+ "[" +this.id+" "+ this.name +" "+ this.surename + this.address + this.email + this.cardNumber + this.phoneNumber +  "]";
 	}
 }

@@ -2,13 +2,13 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-<div style="padding: 5px;">
+<div class="menu">
  
-   <a href="${pageContext.request.contextPath}/">Home</a>
+   <a href="${pageContext.request.contextPath}/home">Home</a>
    |
    <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
    |
-   <a href="${pageContext.request.contextPath}/ReservationChooseDates">View Available Rooms & Book</a>
+   <a href="${pageContext.request.contextPath}/ReservationChooseDates">View Available Rooms and Book</a>
    
    <c:if test="${empty sessionScope.loginedUser}">
    |

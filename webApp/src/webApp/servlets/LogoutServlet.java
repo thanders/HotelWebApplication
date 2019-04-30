@@ -1,6 +1,7 @@
 package webApp.servlets;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,20 +28,21 @@ public class LogoutServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-    	
+    	System.out.println("here3");
     	HttpSession session = request.getSession();
-    	 
+    	
         // Check User has logged on
         Starwood loginedUser = SessionUtils.getLoginedUser(session);
         
      // Logged in
         if (loginedUser != null) {
+        	
             // Redirect to home page.
-        	SessionUtils.removeLoginedUser(session);
+        	SessionUtils.removeLoginedUser(session,response);
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
- 
+        
         // Forward to /WEB-INF/views/loginView.jsp
         // (Users can not access directly into JSP pages placed in WEB-INF)
         request.setAttribute("errorString", "Not logged in");

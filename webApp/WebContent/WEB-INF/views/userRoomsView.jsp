@@ -5,12 +5,15 @@
 <html>
  <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Available Rooms</title>
  </head>
  <body>
  
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
+    
+    <div class="container">
  
     <h3>Available Rooms</h3>
  
@@ -29,6 +32,8 @@
           </tr>
        </c:forEach>
     </table>
+    
+    </div>
  
     <jsp:include page="_footer.jsp"></jsp:include>
  

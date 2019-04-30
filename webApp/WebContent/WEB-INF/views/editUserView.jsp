@@ -12,42 +12,39 @@
       <jsp:include page="_menu.jsp"></jsp:include>
 <form method="POST" action="${pageContext.request.contextPath}/editDetails">
    
-      <h3>Enter your personal details</h3>
+      <h3>Please refill this form to update your details</h3>
+      <p style="color: red;">${errorString}</p>
          <table>
             <tr>
                <th>Name</th>
-               <td><input type="text" name=name value="${Starwood.name}" /></td>
+               <td><input type="text" name=name value="${member.name}" /></td>
             </tr>
             <tr>
                <th>Surname</th>
-               <td><input type="text" name="surename" value="${Starwood.surename}" /></td>
+               <td><input type="text" name="surename" value="${member.surename}" /></td>
             </tr>
             <tr>
                <th>Address</th>
-               <td><input type="text" name="address" value="${Starwood.address}" /></td>
+               <td><input type="text" name="address" value="${member.address}" /></td>
             </tr>
             <tr>
                <th>Email</th>
-               <td><input type="email" name="email" value="${Starwood.mmail}" /></td>
+               <td><input type="email" name="email" value="${member.email}" /></td>
             </tr>
                         
             <tr>
                <th>Phone number</th>
-               <td><input type="text" name="phoneNumber" value="${Starwood.phoneNumber}" /></td>
+               <td><input type="text" name="phoneNumber" value="${member.phoneNumber}" /></td>
             </tr>
 
-         	<tr>
-               <th>Credit card number</th>
-               <td><input type="text" name="cardNumber" value="${Starwood.cardNumber}" /></td>
-            </tr>
             
             <tr>
                <th>User Name</th>
-               <td><input type="text" name="userName" value="${Starwood.userName}" /></td>
+               <td><input type="text" name="userName" value="${member.userName}" /></td>
             </tr>
             <tr>
                <th>Password</th>
-               <td><input type="password" name="password" value="${Starwood.password}" /></td>
+               <td><input type="password" name="password" value="${member.password}" /></td>
             </tr>
           	<tr>
                <td colspan="2">                   

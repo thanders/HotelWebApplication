@@ -6,12 +6,15 @@
 <html>
    <head>
       <meta charset="UTF-8">
+      <link rel="stylesheet" type="text/css" href="style.css">
       <title>Reservation Summary</title>
    </head>
    <body>
     
       <jsp:include page="_header.jsp"></jsp:include>
       <jsp:include page="_menu.jsp"></jsp:include>
+      
+      <div class="container">
        
       <h2>Reservation (3/3)</h2>
        
@@ -28,7 +31,7 @@
      
      <br/><br/>
       
-      <table border="1" cellspacing="0">
+      <table>
       	<tr>	
 	    	<th>Number of rooms</th>
 	    	<th>Room numbers</th>
@@ -74,22 +77,36 @@
 
          	<tr>
                <th>Credit card number</th>
-               <td><input type="text" name="guestCardNumber" value="${Guest.guestCardNumber}" required/></td>
+               <td><input type="text" name="guestCardNumber" maxlength="80" value="${Guest.guestCardNumber}" pattern=".{16,16}" title="16 digits required" required/></td>
             </tr>
-
+            <tr>
+               <th> CVV number</th>
+               <td><input type="text" name="CVV" value="${Guest.CVV}" pattern=".{3,3}" title="3 digits required" required/></td>
+            </tr>
+            
+             <tr>
+               <th>Expiry Date</th>
+               <td><input type="date" name="ExpiryDate" value="${Guest.ExpiryDate}" required/></td>
+            </tr>
          </table>
 	</c:if>
 	
-       
-         
-         <br/><br/>
-         
+	<c:if test="${not empty sessionScope.loginedUser}">
+	<p >Choose a Credit Card to pay with:</p>
+         <select name="CreditCard">
+    <c:forEach var="d" items="${cards}">
+      <option value="${d.getCardNumber()}">${d.getCardNumber()}</option>
+    </c:forEach>
+		</select>
+		<br/><br/>
+		</c:if>
          <input type="submit" value="Book and Pay" />
-         <input type="reset" value="Reset"/>
          
       </form>
        
       <jsp:include page="_footer.jsp"></jsp:include>
+      
+      </div>
        
    </body>
 </html>

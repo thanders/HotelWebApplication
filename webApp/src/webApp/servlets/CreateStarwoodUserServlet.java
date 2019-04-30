@@ -4,6 +4,8 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
@@ -26,13 +29,13 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 	public CreateStarwoodUserServlet() {
 		super();
 	}
-	  @Override
-	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	            throws ServletException, IOException {
-	 	        RequestDispatcher dispatcher = request.getServletContext()
-		                .getRequestDispatcher("/WEB-INF/views/registerStarwood.jsp");
-		        dispatcher.forward(request, response); 	
-	    }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getServletContext()
+				.getRequestDispatcher("/WEB-INF/views/registerStarwood.jsp");
+		dispatcher.forward(request, response); 	
+	}
 
 
 	// When the user enters the product information, and click Submit.
@@ -42,23 +45,27 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		Connection conn = SessionUtils.getStoredConnection(request);
-
+		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
+		int cvvNumber=0;
 		String name = (String) request.getParameter("name");
 		String surename = (String) request.getParameter("surename");
 		String address = (String) request.getParameter("address");
 		String email = (String) request.getParameter("email");
-		String cardNumber = (String) request.getParameter("cardNumber");
+		String cardNumber = (String) request.getParameter("CardNumber");
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
-		int CardNumber = Integer.parseInt(cardNumber);
-        int PhoneNumber = Integer.parseInt(phoneNumber);
-		System.out.println("TEST Card" + " " + cardNumber);
+		int PhoneNumber = Integer.parseInt(phoneNumber);
+		String CardDate= (String) request.getParameter("ExpiryDate");
+		String cvv = (String) request.getParameter("CVV");
+		cvvNumber = Integer.parseInt(cvv);
+		System.out.println(cvv+" yes");
 
-		System.out.println("int Card" + " " + cardNumber);
-		Starwood member = new Starwood(name, surename, address, email, CardNumber, PhoneNumber, userName, password);
+		LocalDate expiry = LocalDate.parse( CardDate , f ) ;
 
-		System.out.println(member.toString());
+		Starwood member = new Starwood(name, surename, address, email, cardNumber, PhoneNumber, userName,password,cvvNumber, expiry);
+	//add db function
+		
 		String errorString = null;
 
 		// If error string is null, try to insert the guest object into the Guest
@@ -66,13 +73,17 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		if (errorString == null) {
 			try {
 				DB_members.insertMember(conn, member);
-	    		int id = DB_members.getStarwoodMemberId(conn,userName);
-				CreditCard card = new CreditCard(id, CardNumber);
+				DB_members.insertMemberLogIn( conn,  member);
+
+				int id = DB_members.getStarwoodMemberId(conn,userName);
+				CreditCard card = new CreditCard(cardNumber, id,cvvNumber,expiry);
 
 				DBUtils.insertCard(conn, card);
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 				errorString = e.getMessage();
+				
 			}
 
 		}
@@ -93,8 +104,12 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		else {
 			// Redirect to the product listing page.
 			//TODO Make logged in
+			HttpSession session = request.getSession();
+			//have a look<<<maybe logindetails>>>
+			SessionUtils.storeLoginedUser(session, member);
+			// Redirect to userInfo page.
 			response.sendRedirect(request.getContextPath() + "/userInfo");
-			
+
 		}
 	}
 

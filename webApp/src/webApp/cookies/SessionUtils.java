@@ -32,10 +32,14 @@ public class SessionUtils {
     public static void storeLoginedUser(HttpSession session, Starwood loginedUser) {
         // On the JSP can access via ${loginedUser}
         session.setAttribute("loginedUser", loginedUser);
+      //setting session to expire in 30 minutes
+		session.setMaxInactiveInterval(30*60);
     }
     
  // Removes user info in Session.
-    public static void removeLoginedUser(HttpSession session) {
+    public static void removeLoginedUser(HttpSession session,HttpServletResponse response) {
+    	System.out.println("hereeee");
+    	deleteUserCookie(response);
         session.removeAttribute("loginedUser");
         session.invalidate();
     }

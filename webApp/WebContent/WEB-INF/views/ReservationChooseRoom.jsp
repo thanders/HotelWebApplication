@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css">
 <title>Reservations</title>
 
 </head>
@@ -13,6 +14,8 @@
 
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
+	
+	<div class="container">
 
 	<h2>Reservation (2/3)</h2>
 	
@@ -20,9 +23,12 @@
 	
 	<br/><br/>
 	
-	Please choose any <b>${numRooms}</b>:
-	
 	<br/><br/>
+
+		Please choose any <b>${numRooms}</b>:
+	<br/><br/>
+	
+
 	
 	<form method="POST" action="${pageContext.request.contextPath}/ReservationChooseRoom">
 	
@@ -56,7 +62,7 @@ ${room.priceFormatted}
 	
 	
 	
-	
+	</div>
 
 	<jsp:include page="_footer.jsp"></jsp:include>
 

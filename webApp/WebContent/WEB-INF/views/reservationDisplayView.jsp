@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css">
 <title>Reservations</title>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -17,11 +18,13 @@
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
 
+	<div class="container">
+
 	<h2>Find my reservation</h2>
 
 	<p style="color: red;">${errorString}</p>
 
-	Enter your reservation number:
+	Enter your reservation number (Guests only, not Starwood members):
 	<br/>
 	<br/>
 
@@ -30,6 +33,8 @@
 		<br/> <br/> 
 		<input type="submit"> <input type="reset" value="Reset">
 	</form>
+	
+	</div>
 
 	<jsp:include page="_footer.jsp"></jsp:include>
 

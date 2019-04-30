@@ -6,12 +6,15 @@
 <html>
    <head>
       <meta charset="UTF-8">
+      <link rel="stylesheet" type="text/css" href="style.css">
       <title>Create Product</title>
    </head>
    <body>
     
       <jsp:include page="_header.jsp"></jsp:include>
       <jsp:include page="_menu.jsp"></jsp:include>
+      
+      <div class="container">
        
       <h2>Reservation (3/3)</h2>
        
@@ -26,8 +29,8 @@
      
      You are requesting to book:
       
-      <table border="1" cellspacing="0">
-      	<tr>	
+      <table>
+      	<tr>
 	    	<th>Number of rooms</th>
 	    	<th>Room numbers</th>
 	    	
@@ -56,6 +59,8 @@
             </tr>
          </table>
       </form>
+      
+      </div>
        
       <jsp:include page="_footer.jsp"></jsp:include>
        

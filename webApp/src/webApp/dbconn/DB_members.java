@@ -12,19 +12,18 @@ public class DB_members{
 		    
 		    // insertMember
 		    public static void insertMember(Connection conn, Starwood member) throws SQLException {
-		        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name, User_Password) values (?,?,?,?,?,?,?,?)";
+		        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name,CVV,ExpiryDate) values (?,?,?,?,?,?,?,?,?)";
 		        PreparedStatement pstm = conn.prepareStatement(sql);
 		        pstm.setString(1, member.getName());
 		        pstm.setString(2, member.getSurename());
 		        pstm.setString(3, member.getAddress());
 		        pstm.setString(4, member.getEmail());
-		        pstm.setInt(5, member.getCardNumber());
+		        pstm.setString(5, member.getCardNumber());
 		        pstm.setInt(6, member.getPhoneNumber());
 		        pstm.setString(7, member.getUserName());
-		        pstm.setString(8, member.getPassword());
+		        pstm.setInt(8, member.getCVV());
+		        pstm.setObject(9, member.getExpiryDate());
 		        pstm.executeUpdate();
-		        System.out.println("insertMember SQL executed");
-	            System.out.println(": "+  member.getName()+ "  " + member.getSurename() + "  " + member.getAddress() + "  " + member.getPhoneNumber()+ "  " +  member.getCardNumber() + "  " +   member.getUserName()+ "  " +  member.getPassword());
 		    }
 		    
 		    
@@ -40,22 +39,19 @@ public class DB_members{
 		 
 		        if (rs.next()) {
 		            String userName = rs.getString("User_Name");
-		            String password = rs.getString("User_Password");
 		            String name = rs.getString("Member_Name");
 		            String surname = rs.getString("Member_Surname");
 		            String address = rs.getString("Address");
 		            String email = rs.getString("Email_Address");
-		            String cardNumber = Integer.toString(rs.getInt("Card_Number"));
+		            String cardNumber = rs.getString("Card_Number");
 		            String phoneNumber = Integer.toString(rs.getInt("Phone_Number"));
-		            int CardNumber = Integer.parseInt(cardNumber);
 		            int PhoneNumber = Integer.parseInt(phoneNumber);
 		            Starwood member = new Starwood();
 		            member.setUserName(userName);
-		            member.setPassword(password);
 		            
 		            member.setName(name);
 		            member.setAddress(address);
-		            member.setCardNumber(CardNumber);
+		            member.setCardNumber(cardNumber);
 		            member.setSurename(surname);
 		            member.setEmail(email);
 		            member.setPhoneNumber(PhoneNumber);    
@@ -84,6 +80,14 @@ public class DB_members{
 		        }
 		    	
 		    	return id;
+		    }
+		    // insertMember
+		    public static void insertMemberLogIn(Connection conn, Starwood member) throws SQLException {
+		        String sql = "Insert into Members(User_Name, User_Password) values (?,?)";
+		        PreparedStatement pstm = conn.prepareStatement(sql);
+		        pstm.setString(1, member.getUserName());
+		        pstm.setString(2, member.getPassword());
+		        pstm.executeUpdate();
 		    }
 
 }

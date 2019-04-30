@@ -1,6 +1,7 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Guest implements Serializable{
 
@@ -11,14 +12,29 @@ public class Guest implements Serializable{
 	private String guestSurename;
 	private String guestAddress;
 	private String guestEmail;
-	private int guestCardNumber;
+	private String guestCardNumber;
 	private int guestPhoneNumber;
+	private int CVV;
+	private LocalDate expiryDate;
 	
-	// Empty constructor
-	public Guest() {}
-	
-	// Constructor
-	public Guest(String guestName, String guestSurename, String guestAddress, String guestEmail, int guestCardNumber, int guestPhoneNumber) {
+	public int getCVV() {
+		return CVV;
+	}
+
+	public void setCVV(int cVV) {
+		CVV = cVV;
+	}
+
+	public LocalDate getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(LocalDate expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public Guest (String guestName, String guestSurename, String guestAddress, String guestEmail,
+			String guestCardNumber, int guestPhoneNumber, int cVV, LocalDate expiryDate) {
 		super();
 		this.guestName = guestName;
 		this.guestSurename = guestSurename;
@@ -26,7 +42,24 @@ public class Guest implements Serializable{
 		this.guestEmail = guestEmail;
 		this.guestCardNumber = guestCardNumber;
 		this.guestPhoneNumber = guestPhoneNumber;
+		CVV = cVV;
+		this.expiryDate = expiryDate;
 	}
+	public Guest (String guestName, String guestSurename, String guestAddress, String guestEmail,
+			String guestCardNumber, int guestPhoneNumber) {
+		super();
+		this.guestName = guestName;
+		this.guestSurename = guestSurename;
+		this.guestAddress = guestAddress;
+		this.guestEmail = guestEmail;
+		this.guestCardNumber = guestCardNumber;
+		this.guestPhoneNumber = guestPhoneNumber;
+	
+	}
+
+	// Empty constructor
+	public Guest() {}
+	
 
 	// Getters and Setters
 	public String getGuestName() {
@@ -61,11 +94,11 @@ public class Guest implements Serializable{
 		this.guestEmail = guestEmail;
 	}
 
-	public int getGuestCardNumber() {
+	public String getGuestCardNumber() {
 		return guestCardNumber;
 	}
 
-	public void setGuestCardNumber(int guestCardNumber) {
+	public void setGuestCardNumber(String guestCardNumber) {
 		this.guestCardNumber = guestCardNumber;
 	}
 

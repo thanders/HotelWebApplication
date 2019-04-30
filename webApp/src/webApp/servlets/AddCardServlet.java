@@ -4,6 +4,8 @@ package webApp.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,13 +27,13 @@ public class AddCardServlet extends HttpServlet {
 	public AddCardServlet() {
 		super();
 	}
-	  @Override
-	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	            throws ServletException, IOException {
-	 	        RequestDispatcher dispatcher = request.getServletContext()
-		                .getRequestDispatcher("/WEB-INF/views/addCard.jsp");
-		        dispatcher.forward(request, response); 	
-	    }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getServletContext()
+				.getRequestDispatcher("/WEB-INF/views/addCard.jsp");
+		dispatcher.forward(request, response); 	
+	}
 
 
 	// When the user enters the product information, and click Submit.
@@ -41,18 +43,23 @@ public class AddCardServlet extends HttpServlet {
 			throws ServletException, IOException {
 		CreditCard card = null;
 		Connection conn = SessionUtils.getStoredConnection(request);
-		String cardNumber = (String) request.getParameter("card");
-	System.out.println(cardNumber);
-		int CardNumber = Integer.parseInt(cardNumber);
-
+		String cardNumber = (String) request.getParameter("Card");
+		String CVV = (String) request.getParameter("CVV");
+		int Cvv = Integer.parseInt(CVV);
+		String CardDate= (String) request.getParameter("ExpiryDate");
+		System.out.println(CardDate+" yes");
+		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
+		LocalDate expiry = LocalDate.parse( CardDate , f ) ;
+		
+		
 		String errorString = null;
 
 		// If error string is null, try to insert the guest object into the Guest
 		// database table
 		if (errorString == null) {
 			try {
-	    		int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
-	    		 card = new CreditCard(id, CardNumber);
+				int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
+				card = new CreditCard(cardNumber,id,Cvv,expiry);
 
 				DBUtils.insertCard(conn, card);
 			} catch (SQLException e) {
@@ -78,7 +85,7 @@ public class AddCardServlet extends HttpServlet {
 			// Redirect to the product listing page.
 			//TODO Make logged in
 			response.sendRedirect(request.getContextPath() + "/userInfo");
-			
+
 		}
 	}
 
