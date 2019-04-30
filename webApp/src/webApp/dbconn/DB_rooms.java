@@ -1,5 +1,6 @@
 package webApp.dbconn;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -35,25 +36,25 @@ public class DB_rooms {
 		  
 		   
 		    // insert a booked room
-		    public static void insertBookedRoom(Connection conn, String roomNumber, int reservationID) throws SQLException {
+		    public static void insertBookedRoom(Connection conn, String roomNumber, BigInteger reservationID) throws SQLException {
 		        String sql = "Insert into Reserved_Rooms(roomNumber, reservationID ) values (?, ?)";
 		        
 		        PreparedStatement pstm = conn.prepareStatement(sql);
 		   	 
 		        pstm.setString(1, roomNumber);
-		        pstm.setInt(2, reservationID);
+		        pstm.setString(2, reservationID.toString());
 		 
 		        pstm.executeUpdate();
  
 		    }
 		    
 	    	// Select booked rooms by reservationID
-		   public static List<Room> selectBookedRooms(Connection conn, int reservationID) throws SQLException {
+		   public static List<Room> selectBookedRooms(Connection conn, BigInteger reservationID) throws SQLException {
 		 
 		        String sql = "SELECT roomNumber, reservationID FROM Reserved_Rooms WHERE reservationID = ?";
 		 
 		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setInt(1, reservationID);
+		        pstm.setString(1, reservationID.toString());
 		        
 		        ResultSet rs = pstm.executeQuery();
 		        

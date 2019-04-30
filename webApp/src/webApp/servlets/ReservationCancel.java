@@ -1,6 +1,7 @@
 package webApp.servlets;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -54,12 +55,12 @@ public class ReservationCancel extends HttpServlet {
     	String resNumberStr = (String) request.getParameter("resNumber");
     	
 
-    	int resNumber = 0;
+    	BigInteger resNumber = null;
     	
         // Convert resNumber string to int
         if (resNumberStr != null) {
         	
-        	resNumber = Integer.parseInt(resNumberStr);
+        	resNumber = new BigInteger(resNumberStr);
         	request.setAttribute("resNumber", resNumber);
         }
     	

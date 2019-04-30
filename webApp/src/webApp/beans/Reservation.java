@@ -1,6 +1,7 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ public class Reservation implements Serializable {
 	
 	// Class fields
 	private static final long serialVersionUID = 1L;
-	private int reservationId;
+	private BigInteger reservationId;
 	private int GuestID;
 	private LocalDate start;
 	private LocalDate end;
@@ -29,7 +30,7 @@ public class Reservation implements Serializable {
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(int reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDateTime bookingDate, String status, String reservationType, double price) {
+	public Reservation(BigInteger reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDateTime bookingDate, String status, String reservationType, double price) {
 		this.reservationId = reservationId;
 		this.GuestID = GuestID;
 		this.start = start;
@@ -44,11 +45,11 @@ public class Reservation implements Serializable {
 	}
 
 
-	public int getReservationId() {
+	public BigInteger getReservationId() {
 		return reservationId;
 	}
 
-	public void setReservationId(int reservationId) {
+	public void setReservationId(BigInteger reservationId) {
 		this.reservationId = reservationId;
 	}
 

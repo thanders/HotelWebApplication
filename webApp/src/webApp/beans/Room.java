@@ -1,6 +1,7 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 
 
@@ -12,7 +13,7 @@ public class Room implements Serializable{
 	private int id;
 	private String roomNumber;
 	private int capacity;
-	private int reservationNumber;
+	private BigInteger reservationNumber;
 	private double price;
     public double getReducedPrice() {
 		return price-(price*0.1);
@@ -45,10 +46,10 @@ public class Room implements Serializable{
 	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
 	}
-	public int getReservationNumber() {
+	public BigInteger getReservationNumber() {
 		return reservationNumber;
 	}
-	public void setReservationNumber(int reservationNumber) {
+	public void setReservationNumber(BigInteger reservationNumber) {
 		this.reservationNumber = reservationNumber;
 	}
 	public int getCapacity() {

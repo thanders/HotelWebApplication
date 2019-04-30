@@ -1,5 +1,6 @@
 package webApp.dbconn;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,13 +15,13 @@ import webApp.beans.Reservation;
 public class DB_reservation {
 
 	    // Query ReservationRID
-	    public static Reservation queryReservationRID(Connection conn, int Reservation_Id) throws SQLException {
+	    public static Reservation queryReservationRID(Connection conn, BigInteger Reservation_Id) throws SQLException {
 	        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.duration, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a WHERE a.Reservation_Id = ? "
 	        		+ "and a.reservationType = 'Guest' ";
 	 
 	        // Connect to the database and execute the Select query
 	        PreparedStatement pstm = conn.prepareStatement(sql);
-	        pstm.setInt(1, Reservation_Id);
+	        pstm.setString(1, Reservation_Id.toString());
 	        ResultSet rs = pstm.executeQuery();
 	        
 	        // Get values from the query and assign to variables
@@ -55,7 +56,7 @@ public class DB_reservation {
 		        ResultSet rs = pstm.executeQuery();
 		        // There should only be one GuestID with a reservation
 		        if (rs.next()) {
-		            int Reservation_Id = rs.getInt("Reservation_Id");
+		        	BigInteger Reservation_Id = BigInteger.valueOf(rs.getLong("Reservation_Id"));
 			        LocalDate start= rs.getDate("start").toLocalDate();
 			        LocalDate end= rs.getDate("end").toLocalDate();
 			        int numberRooms = rs.getInt("numberRooms");
@@ -91,7 +92,7 @@ public class DB_reservation {
 
 
 		        if (rs.next()) {
-		            int Reservation_Id = rs.getInt("Reservation_Id");
+		        	BigInteger Reservation_Id = BigInteger.valueOf(rs.getLong("Reservation_Id"));
 			        LocalDateTime bookingDate= rs.getTimestamp("bookingDate").toLocalDateTime();			       
 			        Reservation reservation = new Reservation(Reservation_Id, GuestID, start, end, numberRooms, bookingDate, status, reservationType, price);
 		            reservation.setPrice(price);
@@ -114,7 +115,7 @@ public class DB_reservation {
 		        ResultSet rs = pstm.executeQuery();
 		        // There should only be one GuestID with a reservation
 		        while (rs.next()) {
-		            int Reservation_Id = rs.getInt("Reservation_Id");
+		        	BigInteger Reservation_Id = BigInteger.valueOf(rs.getLong("Reservation_Id"));
 			        LocalDate start= rs.getDate("start").toLocalDate();
 			        LocalDate end= rs.getDate("end").toLocalDate();
 			        int numberRooms = rs.getInt("numberRooms");
@@ -132,18 +133,18 @@ public class DB_reservation {
 		        }
 	    
 	    // insert Reservation
-	    public static void insertReservation(Connection conn, int GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType, Double price) throws SQLException {
-	        String sql = "Insert into Reservations(GuestID, start, end, numberRooms, status, reservationType, price) values (?, ?, ?, ?, ?, ?, ?)";
+	    public static void insertReservation(Connection conn, BigInteger reservationID, int GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType, Double price) throws SQLException {
+	        String sql = "Insert into Reservations(reservation_Id, GuestID, start, end, numberRooms, status, reservationType, price) values (?, ?, ?, ?, ?, ?, ?, ?)";
 	        
 	        PreparedStatement pstm = conn.prepareStatement(sql);
-	   	 
-	        pstm.setInt(1, GuestID);
-	        pstm.setObject(2, start);
-	        pstm.setObject(3, end);
-	        pstm.setInt(4, numberRooms);
-	        pstm.setString(5, status);
-	        pstm.setString(6, reservationType);
-	        pstm.setDouble(7, price);
+	        pstm.setString(1, reservationID.toString());
+	        pstm.setInt(2, GuestID);
+	        pstm.setObject(3, start);
+	        pstm.setObject(4, end);
+	        pstm.setInt(5, numberRooms);
+	        pstm.setString(6, status);
+	        pstm.setString(7, reservationType);
+	        pstm.setDouble(8, price);
 	 
 	        pstm.executeUpdate();
 	    }
@@ -161,7 +162,7 @@ public class DB_reservation {
 	        
 	        List<Reservation> list = new ArrayList<Reservation>();
 	        while (rs.next()) {
-	            int Reservation_Id = rs.getInt("Reservation_Id");
+	        	BigInteger Reservation_Id = BigInteger.valueOf(rs.getLong("Reservation_Id"));
 	            int GuestID = rs.getInt("GuestID");
 		        LocalDate start= rs.getDate("start").toLocalDate();
 		        LocalDate end= rs.getDate("end").toLocalDate();
@@ -181,12 +182,12 @@ public class DB_reservation {
 	        }
 	
 	    
-	    public static void updateReservationStatus(Connection conn, int reservationID) throws SQLException {
+	    public static void updateReservationStatus(Connection conn, BigInteger reservationID) throws SQLException {
 	        String sql = "Update Reservations set status =? where Reservation_Id=? ";
 	        
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	        pstm.setString(1, "Cancelled");
-	        pstm.setInt(2, reservationID);
+	        pstm.setString(2, reservationID.toString());
 	        pstm.executeUpdate();
 
 	    }
