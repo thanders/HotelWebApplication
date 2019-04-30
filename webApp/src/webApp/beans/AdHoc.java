@@ -20,7 +20,7 @@ public class AdHoc {
         SecureRandom sr = new SecureRandom(new byte[] { 1, 2, 3, 4 }); 
 
         // Declaring the string variable 
-        String str = "Tajmahal"; 
+        String str = "Foxhound"; 
 
         // Declaring the byte Array b 
         byte[] b = str.getBytes(); 
