@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.crypto.SecretKey;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mysql.cj.util.StringUtils;
 
+import security.EncryptDecrypt;
 import webApp.beans.Starwood;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
@@ -37,7 +39,8 @@ public class EditUserDetailsServlet extends HttpServlet {
 		String errorString = null;
 
 		try {
-			int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
+			int id = DB_members.getStarwoodMemberId(conn,
+					SessionUtils.getLoginedUser(request.getSession()).getUserName());
 			member = DB_members.findStarwoodMember(conn, id);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -84,63 +87,72 @@ public class EditUserDetailsServlet extends HttpServlet {
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
+		SecretKey key = SessionUtils.getSessionkey(request.getSession());
+
+
+		// Create encrypter/decrypter class
+		EncryptDecrypt encrypter = new EncryptDecrypt(key);
+
+		// Encrypt
+		String encryptedPassword = encrypter.encrypt(password);
+		// Decrypt
+
 		try {
-			
-			
-			if (name != "" ) {
+
+			if (name != "") {
 				currentUser.setName(name);
 				DBUtils.updateMemberName(conn, currentUser);
-				changesString +=" " + "Name has been updated";
+				changesString += " " + "Name has been updated";
 			}
-			
-			if (surename != "" ) {
+
+			if (surename != "") {
 				currentUser.setSurename(surename);
 				DBUtils.updateMemberSurname(conn, currentUser);
-				changesString +=" " + "Surname has been updated";
-			} 
-			
-			if (address != "" ) {
-				
+				changesString += " " + "Surname has been updated";
+			}
+
+			if (address != "") {
+
 				currentUser.setAddress(address);
 				DBUtils.updateMemberAddress(conn, currentUser);
-				changesString +=" " + "Address has been updated";
-			} 
-			
-			if (email != "" ) {
+				changesString += " " + "Address has been updated";
+			}
+
+			if (email != "") {
 				currentUser.setEmail(email);
 				DBUtils.updateMemberEmail(conn, currentUser);
-				changesString +=" " + "Email has been updated";
-			} 
-		
-			
-			if (phoneNumber != "" ) {
-				
-				if(StringUtils.isStrictlyNumeric(phoneNumber)) {
-					
+				changesString += " " + "Email has been updated";
+			}
+
+			if (phoneNumber != "") {
+
+				if (StringUtils.isStrictlyNumeric(phoneNumber)) {
+
 					int phoneNo = Integer.parseInt(phoneNumber);
 					currentUser.setPhoneNumber(phoneNo);
 					DBUtils.updateMemberPhoneNumber(conn, currentUser);
-					changesString +=" " + "Phone Number has been updated";
-					
-				}else {
+					changesString += " " + "Phone Number has been updated";
+
+				} else {
 					errorString = "Please enter a number for phone number";
 				}
-				
-			} 
-			
-			if (userName != "" ) {
+
+			}
+
+			if (userName != "") {
 				String oldUserName = currentUser.getUserName();
 				currentUser.setUserName(userName);
 				DBUtils.updateMemberUsername(conn, currentUser, oldUserName);
-				changesString +=" " + "Username has been updated";
+				changesString += " " + "Username has been updated";
 			}
-			//fix
-			if (password != "" ) {
-				currentUser.setPassword(password);				
+			// fix
+			if (password != "") {
+
+				currentUser.setPassword(encryptedPassword);
 				DBUtils.updateMemberPasword(conn, currentUser);
-				changesString +=" " + "Password has been updated";
+				changesString += " " + "Password has been updated";
 			}
-			
+
 		}
 
 		catch (SQLException e) {
@@ -148,13 +160,10 @@ public class EditUserDetailsServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-	
-		
 		// Store infomation to request attribute, before forward to views.
 		request.setAttribute("errorString", errorString);
 		request.setAttribute("member", currentUser);
 		request.setAttribute("changesString", changesString);
-		
 
 		// If error, forward to Edit page.
 		if (errorString != null) {
@@ -170,4 +179,3 @@ public class EditUserDetailsServlet extends HttpServlet {
 	}
 
 }
-

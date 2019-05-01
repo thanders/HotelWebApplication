@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
+import javax.crypto.SecretKey;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import security.EncryptDecrypt;
 import webApp.beans.AdHoc;
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
@@ -62,7 +63,11 @@ public class ReservationConfirmServlet extends HttpServlet {
 		Double resPrice = (Double) session.getAttribute("resPrice");
 		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 
+		SecretKey key = SessionUtils.getSessionkey(request.getSession());
 
+
+		// Create encrypter/decrypter class
+		EncryptDecrypt encrypter = new EncryptDecrypt(key);
 
 
 		if(SessionUtils.getLoginedUser(request.getSession())==null)
@@ -79,8 +84,12 @@ public class ReservationConfirmServlet extends HttpServlet {
 			String cvvNumber = (String) request.getParameter("CVV");
 			int guestcvvNumber = Integer.parseInt(cvvNumber);
 			LocalDate expiry = LocalDate.parse( guestCardDate , f ) ;
+			
+		
+			String encryptedCredit = encrypter.encrypt(guestCardNumber);
+			// Decrypt
 			// Create instance of Guest class
-			Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, guestCardNumber, guestPhoneNumber,guestcvvNumber,expiry);
+			Guest guest = new Guest(guestName, guestSurename, guestAddress, guestEmail, encryptedCredit, guestPhoneNumber,guestcvvNumber,expiry);
 
 
 			String errorString = null;
@@ -158,7 +167,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 				request.setAttribute("guestSurname", guest.getGuestSurename());
 				request.setAttribute("guestAddress", guest.getGuestAddress());
 				request.setAttribute("guestEmail", guest.getGuestEmail());
-				request.setAttribute("guestCardNumber", guest.getGuestCardNumber());
+				request.setAttribute("guestCardNumber", encrypter.decrypt(guest.getGuestCardNumber()));
 				request.setAttribute("guestPhoneNumber", guest.getGuestPhoneNumber());
 				request.setAttribute("errorString", errorString);
 
@@ -182,7 +191,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 			String guestSurename = SessionUtils.getLoginedUser(request.getSession()).getSurename();
 			String guestAddress = SessionUtils.getLoginedUser(request.getSession()).getAddress();
 			String guestEmail = SessionUtils.getLoginedUser(request.getSession()).getEmail();
-			String guestCardNumber = SessionUtils.getLoginedUser(request.getSession()).getCardNumber();
+			String guestCardNumber = encrypter.decrypt(SessionUtils.getLoginedUser(request.getSession()).getCardNumber());
 			int guestPhoneNumber = SessionUtils.getLoginedUser(request.getSession()).getPhoneNumber();
 
 			// Create instance of Guest class

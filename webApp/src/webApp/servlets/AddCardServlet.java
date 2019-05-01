@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.crypto.SecretKey;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import security.EncryptDecrypt;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
 import webApp.beans.CreditCard;
@@ -50,7 +52,21 @@ public class AddCardServlet extends HttpServlet {
 		System.out.println(CardDate+" yes");
 		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 		LocalDate expiry = LocalDate.parse( CardDate , f ) ;
-		
+		SecretKey key = SessionUtils.getSessionkey(request.getSession());
+	
+		// Create encrypter/decrypter class
+		EncryptDecrypt encrypter = new EncryptDecrypt(key);
+
+		// Encrypt
+
+		String encryptedCredit = encrypter.encrypt(cardNumber);
+		// Decrypt
+		String decryptedCredit = encrypter.decrypt(encryptedCredit);
+		// Output
+
+		System.out.println("Password: " + cardNumber);
+		System.out.println("Encrypted: " + encryptedCredit);
+		System.out.println("Decrypted: " + decryptedCredit);
 		
 		String errorString = null;
 
@@ -59,7 +75,7 @@ public class AddCardServlet extends HttpServlet {
 		if (errorString == null) {
 			try {
 				int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
-				card = new CreditCard(cardNumber,id,Cvv,expiry);
+				card = new CreditCard(encryptedCredit,id,Cvv,expiry);
 
 				DBUtils.insertCard(conn, card);
 			} catch (SQLException e) {

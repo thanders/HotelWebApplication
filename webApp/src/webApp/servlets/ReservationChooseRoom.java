@@ -5,12 +5,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -254,8 +252,8 @@ public class ReservationChooseRoom extends HttpServlet {
 
 			if(SessionUtils.getLoginedUser(request.getSession())!=null) {
 				try {
-
-					List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()));
+					
+					List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()),SessionUtils.getSessionkey(session));
 
 					request.setAttribute("cards", cards);
 				} catch (SQLException e) {

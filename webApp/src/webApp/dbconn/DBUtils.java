@@ -10,28 +10,53 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.SecretKey;
+
+import security.EncryptDecrypt;
 import webApp.beans.*;
 
 public class DBUtils {
+	///TODO
+//	public static Starwood findMember(Connection conn, //
+//			String userName, String password, SecretKey key) throws SQLException {
+//
+//		String sql = "Select * from Members a " //
+//				+ " where a.User_Name = ? and a.User_Password = ?";
+//		EncryptDecrypt encrypter = new EncryptDecrypt(key);
+//
+//		PreparedStatement pstm = conn.prepareStatement(sql);
+//		pstm.setString(1, userName);
+//		pstm.setString(2, encrypter.encrypt(password));
+//		ResultSet rs = pstm.executeQuery();
+//
+//		if (rs.next()) {
+//			Starwood member = new Starwood(userName,encrypter.decrypt(password));
+//
+//			return member;
+//		}
+//		return null;
+//	}
 
-	public static Starwood findMember(Connection conn, //
-			String userName, String password) throws SQLException {
 
-		String sql = "Select * from Members a " //
-				+ " where a.User_Name = ? and a.User_Password = ?";
+	///TODO
+	public static Starwood findStarwoodMember(Connection conn,String userName, String password,SecretKey key) throws SQLException {
 
-		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setString(1, userName);
-		pstm.setString(2, password);
-		ResultSet rs = pstm.executeQuery();
+			String sql = "Select * from Members a " //
+					+ " where a.User_Name = ? and a.User_Password = ?";
 
-		if (rs.next()) {
-			Starwood member = new Starwood(userName, password);
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			pstm.setString(1, userName);
+			pstm.setString(2, password);
+			ResultSet rs = pstm.executeQuery();
 
-			return member;
+			if (rs.next()) {
+				Starwood member = new Starwood(userName, password);
+
+				return member;
+			}
+			return null;
 		}
-		return null;
-	}
+	
 
 	public static Starwood findStarwoodMember(Connection conn, String userName) throws SQLException {
 
@@ -163,7 +188,7 @@ public class DBUtils {
 		pstm.setString(1, username);
 
 		removeUserReservations(conn, member);
-		removeCreditCards(conn, DB_members.getStarwoodMemberId(conn,username));
+		removeCreditCards(conn, DB_members.getStarwoodMemberId(conn, username));
 		pstm.executeUpdate();
 
 		PreparedStatement pstm1 = conn.prepareStatement(sql2);
@@ -182,15 +207,16 @@ public class DBUtils {
 
 	}
 
-	public static List<CreditCard> getCards(Connection conn, int id) throws SQLException {
+	public static List<CreditCard> getCards(Connection conn, int id, SecretKey key) throws SQLException {
 		String sql = "Select *  from Credit_Card a where a.MemberID = ?   ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setInt(1, id);
 		ResultSet rs = pstm.executeQuery();
+		EncryptDecrypt encrypter = new EncryptDecrypt(key);
 		List<CreditCard> list = new ArrayList<CreditCard>();
 		while (rs.next()) {
 			String card = rs.getString(1);
-			CreditCard creditCard = new CreditCard(card, id);
+			CreditCard creditCard = new CreditCard(encrypter.decrypt(card), id);
 			list.add(creditCard);
 		}
 		return list;
@@ -241,7 +267,6 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setString(1, reservationId.toString());
 
-
 		ResultSet rs = pstm.executeQuery();
 
 		while (rs.next()) {
@@ -254,7 +279,6 @@ public class DBUtils {
 		return rooms;
 
 	}
-	
 
 	public static void updateMemberName(Connection conn, Starwood member) throws SQLException {
 		String sql = "Update Starwood set Member_Name =?  where Id=? ";
@@ -324,14 +348,13 @@ public class DBUtils {
 		pstm.setString(1, member.getUserName());
 		pstm.setInt(2, member.getId());
 		pstm.executeUpdate();
-		
+
 		String sql2 = "Update Members set User_Name =? where User_Name=? ";
 		PreparedStatement pstm2 = conn.prepareStatement(sql2);
 		pstm2.setString(1, member.getUserName());
 		pstm2.setString(2, oldUserName);
 		pstm2.executeUpdate();
 	}
-
 
 	public static void updateMemberPasword(Connection conn, Starwood member) throws SQLException {
 		String sql = "Update Members set User_Password =? where User_Name=? ";
