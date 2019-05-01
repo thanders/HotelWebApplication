@@ -33,7 +33,7 @@
 		<br /> <br />
 		Number of rooms: <input type="number" name="numRooms" min="1" required> 
 		<br /> <br />
-
+		<p style="color: red;">${durationMSG}</p>
 		<input type="submit"> <input type="reset" value="Reset">
 	</form>
 	

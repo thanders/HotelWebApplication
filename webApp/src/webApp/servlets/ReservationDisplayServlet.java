@@ -1,6 +1,7 @@
 package webApp.servlets;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
@@ -75,12 +76,12 @@ public class ReservationDisplayServlet extends HttpServlet {
 		// Use get parameter to obtain posted data from form
 		String resNumberInt = (String) request.getParameter("resNumber");
 
-		int resNumber = 0;
+		BigInteger resNumber = null;
 		Reservation resObj = null;
 		Guest guestObj = null;
 
 		if (resNumberInt != null) {
-			resNumber = Integer.parseInt(resNumberInt);
+			 resNumber=new BigInteger(resNumberInt);
 		}
 
 		// Connect to database

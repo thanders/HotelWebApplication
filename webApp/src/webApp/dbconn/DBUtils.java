@@ -1,5 +1,6 @@
 package webApp.dbconn;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -212,7 +213,7 @@ public class DBUtils {
 				removeReservedRoom(conn, room.getId());
 			}
 
-			pstm.setInt(1, r.getReservationId());
+			pstm.setString(1, r.getReservationId().toString());
 
 			pstm.executeUpdate();
 
@@ -232,13 +233,14 @@ public class DBUtils {
 
 	}
 
-	public static List<Room> getReservedRooms(Connection conn, int reservationId) throws SQLException {
+	public static List<Room> getReservedRooms(Connection conn, BigInteger reservationId) throws SQLException {
 
 		List<Room> rooms = new ArrayList<>();
 		String sql = "Select *  from Reserved_Rooms a where a.reservationID = ? ";
 
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setInt(1, reservationId);
+		pstm.setString(1, reservationId.toString());
+
 
 		ResultSet rs = pstm.executeQuery();
 

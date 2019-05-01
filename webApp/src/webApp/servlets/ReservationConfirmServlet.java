@@ -1,6 +1,7 @@
 package webApp.servlets;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import webApp.beans.AdHoc;
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
 import webApp.beans.Room;
@@ -93,15 +95,17 @@ public class ReservationConfirmServlet extends HttpServlet {
 				int GuestID = DBUtils.insertGuest(conn, guest);
 				String status = "Active";
 				String reservationType = "Guest";
-
+				
+				// get random reservation ID
+				AdHoc random = new AdHoc();
+				BigInteger reservationID = random.randomNumber();
 
 				// Insert the new Reservation into the database
-				DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType, resPrice);
+				DB_reservation.insertReservation(conn, reservationID, GuestID, startObj, endObj, numRooms, status, reservationType, resPrice);
 
 				// Create an object for the new Reservation
 				Reservation resObj = DB_reservation.queryReservation(conn, GuestID);
-
-				int reservationNumber = resObj.getReservationId();
+				BigInteger reservationNumber = resObj.getReservationId();
 
 
 
@@ -197,14 +201,17 @@ public class ReservationConfirmServlet extends HttpServlet {
 				String status = "Active";
 				String reservationType = "Member";
 
-
+				// get random reservation ID
+				AdHoc random = new AdHoc();
+				BigInteger reservationID = random.randomNumber();
+				
 				// Insert the new Reservation into the database
-				DB_reservation.insertReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType, resPrice);
+				DB_reservation.insertReservation(conn, reservationID, GuestID, startObj, endObj, numRooms, status, reservationType, resPrice);
 
 				// Create an object for the new Reservation
 				Reservation resObj = DB_reservation.queryReservation(conn, GuestID, startObj, endObj, numRooms, status, reservationType, resPrice);
 				
-				int reservationNumber = resObj.getReservationId();
+				BigInteger reservationNumber = resObj.getReservationId();
 
 				// Create instances of room class for each booked room
 				for (int i =0; i< choices.length; i++) {
