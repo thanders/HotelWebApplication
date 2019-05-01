@@ -1,12 +1,15 @@
 package webApp.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
@@ -86,12 +90,18 @@ public class ReservationDisplayServlet extends HttpServlet {
 
 		// Connect to database
 		Connection conn = SessionUtils.getStoredConnection(request);
-
-		// Create an object for the new Reservation
+	
+		// Try to create an object for the posted reservationID number
 		try {
 
 			resObj = DB_reservation.queryReservationRID(conn, resNumber);
+			
+			// if reservation found:
 			if(resObj!=null) {
+				
+				// if session exists kill it (this will remove stored login attempts)
+				HttpSession session = request.getSession();
+				session.invalidate();
 				guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
 				if(guestObj!=null) {
 
@@ -138,28 +148,25 @@ public class ReservationDisplayServlet extends HttpServlet {
 					dispatcher.forward(request, response);
 
 				}
-				else {
-					request.setAttribute("errorString", "Guest with that reservation ID doesn't exist");
-					// Forward to /WEB-INF/views/login.jsp
-					RequestDispatcher dispatcher //
-					= request.getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
-
-					dispatcher.forward(request, response);
-				}
 
 			}
+			
+			// else reservation not found
 			else {
-				request.setAttribute("errorString", "Reservation with entered ID doesn't exist");
-				// Forward to /WEB-INF/views/login.jsp
+				
+				// Sleep for two seconds to delay a brute force attack
+				TimeUnit.SECONDS.sleep(2);
+				
+				// Forward to /WEB-INF/views/reservationDisplayView.jsp
 				RequestDispatcher dispatcher //
-				= request.getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
+				= request.getRequestDispatcher("/submitCount");
 
 				dispatcher.forward(request, response);
 			}
 
 
 		}
-		catch (SQLException e){
+		catch ( Exception e){
 			e.printStackTrace();
 		}
 
