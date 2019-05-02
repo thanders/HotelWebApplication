@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,10 @@
 
 	<h2>Find my reservation</h2>
 
-	<p style="color: red;">${errorString}</p>
+	<!-- If submitCount not equal to null, display -->
+	<c:if test="${submitCount!=null || submitCount.isempy()}">
+		<p style="color: blue;">Sorry that reservation doesn't exist (attempt: ${submitCount})</p>
+	</c:if>
 
 	Enter your reservation number (Guests only, not Starwood members):
 	<br/>
@@ -31,9 +35,11 @@
 	<form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
 		Reservation number: <input type="number" name="resNumber" min="1" value="${resNumber}" required>
 		<br/> <br/> 
-		<input type="submit"> <input type="reset" value="Reset">
+		<input type="submit" value="SubmitReservation"> <input type="reset" value="Reset">
+		
+		
 	</form>
-	
+
 	</div>
 
 	<jsp:include page="_footer.jsp"></jsp:include>
