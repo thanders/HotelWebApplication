@@ -2,6 +2,7 @@ package webApp.cookies;
 
 import java.sql.Connection;
 
+import javax.crypto.SecretKey;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +50,19 @@ public class SessionUtils {
         Starwood loginedUser = (Starwood) session.getAttribute("loginedUser");
         return loginedUser;
     }
+    // Removes key info in Session.
+    public static void removeSessionkey(HttpSession session,HttpServletResponse response) {
+        session.removeAttribute("key");
+    }
+ 
+    public static void storeKey(HttpSession session, SecretKey key) {
+        session.setAttribute("key", key);
+    }
+//    // Get the key information stored in the session.
+//    public static SecretKey getSessionkey(HttpSession session) {
+//    	SecretKey key = (SecretKey)session.getAttribute("key");
+//        return key;
+//    }
  
     // Store info in Cookie
     public static void storeUserCookie(HttpServletResponse response, Starwood user) {
@@ -78,5 +92,6 @@ public class SessionUtils {
         cookieUserName.setMaxAge(0);
         response.addCookie(cookieUserName);
     }
+    
 
 }
