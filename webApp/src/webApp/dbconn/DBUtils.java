@@ -3,60 +3,51 @@ package webApp.dbconn;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.time.LocalDate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.crypto.SecretKey;
-
 import security.EncryptDecrypt;
-import webApp.beans.*;
+import webApp.beans.CreditCard;
+import webApp.beans.Guest;
+import webApp.beans.Reservation;
+import webApp.beans.Room;
+import webApp.beans.Starwood;
 
 public class DBUtils {
-	///TODO
-//	public static Starwood findMember(Connection conn, //
-//			String userName, String password, SecretKey key) throws SQLException {
-//
-//		String sql = "Select * from Members a " //
-//				+ " where a.User_Name = ? and a.User_Password = ?";
-//		EncryptDecrypt encrypter = new EncryptDecrypt(key);
-//
-//		PreparedStatement pstm = conn.prepareStatement(sql);
-//		pstm.setString(1, userName);
-//		pstm.setString(2, encrypter.encrypt(password));
-//		ResultSet rs = pstm.executeQuery();
-//
-//		if (rs.next()) {
-//			Starwood member = new Starwood(userName,encrypter.decrypt(password));
-//
-//			return member;
-//		}
-//		return null;
-//	}
+	
+	public static Starwood findStarwoodMember(Connection conn,String userName, String password,String key) throws SQLException {
 
+		String sql = "Select * from Members a " //
+				+ " where a.User_Name = ? ";
 
-	///TODO
-	public static Starwood findStarwoodMember(Connection conn,String userName, String password,SecretKey key) throws SQLException {
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		pstm.setString(1, userName);
 
-			String sql = "Select * from Members a " //
-					+ " where a.User_Name = ? and a.User_Password = ?";
+		ResultSet rs = pstm.executeQuery();
 
-			PreparedStatement pstm = conn.prepareStatement(sql);
-			pstm.setString(1, userName);
-			pstm.setString(2, password);
-			ResultSet rs = pstm.executeQuery();
-
-			if (rs.next()) {
-				Starwood member = new Starwood(userName, password);
-
+		if (rs.next()) {
+			String pass = rs.getString("User_Password");
+			try {
+				pass = EncryptDecrypt.decrypt(pass, key);
+				System.out.println(pass);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("ENtered password is "+password);
+			if(pass.equals(password)) {
+				System.out.println("made it :)");
+				Starwood member = findStarwoodMember(conn,userName);
 				return member;
 			}
-			return null;
 		}
-	
+		return null;
+	}
+
 
 	public static Starwood findStarwoodMember(Connection conn, String userName) throws SQLException {
 
@@ -199,7 +190,6 @@ public class DBUtils {
 	}
 
 	private static void removeCreditCards(Connection conn, int id) throws SQLException {
-		// TODO Auto-generated method stub
 		String sql = "Delete From Credit_Card where MemberID = ?";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setInt(1, id);
@@ -207,17 +197,24 @@ public class DBUtils {
 
 	}
 
-	public static List<CreditCard> getCards(Connection conn, int id, SecretKey key) throws SQLException {
+	public static List<CreditCard> getCards(Connection conn, int id, String key) throws SQLException {
 		String sql = "Select *  from Credit_Card a where a.MemberID = ?   ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setInt(1, id);
 		ResultSet rs = pstm.executeQuery();
-		EncryptDecrypt encrypter = new EncryptDecrypt(key);
+		//EncryptDecrypt encrypter = new EncryptDecrypt(key);
 		List<CreditCard> list = new ArrayList<CreditCard>();
 		while (rs.next()) {
 			String card = rs.getString(1);
-			CreditCard creditCard = new CreditCard(encrypter.decrypt(card), id);
-			list.add(creditCard);
+			CreditCard creditCard;
+			try {
+				creditCard = new CreditCard(EncryptDecrypt.decrypt(card,key), id);
+				list.add(creditCard);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		return list;
 

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.crypto.SecretKey;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -87,14 +86,21 @@ public class EditUserDetailsServlet extends HttpServlet {
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String userName = (String) request.getParameter("userName");
 		String password = (String) request.getParameter("password");
-		SecretKey key = SessionUtils.getSessionkey(request.getSession());
+		EncryptDecrypt encoder = new EncryptDecrypt();
+		String key = encoder.getKey();
 
 
 		// Create encrypter/decrypter class
-		EncryptDecrypt encrypter = new EncryptDecrypt(key);
+		//EncryptDecrypt encrypter = new EncryptDecrypt(key);
 
 		// Encrypt
-		String encryptedPassword = encrypter.encrypt(password);
+		String encryptedPassword="";
+		try {
+			encryptedPassword = EncryptDecrypt.encrypt(password,key);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		// Decrypt
 
 		try {

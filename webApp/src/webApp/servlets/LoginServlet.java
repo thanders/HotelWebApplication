@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.crypto.SecretKey;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import security.EncryptDecrypt;
 import webApp.beans.Starwood;
-import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
+import webApp.dbconn.DBUtils;
 
 @WebServlet(urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
@@ -74,12 +73,12 @@ public class LoginServlet extends HttpServlet {
 			Connection conn = SessionUtils.getStoredConnection(request);
 			try {
 				///TODO
-				SecretKey key = SessionUtils.getSessionkey(request.getSession());
-
+				EncryptDecrypt encoder = new EncryptDecrypt();
+				String key = encoder.getKey();				
 				// Find the user in the DB.
 				user = DBUtils.findStarwoodMember(conn, userName,password, key);
 
-				if (user == null) {
+				if (user == null) {					
 					hasError = true;
 					errorString = "User Name or password invalid";
 				}

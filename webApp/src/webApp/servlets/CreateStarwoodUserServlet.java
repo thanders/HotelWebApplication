@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.crypto.SecretKey;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,33 +61,22 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		String CardDate = (String) request.getParameter("ExpiryDate");
 		String cvv = (String) request.getParameter("CVV");
 		cvvNumber = Integer.parseInt(cvv);
-//		SecretKey key = null;
-//		try {
-//			key = KeyGenerator.getInstance("DES").generateKey();
-//			SessionUtils.storeKey(request.getSession(),key);
-//		} catch (NoSuchAlgorithmException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		SecretKey key = SessionUtils.getSessionkey(request.getSession());
-		EncryptDecrypt encrypter = new EncryptDecrypt(key);
-		String Pass = password; 
-
+		EncryptDecrypt encoder = new EncryptDecrypt();
+		String key = encoder.getKey();
+		
+		
 		// Encrypt
-		String encryptedPassword = encrypter.encrypt(Pass);
-		// Decrypt
-//		String decryptedPassword = encrypter.decrypt(encryptedPassword);
-
-		String encryptedCredit = encrypter.encrypt(cardNumber);
-		// Decrypt
-//		String decryptedCredit = encrypter.decrypt(encryptedCredit);
-		// Output
-//		System.out.println("Password: " + password);
-//		System.out.println("Encrypted: " + encryptedPassword);
-//		System.out.println("Decrypted: " + decryptedPassword);
-//		System.out.println("Password: " + cardNumber);
-//		System.out.println("Encrypted: " + encryptedCredit);
-//		System.out.println("Decrypted: " + decryptedCredit);
+		String encryptedPassword="",encryptedCredit="";
+		try {
+			encryptedPassword = EncryptDecrypt.encrypt(password,key);
+			encryptedCredit = EncryptDecrypt.encrypt(cardNumber,key);
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		LocalDate expiry = LocalDate.parse(CardDate, f);
 //		System.out.println("key1: " + key.toString());
 		Starwood member = new Starwood(name, surename, address, email, encryptedCredit, PhoneNumber, userName, encryptedPassword,
@@ -116,7 +105,12 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 
 		// Store information to request attribute, before forward to views.
 		request.setAttribute("errorString", errorString);
-		member.setCardNumber(encrypter.decrypt(member.getCardNumber()));
+		try {
+			member.setCardNumber(EncryptDecrypt.decrypt(encryptedCredit,key));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Makes member available for page redirection
 		request.setAttribute("starwoodNew", member);
 

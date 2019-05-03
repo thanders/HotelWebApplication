@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.crypto.SecretKey;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,10 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import security.EncryptDecrypt;
-import webApp.dbconn.DBUtils;
-import webApp.dbconn.DB_members;
 import webApp.beans.CreditCard;
 import webApp.cookies.SessionUtils;
+import webApp.dbconn.DBUtils;
+import webApp.dbconn.DB_members;
 
 @WebServlet(urlPatterns = { "/addCard" })
 
@@ -52,17 +51,25 @@ public class AddCardServlet extends HttpServlet {
 		System.out.println(CardDate+" yes");
 		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 		LocalDate expiry = LocalDate.parse( CardDate , f ) ;
-		SecretKey key = SessionUtils.getSessionkey(request.getSession());
+		EncryptDecrypt encoder = new EncryptDecrypt();
+		String key = encoder.getKey();
 	
 		// Create encrypter/decrypter class
-		EncryptDecrypt encrypter = new EncryptDecrypt(key);
+		//EncryptDecrypt encrypter = new EncryptDecrypt(key);
 
 		// Encrypt
 
-		String encryptedCredit = encrypter.encrypt(cardNumber);
-		// Decrypt
-		String decryptedCredit = encrypter.decrypt(encryptedCredit);
-		// Output
+		String encryptedCredit="",decryptedCredit="";
+		try {
+			encryptedCredit = EncryptDecrypt.encrypt(cardNumber,key);
+			// Decrypt
+			 decryptedCredit = EncryptDecrypt.decrypt(encryptedCredit,key);
+			// Output
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 
 		System.out.println("Password: " + cardNumber);
 		System.out.println("Encrypted: " + encryptedCredit);

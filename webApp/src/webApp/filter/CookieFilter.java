@@ -1,12 +1,9 @@
 package webApp.filter;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import webApp.beans.Starwood;
-import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
+import webApp.dbconn.DBUtils;
 
 @WebFilter(filterName = "cookieFilter", urlPatterns = { "/*" })
 public class CookieFilter implements Filter {
@@ -42,14 +39,6 @@ public class CookieFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
-        SecretKey key = null;
-		try {
-			key = KeyGenerator.getInstance("DES").generateKey();
-			SessionUtils.storeKey(session,key);
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
         Starwood userInSession = SessionUtils.getLoginedUser(session);
         // 
         if (userInSession != null) {

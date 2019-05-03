@@ -1,58 +1,105 @@
 package security;
 
-import java.io.UnsupportedEncodingException;
+import java.security.SecureRandom;
+import java.util.List;
+
 import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.tomcat.util.codec.binary.Base64;
+
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.AlgorithmParameters;
+
+
 
 public class EncryptDecrypt {
-	Cipher ecipher;
-	Cipher dcipher;
 
-	public EncryptDecrypt(SecretKey key) {
+	private String key = "";
+	
+	public EncryptDecrypt(){
 		try {
-			ecipher = Cipher.getInstance("DES");
-			dcipher = Cipher.getInstance("DES");
-			ecipher.init(Cipher.ENCRYPT_MODE, key);
-			dcipher.init(Cipher.DECRYPT_MODE, key);
-
-		} catch (javax.crypto.NoSuchPaddingException e) {
-		} catch (java.security.NoSuchAlgorithmException e) {
-		} catch (java.security.InvalidKeyException e) {
+			this.key = readFile(Paths.get(this.getClass().getResource("store.txt").toURI()).toString(),StandardCharsets.UTF_8);
+		} catch (IOException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-
-	public String encrypt(String str) {
-		try {
-			// Encode the string into bytes using utf-8
-			byte[] utf8 = str.getBytes("UTF8");
-
-			// Encrypt
-			byte[] enc = ecipher.doFinal(utf8);
-
-			// Encode bytes to base64 to get a string
-			return new sun.misc.BASE64Encoder().encode(enc);
-		} catch (javax.crypto.BadPaddingException e) {
-		} catch (IllegalBlockSizeException e) {
-		} catch (UnsupportedEncodingException e) {
-		} catch (@SuppressWarnings("hiding") java.io.IOException e) {
-		}
-		return null;
+	public String getKey() {
+		return this.key;
 	}
 
-	public String decrypt(String str) {
+	static String readFile(String path, Charset encoding) 
+			throws IOException 
+	{
+		//byte[] encoded = Files.readAllBytes(Paths.get(path));
+		List<String> lines = Files.readAllLines(Paths.get(path), encoding);
+		return lines.get(0);
+	}
+
+	public static String encrypt(String record, String patientSecret) throws Exception {
+		byte[] ivBytes;
+		/*you can give whatever you want for patientSecret. This is for testing purpose*/
+		SecureRandom random = new SecureRandom();
+		byte bytes[] = new byte[20];
+		random.nextBytes(bytes);
+		// Derive the key
+		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		PBEKeySpec spec = new PBEKeySpec(patientSecret.toCharArray(), bytes, 65556, 256);
+		SecretKey secretKey = factory.generateSecret(spec);
+		SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
+		//encrypting the record
+		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		cipher.init(Cipher.ENCRYPT_MODE, secret);
+		AlgorithmParameters params = cipher.getParameters();
+		ivBytes = params.getParameterSpec(IvParameterSpec.class).getIV();
+		byte[] encryptedTextBytes = cipher.doFinal(record.getBytes(StandardCharsets.UTF_8));
+		//prepend salt and vi
+		byte[] buffer = new byte[bytes.length + ivBytes.length + encryptedTextBytes.length];
+		System.arraycopy(bytes, 0, buffer, 0, bytes.length);
+		System.arraycopy(ivBytes, 0, buffer, bytes.length, ivBytes.length);
+		System.arraycopy(encryptedTextBytes, 0, buffer, bytes.length + ivBytes.length, encryptedTextBytes.length);
+		return new Base64().encodeToString(buffer);
+	}
+
+	public static String decrypt(String encryptedDoc, String patientSecret) throws Exception {
+		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		//strip off the salt and iv
+		ByteBuffer buffer = ByteBuffer.wrap(new Base64().decode(encryptedDoc));
+		byte[] saltBytes = new byte[20];
+		buffer.get(saltBytes, 0, saltBytes.length);
+		byte[] ivBytes1 = new byte[cipher.getBlockSize()];
+		buffer.get(ivBytes1, 0, ivBytes1.length);
+		byte[] encryptedTextBytes = new byte[buffer.capacity() - saltBytes.length - ivBytes1.length];
+
+		buffer.get(encryptedTextBytes);
+		// Deriving the key
+		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		PBEKeySpec spec = new PBEKeySpec(patientSecret.toCharArray(), saltBytes, 65556, 256);
+		SecretKey secretKey = factory.generateSecret(spec);
+		SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
+		cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(ivBytes1));
+		byte[] decryptedTextBytes = null;
 		try {
-			// Decode base64 to get bytes
-			byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
-
-			// Decrypt
-			byte[] utf8 = dcipher.doFinal(dec);
-
-			// Decode using utf-8
-			return new String(utf8, "UTF8");
-		} catch (javax.crypto.BadPaddingException e) {
-		} catch (IllegalBlockSizeException e) {
-		} catch (UnsupportedEncodingException e) {
-		} catch (java.io.IOException e) {
+			decryptedTextBytes = cipher.doFinal(encryptedTextBytes);
+			return new String(decryptedTextBytes);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+			return "";
 		}
-		return null;
 	}
 }

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import security.EncryptDecrypt;
 import webApp.beans.CreditCard;
 import webApp.beans.Reservation;
 import webApp.beans.Room;
@@ -252,8 +253,9 @@ public class ReservationChooseRoom extends HttpServlet {
 
 			if(SessionUtils.getLoginedUser(request.getSession())!=null) {
 				try {
-					
-					List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()),SessionUtils.getSessionkey(session));
+					EncryptDecrypt encoder = new EncryptDecrypt();
+					String key = encoder.getKey();
+					List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()),key);
 
 					request.setAttribute("cards", cards);
 				} catch (SQLException e) {

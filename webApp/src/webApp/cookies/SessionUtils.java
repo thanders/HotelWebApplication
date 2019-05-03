@@ -58,11 +58,11 @@ public class SessionUtils {
     public static void storeKey(HttpSession session, SecretKey key) {
         session.setAttribute("key", key);
     }
-    // Get the key information stored in the session.
-    public static SecretKey getSessionkey(HttpSession session) {
-    	SecretKey key = (SecretKey)session.getAttribute("key");
-        return key;
-    }
+//    // Get the key information stored in the session.
+//    public static SecretKey getSessionkey(HttpSession session) {
+//    	SecretKey key = (SecretKey)session.getAttribute("key");
+//        return key;
+//    }
  
     // Store info in Cookie
     public static void storeUserCookie(HttpServletResponse response, Starwood user) {
