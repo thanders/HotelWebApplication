@@ -1,7 +1,6 @@
 package webApp.servlets;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,9 +26,7 @@ public class LogoutServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
-    	System.out.println("here3");
-    	HttpSession session = request.getSession();
+    	    	HttpSession session = request.getSession();
     	
         // Check User has logged on
         Starwood loginedUser = SessionUtils.getLoginedUser(session);

@@ -44,7 +44,7 @@
             </tr>
             <tr>
                <th>Password</th>
-               <td><input type="password" name="password" value="${member.password}" /></td>
+               <td><input type="password" name="password" value="${member.password}" pattern="(?=.*\d)(?=.*[\W_]).{8,}" title="Minimum of 8 characters. Should have at least one special character and one number." required/></td>
             </tr>
           	<tr>
                <td colspan="2">                   

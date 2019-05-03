@@ -5,12 +5,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import security.EncryptDecrypt;
 import webApp.beans.CreditCard;
 import webApp.beans.Reservation;
 import webApp.beans.Room;
@@ -254,8 +253,9 @@ public class ReservationChooseRoom extends HttpServlet {
 
 			if(SessionUtils.getLoginedUser(request.getSession())!=null) {
 				try {
-
-					List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()));
+					EncryptDecrypt encoder = new EncryptDecrypt();
+					String key = encoder.getKey();
+					List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()),key);
 
 					request.setAttribute("cards", cards);
 				} catch (SQLException e) {

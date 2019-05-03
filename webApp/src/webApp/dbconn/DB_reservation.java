@@ -145,7 +145,6 @@ public class DB_reservation {
 	        pstm.setString(6, status);
 	        pstm.setString(7, reservationType);
 	        pstm.setDouble(8, price);
-	 
 	        pstm.executeUpdate();
 	    }
 	    
