@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import security.EncryptDecrypt;
 import webApp.beans.Starwood;
-import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
+import webApp.dbconn.DBUtils;
 
 @WebServlet(urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
@@ -43,9 +44,9 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/userInfo");
 			return;
 		}
-		
+
 		RequestDispatcher dispatcher //
-		= this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
+				= this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
 
 		dispatcher.forward(request, response);
 
@@ -64,18 +65,20 @@ public class LoginServlet extends HttpServlet {
 		Starwood user = null;
 		boolean hasError = false;
 		String errorString = null;
-		Starwood userlogInDetails = null;
+//		Starwood userlogInDetails = null;
 		if (userName == null || password == null || userName.length() == 0 || password.length() == 0) {
 			hasError = true;
 			errorString = "Required username and password!";
 		} else {
 			Connection conn = SessionUtils.getStoredConnection(request);
 			try {
+				///TODO
+				EncryptDecrypt encoder = new EncryptDecrypt();
+				String key = encoder.getKey();				
 				// Find the user in the DB.
-				//edit to check for username
-				user = DBUtils.findStarwoodMember(conn, userName);
-				userlogInDetails = DBUtils.findMember(conn,userName,password);
-				if (user == null && userlogInDetails ==null) {
+				user = DBUtils.findStarwoodMember(conn, userName,password, key);
+
+				if (user == null) {					
 					hasError = true;
 					errorString = "User Name or password invalid";
 				}
@@ -87,11 +90,10 @@ public class LoginServlet extends HttpServlet {
 		}
 		// If error, forward to /WEB-INF/views/login.jsp
 		if (hasError) {
-			//fix
+			// fix
 			user = new Starwood();
 			user.setUserName(userName);
 			user.setPassword(password);
-
 
 			// Store information in request attribute, before forward.
 			request.setAttribute("errorString", errorString);
@@ -99,7 +101,7 @@ public class LoginServlet extends HttpServlet {
 
 			// Forward to /WEB-INF/views/login.jsp
 			RequestDispatcher dispatcher //
-			= this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
+					= this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
 
 			dispatcher.forward(request, response);
 		}

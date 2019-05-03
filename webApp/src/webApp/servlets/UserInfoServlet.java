@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import security.EncryptDecrypt;
 import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 
@@ -33,7 +34,14 @@ public class UserInfoServlet extends HttpServlet {
 
 		// Check User has logged on
 		Starwood loginedUser = SessionUtils.getLoginedUser(session);
-
+		try {
+			EncryptDecrypt encoder = new EncryptDecrypt();
+			String key = encoder.getKey();
+			loginedUser.setCardNumber(EncryptDecrypt.decrypt(loginedUser.getCardNumber(),key));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Not logged in
 		if (loginedUser == null) {
 			// Redirect to login page.

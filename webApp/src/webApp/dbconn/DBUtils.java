@@ -3,35 +3,51 @@ package webApp.dbconn;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.time.LocalDate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import webApp.beans.*;
+import security.EncryptDecrypt;
+import webApp.beans.CreditCard;
+import webApp.beans.Guest;
+import webApp.beans.Reservation;
+import webApp.beans.Room;
+import webApp.beans.Starwood;
 
 public class DBUtils {
-
-	public static Starwood findMember(Connection conn, //
-			String userName, String password) throws SQLException {
+	
+	public static Starwood findStarwoodMember(Connection conn,String userName, String password,String key) throws SQLException {
 
 		String sql = "Select * from Members a " //
-				+ " where a.User_Name = ? and a.User_Password = ?";
+				+ " where a.User_Name = ? ";
 
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setString(1, userName);
-		pstm.setString(2, password);
+
 		ResultSet rs = pstm.executeQuery();
 
 		if (rs.next()) {
-			Starwood member = new Starwood(userName, password);
-
-			return member;
+			String pass = rs.getString("User_Password");
+			try {
+				pass = EncryptDecrypt.decrypt(pass, key);
+				System.out.println(pass);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("ENtered password is "+password);
+			if(pass.equals(password)) {
+				System.out.println("made it :)");
+				Starwood member = findStarwoodMember(conn,userName);
+				return member;
+			}
 		}
 		return null;
 	}
+
 
 	public static Starwood findStarwoodMember(Connection conn, String userName) throws SQLException {
 
@@ -163,7 +179,7 @@ public class DBUtils {
 		pstm.setString(1, username);
 
 		removeUserReservations(conn, member);
-		removeCreditCards(conn, DB_members.getStarwoodMemberId(conn,username));
+		removeCreditCards(conn, DB_members.getStarwoodMemberId(conn, username));
 		pstm.executeUpdate();
 
 		PreparedStatement pstm1 = conn.prepareStatement(sql2);
@@ -174,7 +190,6 @@ public class DBUtils {
 	}
 
 	private static void removeCreditCards(Connection conn, int id) throws SQLException {
-		// TODO Auto-generated method stub
 		String sql = "Delete From Credit_Card where MemberID = ?";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setInt(1, id);
@@ -182,16 +197,24 @@ public class DBUtils {
 
 	}
 
-	public static List<CreditCard> getCards(Connection conn, int id) throws SQLException {
+	public static List<CreditCard> getCards(Connection conn, int id, String key) throws SQLException {
 		String sql = "Select *  from Credit_Card a where a.MemberID = ?   ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setInt(1, id);
 		ResultSet rs = pstm.executeQuery();
+		//EncryptDecrypt encrypter = new EncryptDecrypt(key);
 		List<CreditCard> list = new ArrayList<CreditCard>();
 		while (rs.next()) {
 			String card = rs.getString(1);
-			CreditCard creditCard = new CreditCard(card, id);
-			list.add(creditCard);
+			CreditCard creditCard;
+			try {
+				creditCard = new CreditCard(EncryptDecrypt.decrypt(card,key), id);
+				list.add(creditCard);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		return list;
 
@@ -241,7 +264,6 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setString(1, reservationId.toString());
 
-
 		ResultSet rs = pstm.executeQuery();
 
 		while (rs.next()) {
@@ -254,7 +276,6 @@ public class DBUtils {
 		return rooms;
 
 	}
-	
 
 	public static void updateMemberName(Connection conn, Starwood member) throws SQLException {
 		String sql = "Update Starwood set Member_Name =?  where Id=? ";
@@ -324,14 +345,13 @@ public class DBUtils {
 		pstm.setString(1, member.getUserName());
 		pstm.setInt(2, member.getId());
 		pstm.executeUpdate();
-		
+
 		String sql2 = "Update Members set User_Name =? where User_Name=? ";
 		PreparedStatement pstm2 = conn.prepareStatement(sql2);
 		pstm2.setString(1, member.getUserName());
 		pstm2.setString(2, oldUserName);
 		pstm2.executeUpdate();
 	}
-
 
 	public static void updateMemberPasword(Connection conn, Starwood member) throws SQLException {
 		String sql = "Update Members set User_Password =? where User_Name=? ";

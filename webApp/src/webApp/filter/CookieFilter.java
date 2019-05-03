@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import webApp.beans.Starwood;
-import webApp.dbconn.DBUtils;
 import webApp.cookies.SessionUtils;
+import webApp.dbconn.DBUtils;
 
 @WebFilter(filterName = "cookieFilter", urlPatterns = { "/*" })
 public class CookieFilter implements Filter {
@@ -39,7 +39,6 @@ public class CookieFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
- 
         Starwood userInSession = SessionUtils.getLoginedUser(session);
         // 
         if (userInSession != null) {
