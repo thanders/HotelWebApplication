@@ -5,8 +5,10 @@
 <div class="menu">
  
    <a href="${pageContext.request.contextPath}/home">Home</a>
+   <c:if test="${not empty sessionScope.loginedUser}">
    |
    <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
+	</c:if>  
    |
    <a href="${pageContext.request.contextPath}/ReservationChooseDates">View Available Rooms and Book</a>
    
