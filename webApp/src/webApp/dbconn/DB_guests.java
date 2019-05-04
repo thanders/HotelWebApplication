@@ -1,5 +1,6 @@
 package webApp.dbconn;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,11 +13,11 @@ public class DB_guests {
 	    
 	    
 	    // QueryGuest
-	    public static Guest QueryGuest(Connection conn, int GuestID) throws SQLException {
+	    public static Guest QueryGuest(Connection conn, BigInteger GuestID) throws SQLException {
 	        String sql = "Select a.Guest_Name, a.Guest_Surname, a.Address, a.Card_Number, a.Phone_Number, a.Email_Address, a.CVV, a.ExpiryDate from Guest a WHERE Id = ?";
 	 
 	        PreparedStatement pstm = conn.prepareStatement(sql);
-	        pstm.setInt(1, GuestID);
+	        pstm.setString(1, GuestID.toString());
 	        ResultSet rs = pstm.executeQuery();
 	        
 	        // Each Guest ID is unique (Guest are not registered so can appear more than once)

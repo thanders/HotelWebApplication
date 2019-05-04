@@ -3,6 +3,7 @@ package webApp.beans;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Random;
 
 // This is a class for ad hoc methods
 public class AdHoc {
@@ -46,5 +47,11 @@ public class AdHoc {
         
 		return this.randomNumber;
 	}
+	
+	public BigInteger randomBigInteger() {
+        Random rand = new Random();
+        BigInteger result = new BigInteger(20, rand); 
+        return result;
+    }
 
 }
