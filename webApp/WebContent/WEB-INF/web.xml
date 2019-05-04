@@ -32,4 +32,13 @@
 <transport-guarantee>CONFIDENTIAL</transport-guarantee>
 </user-data-constraint>
 </security-constraint>
+
+<session-config>
+          <cookie-config>
+             <http-only>true</http-only>
+             <secure>true</secure>
+          </cookie-config>
+          <tracking-mode>COOKIE</tracking-mode>
+      </session-config>
+
 </web-app>
