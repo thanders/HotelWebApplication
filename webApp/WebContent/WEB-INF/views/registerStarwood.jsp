@@ -16,51 +16,52 @@
       <div class="container">
       
 <form method="POST" action="${pageContext.request.contextPath}/createStarwood">
+<p style="color: red;">${errorString}</p>
    
       <h3>Enter your personal details</h3>
          <table>
             <tr>
                <td>Name</td>
-               <td><input type="text" name=name value="${Starwood.name}" required/></td>
+               <td><input type="text" name=name value="${member.name}" required/></td>
             </tr>
             <tr>
                <td>Surname</td>
-               <td><input type="text" name="surename" value="${Starwood.surename}" required/></td>
+               <td><input type="text" name="surename" value="${member.surename}" required/></td>
             </tr>
             <tr>
                <td>Address</td>
-               <td><input type="text" name="address" value="${Starwood.address}" required/></td>
+               <td><input type="text" name="address" value="${member.address}" required/></td>
             </tr>
             <tr>
                <td>Email</td>
-               <td><input type="email" name="email" value="${Starwood.mmail}" required/></td>
+               <td><input type="email" name="email" value="${member.email}" required/></td>
             </tr>
                         
             <tr>
                <td>Phone number</td>
-               <td><input type="text" name="phoneNumber" value="${Starwood.phoneNumber}" required/></td>
+               <td><input type="text" name="phoneNumber" value="${member.phoneNumber}" required/></td>
             </tr>
 
          	<tr>
                <th>Credit card number</th>
-               <td><input type="text" name="CardNumber" maxlength="80" value="${Starwood.cardNumber}" pattern=".{16,16}" title="16 digits required" required/></td>
+               <td><input type="text" name="CardNumber" maxlength="80"  pattern=".{16,16}" title="16 digits required" required/></td>
             </tr>
             <tr>
                <th> CVV number</th>
-               <td><input type="text" name="CVV" value="${Starwood.CVV}" pattern=".{3,3}" title="3 digits required" required/></td>
+               <td><input type="text" name="CVV"  pattern=".{3,3}" title="3 digits required" required/></td>
             </tr>
             
              <tr>
                <th>Expiry Date</th>
-               <td><input type="date" name="ExpiryDate" value="${Starwood.ExpiryDate}" required/></td>
+               <td><input type="date" name="ExpiryDate"  required/></td>
             </tr>
             <tr>
                <td>User Name</td>
-               <td><input type="text" name="userName" value="${Starwood.userName}" required/></td>
+               <td><input type="text" name="userName"  required/></td>
             </tr>
             <tr>
                <td>Password</td>
-               <td><input type="password" name="password" value="${Starwood.password}" pattern="(?=.*\d)(?=.*[\W_]).{8,}" title="Minimum of 8 characters. Should have at least one special character and one number." required/></td>
+               <td><input type="password" name="password"  pattern="(?=.*\d)(?=.*[\W_]).{8,}" title="Minimum of 8 characters. Should have at least one special character and one number." required/></td>
             </tr>
           	<tr>
                <td colspan="2">                   
