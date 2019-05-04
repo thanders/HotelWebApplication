@@ -1,13 +1,14 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.LocalDate;
 
 public class Guest implements Serializable{
 
 	// Declare class fields
 	private static final long serialVersionUID = 1L;
-	private int guestID;
+	private BigInteger guestID;
 	private String guestName;
 	private String guestSurename;
 	private String guestAddress;
@@ -110,11 +111,11 @@ public class Guest implements Serializable{
 		this.guestPhoneNumber = guestPhoneNumber;
 	}
 	
-	public int getGuestID() {
+	public BigInteger getGuestID() {
 		return guestID;
 	}
 
-	public void setGuestID(int guestID) {
+	public void setGuestID(BigInteger guestID) {
 		this.guestID = guestID;
 	}
 

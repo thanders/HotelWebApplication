@@ -26,7 +26,7 @@ public class DB_reservation {
 	        
 	        // Get values from the query and assign to variables
 	        if (rs.next()) {
-		        int GuestID= rs.getInt("GuestID");
+	        	BigInteger GuestID= BigInteger.valueOf(rs.getLong("GuestID"));
 		        LocalDate start= rs.getDate("start").toLocalDate();
 		        LocalDate end= rs.getDate("end").toLocalDate();
 		        int numberRooms= rs.getInt("numberRooms");
@@ -47,12 +47,12 @@ public class DB_reservation {
 	    }
 	    
 	    	// queryReservation with Guest ID
-		   public static Reservation queryReservation(Connection conn, int GuestID) throws SQLException {
+		   public static Reservation queryReservation(Connection conn, BigInteger GuestID) throws SQLException {
 		 
 		        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a where a.GuestID = ?";
 		 
 		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setInt(1, GuestID);
+		        pstm.setString(1, GuestID.toString());
 		        ResultSet rs = pstm.executeQuery();
 		        // There should only be one GuestID with a reservation
 		        if (rs.next()) {
@@ -74,14 +74,14 @@ public class DB_reservation {
 		        }
 		   
 		// queryReservation with Guest ID
-		   public static Reservation queryReservation(Connection conn, int GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType, Double price) throws SQLException {
+		   public static Reservation queryReservation(Connection conn, BigInteger GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType, Double price) throws SQLException {
 		 
 		        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a "
 		        		+ "where a.GuestID = ? and a.start = ? and a.end = ? and a.numberRooms = ? and a.status = ?"
 		        		+ "and a.reservationType = ? and a.price = ?";
 		 
 		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setInt(1, GuestID);
+		        pstm.setString(1, GuestID.toString());
 		        pstm.setObject(2, start);
 		        pstm.setObject(3, end);
 		        pstm.setInt(4, numberRooms);
@@ -105,12 +105,12 @@ public class DB_reservation {
 	    
 		   
 		// Query Reservations for a given member with Guest ID
-		   public static List<Reservation> queryReservations(Connection conn, int GuestID, String reservationType) throws SQLException {
+		   public static List<Reservation> queryReservations(Connection conn, BigInteger GuestID, String reservationType) throws SQLException {
 		 
 		        String sql = "Select a.Reservation_Id, a.GuestID, a.start, a.end, a.numberRooms, a.bookingDate, a.status, a.reservationType, a.price from Reservations a where a.GuestID = ? and a.reservationType = ? ";
 		        List<Reservation> reservations = new ArrayList<>();
 		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setInt(1, GuestID);
+		        pstm.setString(1, GuestID.toString());
 		        pstm.setString(2, reservationType);
 		        ResultSet rs = pstm.executeQuery();
 		        // There should only be one GuestID with a reservation
@@ -133,12 +133,12 @@ public class DB_reservation {
 		        }
 	    
 	    // insert Reservation
-	    public static void insertReservation(Connection conn, BigInteger reservationID, int GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType, Double price) throws SQLException {
+	    public static void insertReservation(Connection conn, BigInteger reservationID, BigInteger GuestID, LocalDate start, LocalDate end, int numberRooms, String status, String reservationType, Double price) throws SQLException {
 	        String sql = "Insert into Reservations(reservation_Id, GuestID, start, end, numberRooms, status, reservationType, price) values (?, ?, ?, ?, ?, ?, ?, ?)";
 	        
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 	        pstm.setString(1, reservationID.toString());
-	        pstm.setInt(2, GuestID);
+	        pstm.setString(2, GuestID.toString());
 	        pstm.setObject(3, start);
 	        pstm.setObject(4, end);
 	        pstm.setInt(5, numberRooms);
@@ -162,7 +162,7 @@ public class DB_reservation {
 	        List<Reservation> list = new ArrayList<Reservation>();
 	        while (rs.next()) {
 	        	BigInteger Reservation_Id = BigInteger.valueOf(rs.getLong("Reservation_Id"));
-	            int GuestID = rs.getInt("GuestID");
+	        	BigInteger GuestID = BigInteger.valueOf(rs.getLong("GuestID"));
 		        LocalDate start= rs.getDate("start").toLocalDate();
 		        LocalDate end= rs.getDate("end").toLocalDate();
 		        int numberRooms = rs.getInt("numberRooms");

@@ -74,7 +74,7 @@ public class ReservationCancel extends HttpServlet {
 			Starwood member = SessionUtils.getLoginedUser(request.getSession());
 			List<Reservation> reservations = new ArrayList<>();
 			
-			int guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
+			BigInteger guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
 			reservations = DB_reservation.queryReservations(conn, guestID , "Member");
 			
 			// Change the reservation's status to cancelled

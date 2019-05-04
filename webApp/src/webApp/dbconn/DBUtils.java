@@ -5,12 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import security.EncryptDecrypt;
+import webApp.beans.AdHoc;
 import webApp.beans.CreditCard;
 import webApp.beans.Guest;
 import webApp.beans.Reservation;
@@ -100,28 +100,31 @@ public class DBUtils {
 	}
 
 	// insertGuest, obtain auto generated GuestID key and create Reservation
-	public static int insertGuest(Connection conn, Guest guest) throws SQLException {
-		String sql = "Insert into Guest(Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number,ExpiryDate,CVV) values (?,?,?,?,?,?,?,?)";
+	public static BigInteger insertGuest(Connection conn, Guest guest) throws SQLException {
+		String sql = "Insert into Guest(Id,Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number,ExpiryDate,CVV) values (?,?,?,?,?,?,?,?,?)";
 
-		PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-		pstm.setString(1, guest.getGuestName());
-		pstm.setString(2, guest.getGuestSurename());
-		pstm.setString(3, guest.getGuestAddress());
-		pstm.setString(4, guest.getGuestEmail());
-		pstm.setString(5, guest.getGuestCardNumber());
-		pstm.setInt(6, guest.getGuestPhoneNumber());
-		pstm.setObject(7, guest.getExpiryDate());
-		pstm.setInt(8, guest.getCVV());
+		//PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		
+		AdHoc adHoc = new AdHoc();
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, adHoc.randomNumber().toString());
+		pstm.setString(2, guest.getGuestName());
+		pstm.setString(3, guest.getGuestSurename());
+		pstm.setString(4, guest.getGuestAddress());
+		pstm.setString(5, guest.getGuestEmail());
+		pstm.setString(6, guest.getGuestCardNumber());
+		pstm.setInt(7, guest.getGuestPhoneNumber());
+		pstm.setObject(8, guest.getExpiryDate());
+		pstm.setInt(9, guest.getCVV());
 		pstm.executeUpdate();
 
 		ResultSet rs = pstm.getGeneratedKeys();
 
-		int GuestID = 0;
+		BigInteger GuestID = BigInteger.valueOf(0);
 
 		// Assign auto generated Guest key to variable and create reservation
 		if (rs != null && rs.next()) {
-			GuestID = rs.getInt(1);
+			GuestID = BigInteger.valueOf(rs.getLong("Id"));
 		}
 
 		return GuestID;
@@ -189,18 +192,18 @@ public class DBUtils {
 		pstm1.executeUpdate();
 	}
 
-	private static void removeCreditCards(Connection conn, int id) throws SQLException {
+	private static void removeCreditCards(Connection conn, BigInteger id) throws SQLException {
 		String sql = "Delete From Credit_Card where MemberID = ?";
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setInt(1, id);
+		pstm.setString(1, id.toString());
 		pstm.executeUpdate();
 
 	}
 
-	public static List<CreditCard> getCards(Connection conn, int id, String key) throws SQLException {
+	public static List<CreditCard> getCards(Connection conn, BigInteger id, String key) throws SQLException {
 		String sql = "Select *  from Credit_Card a where a.MemberID = ?   ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setInt(1, id);
+		pstm.setString(1, id.toString());
 		ResultSet rs = pstm.executeQuery();
 		//EncryptDecrypt encrypter = new EncryptDecrypt(key);
 		List<CreditCard> list = new ArrayList<CreditCard>();
@@ -222,7 +225,7 @@ public class DBUtils {
 
 	public static void removeUserReservations(Connection conn, Starwood member) throws SQLException {
 
-		int guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
+		BigInteger guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
 		List<Reservation> reservations = DB_reservation.queryReservations(conn, guestID, "Member");
 
 		for (Reservation r : reservations) {
@@ -282,7 +285,7 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setString(1, member.getName());
-		pstm.setInt(2, member.getId());
+		pstm.setString(2, member.getId().toString());
 		pstm.executeUpdate();
 	}
 
@@ -291,7 +294,7 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setString(1, member.getSurename());
-		pstm.setInt(2, member.getId());
+		pstm.setString(2, member.getId().toString());
 		pstm.executeUpdate();
 	}
 
@@ -299,7 +302,7 @@ public class DBUtils {
 		String sql = "Update Starwood set Address =?  where Id=? ";
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setString(1, member.getAddress());
-		pstm.setInt(2, member.getId());
+		pstm.setString(2, member.getId().toString());
 		pstm.executeUpdate();
 	}
 
@@ -308,7 +311,7 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setString(1, member.getEmail());
-		pstm.setInt(2, member.getId());
+		pstm.setString(2, member.getId().toString());
 		pstm.executeUpdate();
 	}
 
@@ -317,7 +320,7 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setInt(1, member.getPhoneNumber());
-		pstm.setInt(2, member.getId());
+		pstm.setString(2, member.getId().toString());
 		pstm.executeUpdate();
 	}
 
@@ -326,7 +329,7 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setString(1, member.getCardNumber());
-		pstm.setInt(2, member.getId());
+		pstm.setString(2, member.getId().toString());
 
 		// Update the old card in the credit card table as well
 		String sql2 = "Update Credit_Card set Card_Number =?  where Card_Number=? ";
@@ -343,7 +346,7 @@ public class DBUtils {
 		PreparedStatement pstm = conn.prepareStatement(sql);
 
 		pstm.setString(1, member.getUserName());
-		pstm.setInt(2, member.getId());
+		pstm.setString(2, member.getId().toString());
 		pstm.executeUpdate();
 
 		String sql2 = "Update Members set User_Name =? where User_Name=? ";
@@ -364,7 +367,7 @@ public class DBUtils {
 	public static void insertCard(Connection conn, CreditCard card) throws SQLException {
 		String sql = "Insert into Credit_Card(MemberID, Card_Number,ExpiryDate, CVV) values (?,?,?,?)";
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setInt(1, card.getId());
+		pstm.setString(1, card.getId().toString());
 		pstm.setString(2, card.getCardNumber());
 		pstm.setObject(3, card.getExpiryDate());
 		pstm.setInt(4, card.getCVV());

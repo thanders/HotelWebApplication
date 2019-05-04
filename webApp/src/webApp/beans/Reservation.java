@@ -11,7 +11,7 @@ public class Reservation implements Serializable {
 	// Class fields
 	private static final long serialVersionUID = 1L;
 	private BigInteger reservationId;
-	private int GuestID;
+	private BigInteger GuestID;
 	private LocalDate start;
 	private LocalDate end;
 	private int numberRooms;
@@ -30,7 +30,7 @@ public class Reservation implements Serializable {
 	public Reservation() { }
 	
 	// Constructor
-	public Reservation(BigInteger reservationId, int GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDateTime bookingDate, String status, String reservationType, double price) {
+	public Reservation(BigInteger reservationId, BigInteger GuestID, LocalDate start, LocalDate end, int numberRooms, LocalDateTime bookingDate, String status, String reservationType, double price) {
 		this.reservationId = reservationId;
 		this.GuestID = GuestID;
 		this.start = start;
@@ -53,11 +53,11 @@ public class Reservation implements Serializable {
 		this.reservationId = reservationId;
 	}
 
-	public int getGuestID() {
+	public BigInteger getGuestID() {
 		return GuestID;
 	}
 
-	public void setGuestID(int guestID) {
+	public void setGuestID(BigInteger guestID) {
 		GuestID = guestID;
 	}
 

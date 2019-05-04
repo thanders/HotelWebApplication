@@ -1,39 +1,57 @@
 package webApp.dbconn;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import webApp.beans.AdHoc;
 import webApp.beans.Starwood;
 
 public class DB_members{ 
 		    
 		    
 		    // insertMember
-		    public static void insertMember(Connection conn, Starwood member) throws SQLException {
-		        String sql = "Insert into Starwood(Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name,CVV,ExpiryDate) values (?,?,?,?,?,?,?,?,?)";
-		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setString(1, member.getName());
-		        pstm.setString(2, member.getSurename());
-		        pstm.setString(3, member.getAddress());
-		        pstm.setString(4, member.getEmail());
-		        pstm.setString(5, member.getCardNumber());
-		        pstm.setInt(6, member.getPhoneNumber());
-		        pstm.setString(7, member.getUserName());
-		        pstm.setInt(8, member.getCVV());
-		        pstm.setObject(9, member.getExpiryDate());
-		        pstm.executeUpdate();
+		    public static String insertMember(Connection conn, Starwood member) throws SQLException {
+		        String output = null;
+		    	BigInteger existingMember = getStarwoodMemberId(conn,member.getUserName());
+		    	
+		    	//If statement represents the case when the username is take, set member to null and return
+		    	if(!existingMember.toString().equals(BigInteger.valueOf(-1).toString())) {
+		    		System.out.println("hereyaah");
+		    		output = "Username taken, please chose different username";
+		    	}
+		    	else {
+		    		String sql = "Insert into Starwood(Id,Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name,CVV,ExpiryDate) values (?,?,?,?,?,?,?,?,?,?)";
+			        AdHoc adHoc = new AdHoc();
+			        PreparedStatement pstm = conn.prepareStatement(sql);
+			        pstm.setString(1, adHoc.randomBigInteger().toString());
+			        pstm.setString(2, member.getName());
+			        pstm.setString(3, member.getSurename());
+			        pstm.setString(4, member.getAddress());
+			        pstm.setString(5, member.getEmail());
+			        pstm.setString(6, member.getCardNumber());
+			        pstm.setInt(7, member.getPhoneNumber());
+			        pstm.setString(8, member.getUserName());
+			        pstm.setInt(9, member.getCVV());
+			        pstm.setObject(10, member.getExpiryDate());
+			        pstm.executeUpdate();
+		    	}
+		    	
+		    	
+		        
+		        return output;
 		    }
 		    
 		    
-		    public static Starwood findStarwoodMember(Connection conn, int id) throws SQLException {
+		    public static Starwood findStarwoodMember(Connection conn, BigInteger id) throws SQLException {
 			   	 
 		        String sql = "Select *  from Starwood a "//
 		                + " where a.id = ? ";
 		 
 		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setInt(1, id);
+		        pstm.setString(1, id.toString());
 		 
 		        ResultSet rs = pstm.executeQuery();
 		 
@@ -63,9 +81,9 @@ public class DB_members{
 		    }
 		    
 		    //Method returns -1 if it doesn't find member with given username
-		    public static int getStarwoodMemberId(Connection conn, String userName) throws SQLException {
+		    public static BigInteger getStarwoodMemberId(Connection conn, String userName) throws SQLException {
 		    	
-		    	int id = -1;
+		    	BigInteger id = BigInteger.valueOf(-1);
 		    	
 		    	String sql = "Select Id  from Starwood a "//
 		                + " where a.User_name = ? ";
@@ -76,7 +94,7 @@ public class DB_members{
 		        ResultSet rs = pstm.executeQuery();
 		        
 		        if (rs.next()) {
-		        	id  = rs.getInt("Id");
+		        	id  = BigInteger.valueOf(rs.getLong("Id"));
 		        }
 		    	
 		    	return id;

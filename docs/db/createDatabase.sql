@@ -39,7 +39,6 @@ CREATE TABLE `Credit_Card` (
 
 LOCK TABLES `Credit_Card` WRITE;
 /*!40000 ALTER TABLE `Credit_Card` DISABLE KEYS */;
-INSERT INTO `Credit_Card` VALUES ('1234567788912345',30,188,'2019-04-29'),('1234567812345678',31,123,'2019-04-30'),('1234567890123456',29,123,'2019-04-30'),('1234567891234123',32,123,'2019-05-14'),('1234567899999922',29,111,'2019-04-30');
 /*!40000 ALTER TABLE `Credit_Card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,7 +50,7 @@ DROP TABLE IF EXISTS `Guest`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Guest` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` bigint(20) NOT NULL,
   `Guest_Name` varchar(128) COLLATE utf8_bin NOT NULL,
   `Guest_Surname` varchar(128) COLLATE utf8_bin NOT NULL,
   `Address` varchar(280) COLLATE utf8_bin NOT NULL,
@@ -61,7 +60,7 @@ CREATE TABLE `Guest` (
   `CVV` int(3) NOT NULL,
   `ExpiryDate` date NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +69,6 @@ CREATE TABLE `Guest` (
 
 LOCK TABLES `Guest` WRITE;
 /*!40000 ALTER TABLE `Guest` DISABLE KEYS */;
-INSERT INTO `Guest` VALUES (8,'Abdulrahman Salim','Akinyede','43 Parslickstown Court','1234567890123456',852777322,'Abdulrahman.salim@ucdconnect.ie',123,'2019-04-29'),(44,'t','t','th','1111111111111111',834206066,'t@t.t',123,'2019-04-30'),(45,'Thomas Anderson','Test','36 Crannagh Castle','1234567812345678',834206066,'thomas.anderson@ucdconnect.ie',123,'2019-05-02'),(46,'Tom','Tom','Tom','1234567812345678',1234,'Tom@Tom.com',123,'2019-05-21');
 /*!40000 ALTER TABLE `Guest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +92,6 @@ CREATE TABLE `Members` (
 
 LOCK TABLES `Members` WRITE;
 /*!40000 ALTER TABLE `Members` DISABLE KEYS */;
-INSERT INTO `Members` VALUES ('t','t'),('tom','tom');
 /*!40000 ALTER TABLE `Members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +104,7 @@ DROP TABLE IF EXISTS `Reservations`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Reservations` (
   `Reservation_Id` bigint(20) NOT NULL COMMENT '\\n',
-  `GuestID` int(11) NOT NULL,
+  `GuestID` bigint(20) NOT NULL,
   `start` date NOT NULL,
   `end` date NOT NULL,
   `duration` int(11) DEFAULT NULL,
@@ -126,7 +123,6 @@ CREATE TABLE `Reservations` (
 
 LOCK TABLES `Reservations` WRITE;
 /*!40000 ALTER TABLE `Reservations` DISABLE KEYS */;
-INSERT INTO `Reservations` VALUES (1018639452708551,32,'2019-05-15','2019-05-22',NULL,1,'Active','2019-05-01 22:06:07','Member','3150.0'),(5482819089468110,45,'2019-05-01','2019-05-16',NULL,2,'Active','2019-05-01 21:47:48','Guest','3600.0'),(10678326152847750,46,'2019-05-02','2019-05-04',NULL,2,'Active','2019-05-02 15:49:16','Guest','480.0'),(108531092716783030,32,'2019-05-15','2019-05-21',NULL,4,'Active','2019-05-01 22:05:19','Member','2592.0'),(1012910412054661571,44,'2019-05-01','2019-05-02',NULL,2,'Active','2019-04-30 11:53:20','Guest','240.0');
 /*!40000 ALTER TABLE `Reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +138,7 @@ CREATE TABLE `Reserved_Rooms` (
   `roomNumber` varchar(45) COLLATE utf8_bin NOT NULL,
   `reservationID` varchar(45) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +147,6 @@ CREATE TABLE `Reserved_Rooms` (
 
 LOCK TABLES `Reserved_Rooms` WRITE;
 /*!40000 ALTER TABLE `Reserved_Rooms` DISABLE KEYS */;
-INSERT INTO `Reserved_Rooms` VALUES (1,'14b','1012910412054661571'),(2,'15b','1012910412054661571'),(3,'16b','5482819089468110'),(4,'17b','5482819089468110'),(5,'1a','108531092716783030'),(6,'20c','108531092716783030'),(7,'23b','108531092716783030'),(8,'2a','108531092716783030'),(9,'8a','1018639452708551'),(10,'13b','10678326152847750'),(11,'16b','10678326152847750');
 /*!40000 ALTER TABLE `Reserved_Rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +184,7 @@ DROP TABLE IF EXISTS `Starwood`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Starwood` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` bigint(20) NOT NULL,
   `Member_Name` varchar(128) COLLATE utf8_bin NOT NULL,
   `Member_Surname` varchar(128) COLLATE utf8_bin NOT NULL,
   `User_Name` varchar(128) COLLATE utf8_bin NOT NULL,
@@ -201,7 +196,7 @@ CREATE TABLE `Starwood` (
   `ExpiryDate` date NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `User_Name_UNIQUE` (`User_Name`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,7 +205,6 @@ CREATE TABLE `Starwood` (
 
 LOCK TABLES `Starwood` WRITE;
 /*!40000 ALTER TABLE `Starwood` DISABLE KEYS */;
-INSERT INTO `Starwood` VALUES (30,'Abdulrahman Salim','a','b','43 Parslickstown Court','1234567788912345',852777322,'Abdulrahman.salim@ucdconnect.ie',188,'2019-04-29'),(32,'t','t','tom','t','1234567812345678',1234,'t@t.com',234,'2019-05-16'),(33,'t','t','t','t','1234567812345678',123,'t@t.com',123,'2019-05-22');
 /*!40000 ALTER TABLE `Starwood` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -223,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-02 21:02:49
+-- Dump completed on 2019-05-04 14:03:08
