@@ -70,6 +70,8 @@ public class SessionUtils {
         Cookie cookieUserName = new Cookie(ATT_NAME_USER_NAME, user.getUserName());
         // 1 day (Converted to seconds)
         cookieUserName.setMaxAge(24 * 60 * 60);
+        cookieUserName.setHttpOnly(true);
+        cookieUserName.setSecure(true);
         response.addCookie(cookieUserName);
     }
  
