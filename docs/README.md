@@ -14,6 +14,25 @@ Create a database called sse `CREATE database sse;`
 
 Execute the included SQL file to create the webApp's tables `source docs/db/createTables.sql;`
 
+## Webserver deployment
+
+This project can be deployed on any webserver. However, we developed it using Tomcat.
+
+### SSL
+We have provided a two sample files for deploying our app with SSL.
+
+The `/server` directory contains server.xml and keystore. If you are using Tomcat and want to deploy SSL you should replace your local Tomcat's server.xml configuration file with the one found in `/server/server.xml` You will need to search for "keystoreFile" and replace the path with your local path to `/server/keystore`
+
+Once the webserver is working and SSL has been setup our project can be accessed from:
+
+HTTP:
+
+http://localhost:8080/MarriotWebApp/
+
+HTTPS:
+
+https://localhost:8443/MarriotWebApp/
+
 ## Project Trello board
 
 This is effectively a diary that documents the contribution of each team member to the project.

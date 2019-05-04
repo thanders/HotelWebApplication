@@ -2,6 +2,7 @@
 package webApp.servlets;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -63,22 +64,22 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		cvvNumber = Integer.parseInt(cvv);
 		EncryptDecrypt encoder = new EncryptDecrypt();
 		String key = encoder.getKey();
-		
-		
+
+
 		// Encrypt
 		String encryptedPassword="",encryptedCredit="";
 		try {
 			encryptedPassword = EncryptDecrypt.encrypt(password,key);
 			encryptedCredit = EncryptDecrypt.encrypt(cardNumber,key);
-			
+
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
+
+
 		LocalDate expiry = LocalDate.parse(CardDate, f);
-//		System.out.println("key1: " + key.toString());
+		//		System.out.println("key1: " + key.toString());
 		Starwood member = new Starwood(name, surename, address, email, encryptedCredit, PhoneNumber, userName, encryptedPassword,
 				cvvNumber, expiry);
 		String errorString = null;
@@ -87,13 +88,15 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		// database table
 		if (errorString == null) {
 			try {
-				DB_members.insertMember(conn, member);
-				DB_members.insertMemberLogIn(conn, member);
+				errorString = DB_members.insertMember(conn, member);
+				if(errorString == null) {
+					DB_members.insertMemberLogIn(conn, member);
 
-				int id = DB_members.getStarwoodMemberId(conn, userName);
-				CreditCard card = new CreditCard(encryptedCredit, id, cvvNumber, expiry);
+					BigInteger id = DB_members.getStarwoodMemberId(conn, userName);
+					CreditCard card = new CreditCard(encryptedCredit, id, cvvNumber, expiry);
 
-				DBUtils.insertCard(conn, card);
+					DBUtils.insertCard(conn, card);
+				}
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -106,13 +109,15 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		// Store information to request attribute, before forward to views.
 		request.setAttribute("errorString", errorString);
 		try {
+
 			member.setCardNumber(EncryptDecrypt.decrypt(encryptedCredit,key));
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// Makes member available for page redirection
-		request.setAttribute("starwoodNew", member);
+		request.setAttribute("member", member);
 
 		// If error, forward to Edit page.
 		if (errorString != null) {

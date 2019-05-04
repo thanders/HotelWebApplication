@@ -1,6 +1,7 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.LocalDate;
 
 public class CreditCard implements Serializable {
@@ -10,11 +11,11 @@ public class CreditCard implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String cardNumber;
-	private int id;
+	private BigInteger id;
 	private int CVV;
 	private LocalDate expiryDate;
 
-	public CreditCard(String cardNumber, int id, int cVV, LocalDate expiryDate) {
+	public CreditCard(String cardNumber, BigInteger id, int cVV, LocalDate expiryDate) {
 		super();
 		this.cardNumber = cardNumber;
 		this.id = id;
@@ -39,15 +40,15 @@ public class CreditCard implements Serializable {
 		this.expiryDate = expiryDate;
 	}
 
-	public int getId() {
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 	
-	public CreditCard(String cardNumber, int id) {
+	public CreditCard(String cardNumber, BigInteger id) {
 		super();
 		this.cardNumber = cardNumber;
 		this.id = id;

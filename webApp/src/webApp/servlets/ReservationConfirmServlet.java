@@ -108,7 +108,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 				Connection conn = SessionUtils.getStoredConnection(request);
 
 				// Insert the new Guest instance into the database
-				int GuestID = DBUtils.insertGuest(conn, guest);
+				BigInteger GuestID = DBUtils.insertGuest(conn, guest);
 				String status = "Active";
 				String reservationType = "Guest";
 				
@@ -224,7 +224,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 				// Connect to database
 				Connection conn = SessionUtils.getStoredConnection(request);
 
-				int GuestID = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
+				BigInteger GuestID = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
 				String status = "Active";
 				String reservationType = "Member";
 

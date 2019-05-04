@@ -2,6 +2,7 @@ package webApp.servlets;
 
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -81,7 +82,7 @@ public class AddCardServlet extends HttpServlet {
 		// database table
 		if (errorString == null) {
 			try {
-				int id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
+				BigInteger id = DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName());
 				card = new CreditCard(encryptedCredit,id,Cvv,expiry);
 
 				DBUtils.insertCard(conn, card);
