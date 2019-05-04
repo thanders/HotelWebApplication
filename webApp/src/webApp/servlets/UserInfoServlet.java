@@ -37,7 +37,9 @@ public class UserInfoServlet extends HttpServlet {
 		try {
 			EncryptDecrypt encoder = new EncryptDecrypt();
 			String key = encoder.getKey();
-			loginedUser.setCardNumber(EncryptDecrypt.decrypt(loginedUser.getCardNumber(),key));
+			String cardNumber = EncryptDecrypt.decrypt(loginedUser.getCardNumber(),key);
+			cardNumber = SessionUtils.maskCardNumber(cardNumber, "************####");
+			loginedUser.setCardNumber(cardNumber);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
