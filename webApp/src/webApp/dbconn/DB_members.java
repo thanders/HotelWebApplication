@@ -13,21 +13,35 @@ public class DB_members{
 		    
 		    
 		    // insertMember
-		    public static void insertMember(Connection conn, Starwood member) throws SQLException {
-		        String sql = "Insert into Starwood(Id,Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name,CVV,ExpiryDate) values (?,?,?,?,?,?,?,?,?,?)";
-		        AdHoc adHoc = new AdHoc();
-		        PreparedStatement pstm = conn.prepareStatement(sql);
-		        pstm.setString(1, adHoc.randomBigInteger().toString());
-		        pstm.setString(2, member.getName());
-		        pstm.setString(3, member.getSurename());
-		        pstm.setString(4, member.getAddress());
-		        pstm.setString(5, member.getEmail());
-		        pstm.setString(6, member.getCardNumber());
-		        pstm.setInt(7, member.getPhoneNumber());
-		        pstm.setString(8, member.getUserName());
-		        pstm.setInt(9, member.getCVV());
-		        pstm.setObject(10, member.getExpiryDate());
-		        pstm.executeUpdate();
+		    public static String insertMember(Connection conn, Starwood member) throws SQLException {
+		        String output = null;
+		    	BigInteger existingMember = getStarwoodMemberId(conn,member.getUserName());
+		    	
+		    	//If statement represents the case when the username is take, set member to null and return
+		    	if(!existingMember.toString().equals(BigInteger.valueOf(-1).toString())) {
+		    		System.out.println("hereyaah");
+		    		output = "Username taken, please chose different username";
+		    	}
+		    	else {
+		    		String sql = "Insert into Starwood(Id,Member_Name, Member_Surname, Address, Email_Address, Card_Number, Phone_Number, User_Name,CVV,ExpiryDate) values (?,?,?,?,?,?,?,?,?,?)";
+			        AdHoc adHoc = new AdHoc();
+			        PreparedStatement pstm = conn.prepareStatement(sql);
+			        pstm.setString(1, adHoc.randomBigInteger().toString());
+			        pstm.setString(2, member.getName());
+			        pstm.setString(3, member.getSurename());
+			        pstm.setString(4, member.getAddress());
+			        pstm.setString(5, member.getEmail());
+			        pstm.setString(6, member.getCardNumber());
+			        pstm.setInt(7, member.getPhoneNumber());
+			        pstm.setString(8, member.getUserName());
+			        pstm.setInt(9, member.getCVV());
+			        pstm.setObject(10, member.getExpiryDate());
+			        pstm.executeUpdate();
+		    	}
+		    	
+		    	
+		        
+		        return output;
 		    }
 		    
 		    
