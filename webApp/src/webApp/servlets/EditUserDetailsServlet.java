@@ -1,6 +1,7 @@
 package webApp.servlets;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -15,9 +16,9 @@ import com.mysql.cj.util.StringUtils;
 
 import security.EncryptDecrypt;
 import webApp.beans.Starwood;
+import webApp.cookies.SessionUtils;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
-import webApp.cookies.SessionUtils;
 
 @WebServlet(urlPatterns = { "/editDetails" })
 public class EditUserDetailsServlet extends HttpServlet {
@@ -38,7 +39,7 @@ public class EditUserDetailsServlet extends HttpServlet {
 		String errorString = null;
 
 		try {
-			int id = DB_members.getStarwoodMemberId(conn,
+			BigInteger id = DB_members.getStarwoodMemberId(conn,
 					SessionUtils.getLoginedUser(request.getSession()).getUserName());
 			member = DB_members.findStarwoodMember(conn, id);
 		} catch (SQLException e) {

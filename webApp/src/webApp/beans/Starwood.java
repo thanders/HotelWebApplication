@@ -1,6 +1,7 @@
 package webApp.beans;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.LocalDate;
 
 public class Starwood implements Serializable{
@@ -65,7 +66,7 @@ public class Starwood implements Serializable{
 	}
 
 	private String name;
-	private int id;
+	private BigInteger id;
 	public Starwood() {
 		
 	}
@@ -112,11 +113,11 @@ public class Starwood implements Serializable{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getId() {
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 	

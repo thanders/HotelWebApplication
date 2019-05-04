@@ -1,10 +1,8 @@
 package webApp.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class ReservationDisplayServlet extends HttpServlet {
 			List<Reservation> reservations = new ArrayList<>();
 
 			try {
-				int guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
+				BigInteger guestID = DB_members.getStarwoodMemberId(conn, member.getUserName());
 				reservations = DB_reservation.
 						queryReservations(conn, guestID , "Member");
 			} catch (SQLException e) {
