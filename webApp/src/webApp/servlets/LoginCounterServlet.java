@@ -60,12 +60,17 @@ public class LoginCounterServlet extends HttpServlet {
 			
 			loginCount =4 ;
 			
+			// session timeout after 2 minutes
+			sessionLoginCount.setMaxInactiveInterval(2*60);
+			
 			// set session login count to loginCount
 			sessionLoginCount.setAttribute("loginCount", loginCount);
 			request.setAttribute("locked", loginCount);
 			request.setAttribute("purposeLocked1", "logging into your account");
 			request.setAttribute("purposeLocked2", "log into your account");
 			sessionLoginCount.setAttribute("count", loginCount);
+			
+			
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/lockedOut");
 			rd.forward(request,response);
