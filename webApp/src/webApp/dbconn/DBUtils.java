@@ -18,7 +18,7 @@ import webApp.beans.Room;
 import webApp.beans.Starwood;
 
 public class DBUtils {
-	
+
 	public static Starwood findStarwoodMember(Connection conn,String userName, String password,String key) throws SQLException {
 
 		String sql = "Select * from Members a " //
@@ -31,20 +31,23 @@ public class DBUtils {
 
 		if (rs.next()) {
 			String pass = rs.getString("User_Password");
+			System.out.println(rs.getString("User_Name"));
 			try {
 				pass = EncryptDecrypt.decrypt(pass, key);
-				
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			if(pass.equals(password)) {
-				
+
 				Starwood member = findStarwoodMember(conn,userName);
-				pass = rs.getString("User_Password");
-				member.setPassword(pass);
-				return member;
+				if(member!=null) {
+					pass = rs.getString("User_Password");
+					member.setPassword(pass);
+					return member;
+				}
 			}
 		}
 		return null;
@@ -62,6 +65,7 @@ public class DBUtils {
 		ResultSet rs = pstm.executeQuery();
 
 		if (rs.next()) {
+			System.out.println("found");
 			String name = rs.getString("Member_Name");
 			String surname = rs.getString("Member_Surname");
 			String address = rs.getString("Address");
@@ -106,10 +110,10 @@ public class DBUtils {
 		String sql = "Insert into Guest(Id,Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number,ExpiryDate,CVV) values (?,?,?,?,?,?,?,?,?)";
 
 		//PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		
+
 		AdHoc adHoc = new AdHoc();
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        pstm.setString(1, adHoc.randomNumber().toString());
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		pstm.setString(1, adHoc.randomNumber().toString());
 		pstm.setString(2, guest.getGuestName());
 		pstm.setString(3, guest.getGuestSurename());
 		pstm.setString(4, guest.getGuestAddress());

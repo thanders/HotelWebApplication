@@ -80,7 +80,7 @@ public class LoginServlet extends HttpServlet {
 
 				if (user == null) {					
 					hasError = true;
-					errorString = "User Name or password invalid";
+					errorString = "User Name or password invalid, both are case sensitive";
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
