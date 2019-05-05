@@ -31,7 +31,7 @@
 	<br />
 
 	<form method="POST"
-		action="http://localhost:8080/MarriotWebApp/deleteUser">
+		action="http://localhost:8080/MarriotWebApp/deleteAccount">
 		<br> <input type="submit" value="Delete Account" /> <br />
 	</form>
 	

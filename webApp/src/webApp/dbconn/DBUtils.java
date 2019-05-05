@@ -33,15 +33,17 @@ public class DBUtils {
 			String pass = rs.getString("User_Password");
 			try {
 				pass = EncryptDecrypt.decrypt(pass, key);
-				System.out.println(pass);
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("ENtered password is "+password);
+			
 			if(pass.equals(password)) {
-				System.out.println("made it :)");
+				
 				Starwood member = findStarwoodMember(conn,userName);
+				pass = rs.getString("User_Password");
+				member.setPassword(pass);
 				return member;
 			}
 		}
