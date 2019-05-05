@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
    <head>
@@ -13,6 +14,11 @@
  
       <h3>Login Page</h3>
       <p style="color: red;">${errorString}</p>
+      
+      	<!-- If submitCount not equal to null, display -->
+	<c:if test="${loginCount!=null || loginCount.isempy()}">
+		<p style="color: blue;">Sorry that reservation doesn't exist (attempt: ${loginCount})</p>
+	</c:if>
  
  
       <form method="POST" action="${pageContext.request.contextPath}/login">
