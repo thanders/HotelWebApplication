@@ -14,12 +14,6 @@
  
       <h3>Login Page</h3>
       <p style="color: red;">${errorString}</p>
-      
-      	<!-- If submitCount not equal to null, display -->
-	<c:if test="${loginCount!=null || loginCount.isempy()}">
-		<p style="color: blue;">Sorry that reservation doesn't exist (attempt: ${loginCount})</p>
-	</c:if>
- 
  
       <form method="POST" action="${pageContext.request.contextPath}/login">
          <table border="1">
@@ -43,8 +37,14 @@
             </tr>
          </table>
       </form>
+      
+      
+    <!-- If loginCount not equal to null, display -->
+	<c:if test="${loginCount!=null || loginCount.isempy()}">
+		<p style="color: blue;">Invalid login attempts: ${loginCount}</p>
+	</c:if>
  
-      <p style="color:blue;">User Name: Tom.yates, password: Password1</p>
+      <!-- <p style="color:blue;">User Name: Tom.yates, password: Password1</p> -->
  
       <jsp:include page="_footer.jsp"></jsp:include>
    </body>

@@ -28,16 +28,35 @@ public class LoginCounterServlet extends HttpServlet {
 	
 		if(loginCount == null) {
 			loginCount = new Integer(1);
+			
+			// set submitCount so you can use it on the JSP
+			sessionLoginCount.setAttribute("loginCount", loginCount);  
+			
+			// Forward to reservationDisplayView
+			RequestDispatcher dispatcher //
+			= request.getRequestDispatcher("/WEB-INF/views/loginView.jsp");
+
+			dispatcher.forward(request, response);
+			
 		}
-		else {
-			loginCount = new Integer(loginCount.intValue()+1) ;
-		}                         
 		
-		// set submitCount so you can use it on the JSP
-		sessionLoginCount.setAttribute("loginCount", loginCount);              // storing the value with session object
+		// If loginCount not null or less than 3 forward request to the ReservationDisplay page
+		else if (loginCount <= 3) {
+			
+			loginCount +=1 ;
+
+			// set submitCount so you can use it on the JSP
+			sessionLoginCount.setAttribute("loginCount", loginCount);  
+			
+			// Forward to reservationDisplayView
+			RequestDispatcher dispatcher //
+			= request.getRequestDispatcher("/WEB-INF/views/loginView.jsp");
+
+			dispatcher.forward(request, response);
+		}
 		
 		// If submitCount greater than 3, you are locked out - redirect to locked out page
-		if (loginCount >3) {
+		else{
 			request.setAttribute("locked", loginCount);
 			
 			request.setAttribute("purposeLocked1", "logging into your account");
@@ -48,14 +67,6 @@ public class LoginCounterServlet extends HttpServlet {
 			rd.forward(request,response);
 			
 		}
-		// Otherwise forward request to the ReservationDisplay page
-		else {
-			
-			// Forward to reservationDisplayView
-			RequestDispatcher dispatcher //
-			= request.getRequestDispatcher("/WEB-INF/views/loginView.jsp");
-
-			dispatcher.forward(request, response);
-		}
+		
 	}
 }
