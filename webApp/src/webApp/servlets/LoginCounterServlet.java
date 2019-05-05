@@ -41,7 +41,7 @@ public class LoginCounterServlet extends HttpServlet {
 		}
 		
 		// If loginCount not null or less than 3 forward request to the ReservationDisplay page
-		else if (loginCount <= 3) {
+		else if (loginCount < 3) {
 			
 			loginCount +=1 ;
 
@@ -57,11 +57,15 @@ public class LoginCounterServlet extends HttpServlet {
 		
 		// If submitCount greater than 3, you are locked out - redirect to locked out page
 		else{
-			request.setAttribute("locked", loginCount);
 			
+			loginCount =4 ;
+			
+			// set session login count to loginCount
+			sessionLoginCount.setAttribute("loginCount", loginCount);
+			request.setAttribute("locked", loginCount);
 			request.setAttribute("purposeLocked1", "logging into your account");
 			request.setAttribute("purposeLocked2", "log into your account");
-			request.setAttribute("count", loginCount);
+			sessionLoginCount.setAttribute("count", loginCount);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/lockedOut");
 			rd.forward(request,response);
