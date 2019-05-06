@@ -1,8 +1,6 @@
 package webApp.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +13,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = { "/submitCount" })
 public class ReservationRetrieveCounter extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("deprecation")
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,  IOException {
 

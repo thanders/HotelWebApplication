@@ -256,7 +256,9 @@ public class ReservationChooseRoom extends HttpServlet {
 					EncryptDecrypt encoder = new EncryptDecrypt();
 					String key = encoder.getKey();
 					List<CreditCard> cards = DBUtils.getCards(conn, DB_members.getStarwoodMemberId(conn, SessionUtils.getLoginedUser(request.getSession()).getUserName()),key);
-
+					for(CreditCard card : cards) {
+						card.setCardNumber(SessionUtils.maskCardNumber(card.getCardNumber(), "************####"));
+					}
 					request.setAttribute("cards", cards);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
