@@ -109,8 +109,6 @@ public class DBUtils {
 	public static BigInteger insertGuest(Connection conn, Guest guest) throws SQLException {
 		String sql = "Insert into Guest(Id,Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number,ExpiryDate,CVV) values (?,?,?,?,?,?,?,?,?)";
 
-		//PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
 		AdHoc adHoc = new AdHoc();
 		PreparedStatement pstm = conn.prepareStatement(sql);
 		pstm.setString(1, adHoc.randomNumber().toString());
@@ -124,7 +122,7 @@ public class DBUtils {
 		pstm.setInt(9, guest.getCVV());
 		pstm.executeUpdate();
 
-		ResultSet rs = pstm.getGeneratedKeys();
+		ResultSet rs = pstm.getResultSet();
 
 		BigInteger GuestID = BigInteger.valueOf(0);
 
@@ -166,7 +164,7 @@ public class DBUtils {
 		pstm.executeUpdate();
 
 		int ID = 0;
-		ResultSet rs = pstm.getGeneratedKeys();
+		ResultSet rs = pstm.getResultSet();
 
 		// Assign auto generated Guest key to variable and create reservation
 		if (rs != null && rs.next()) {
