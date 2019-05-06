@@ -111,7 +111,8 @@ public class DBUtils {
 
 		AdHoc adHoc = new AdHoc();
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setString(1, adHoc.randomNumber().toString());
+		BigInteger GuestID = adHoc.randomNumber();
+		pstm.setString(1, GuestID.toString());
 		pstm.setString(2, guest.getGuestName());
 		pstm.setString(3, guest.getGuestSurename());
 		pstm.setString(4, guest.getGuestAddress());
@@ -121,16 +122,7 @@ public class DBUtils {
 		pstm.setObject(8, guest.getExpiryDate());
 		pstm.setInt(9, guest.getCVV());
 		pstm.executeUpdate();
-
-		ResultSet rs = pstm.getResultSet();
-
-		BigInteger GuestID = BigInteger.valueOf(0);
-
-		// Assign auto generated Guest key to variable and create reservation
-		if (rs != null && rs.next()) {
-			GuestID = BigInteger.valueOf(rs.getLong("Id"));
-		}
-
+		
 		return GuestID;
 	}
 

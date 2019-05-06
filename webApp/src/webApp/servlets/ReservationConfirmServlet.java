@@ -70,7 +70,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 		// Create encrypter/decrypter class
 	//	EncryptDecrypt encrypter = new EncryptDecrypt(key);
 
-
+		// IF not logged in (GUEST)
 		if(SessionUtils.getLoginedUser(request.getSession())==null)
 		{
 			String guestName = (String) request.getParameter("guestName");
@@ -104,13 +104,15 @@ public class ReservationConfirmServlet extends HttpServlet {
 			// If error string is null, try to insert the guest object into the Guest database table
 			try {
 
-				//�Connect to database
+				//Connect to database
 				Connection conn = SessionUtils.getStoredConnection(request);
 
 				// Insert the new Guest instance into the database
 				BigInteger GuestID = DBUtils.insertGuest(conn, guest);
 				String status = "Active";
 				String reservationType = "Guest";
+				
+				System.out.println("GUEST ID generation: "+ GuestID);
 				
 				// get random reservation ID
 				AdHoc random = new AdHoc();
