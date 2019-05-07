@@ -19,9 +19,9 @@
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
 
-	<div class="container">
+	<div class="container">
 
-	<h2>Find my reservation</h2>
+	<h3>Find my reservation</h3>
 
 	<!-- If submitCount not equal to null, display -->
 	<c:if test="${submitCount!=null}">
@@ -51,6 +51,7 @@
 		
 	</form>
 
+	</div>
 	</div>
 
 	<jsp:include page="_footer.jsp"></jsp:include>

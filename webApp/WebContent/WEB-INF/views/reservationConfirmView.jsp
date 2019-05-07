@@ -15,7 +15,7 @@
     
     <div class="container">
  
-    <h2>Reservation confirmation</h2>
+    <h3>Reservation confirmation</h3>
  
     <p style="color: red;">${errorString}</p>
  	
@@ -26,7 +26,7 @@
  	The confirmation details are below:
  	<br/> <br/>
     
-    <table border="1" cellspacing="0" >
+    <table>
     	<tr>
     		<th>Name</th>
     		<th>Surname</th>
@@ -45,7 +45,7 @@
     
     <br/> <br/>
     
-    <table border="1" cellspacing="0" >
+    <table>
     	<tr>
     		<th>Booking Date</th>
     		<th>Reservation Type</th>

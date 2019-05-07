@@ -16,7 +16,7 @@
       
       <div class="container">
        
-      <h2>Reservation (3/3)</h2>
+      <h3>Reservation (3/3)</h3>
        
       <p style="color: red;">${errorString}</p>
      

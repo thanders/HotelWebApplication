@@ -13,14 +13,14 @@
     <jsp:include page="_header.jsp"></jsp:include>
     <jsp:include page="_menu.jsp"></jsp:include>
     
-    <div class="container">
+    <div class="container">
  
     <h3>Available Rooms</h3>
  
     <p style="color: red;">${errorString}</p>
  
  	<!--Table to display available rooms-->
-    <table border="1" cellspacing="0">
+    <table>
        <tr>
           <th>Room Number</th>
           <th>Room Type</th>
