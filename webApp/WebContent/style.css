@@ -10,11 +10,10 @@ body.hero, html.hero {
 html{height: 100%;}
 
 body {
-  min-height: 20%;
-  display: grid;
-  grid-template-rows: 1fr auto;
+
     padding-left: 5%;
   padding-right: 5%;
+ 
 }
 
 h1 {
@@ -108,19 +107,21 @@ th {
 }
 
 .container {
-	
-  grid-row-start: 4;
-  grid-row-end: 5;
-  min-height: 20%;
+	    min-height: 100%;
+    padding-bottom:60px;
+    margin-bottom:50px;
 
     
 }
 .footer {
-
-  grid-row-start: 6;
-  grid-row-end: 7;
-  margin-top: 50px;
-    
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background: #696969;
+	text-align: center;
+	left: 0;
+  	bottom: 0;
+  	position: fixed;
+  	width: 100%;
 }
 
 label span {
@@ -182,6 +183,54 @@ input {
   width: 400px;
   display: flex;
   justify-content: center;
+}
+
+
+/* Menu */
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #696969;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #6495ed;
+}
+
+/* footer */
+
+.footer ul {
+	list-style-type: none;
+	padding: 0;
+	overflow: hidden;
+	background-color: #696969;
+
+	margin: auto;
+	display: table;
+}
+
+.footer li {
+	float: left;
+	margin-right: 20px;
 }
 
   
