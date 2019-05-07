@@ -135,8 +135,9 @@
 		<br/><br/>
 		</c:if>
 		
-         <div class="submitReservation"> 
+         <div class="inputSubmitReset"> 
          	<input type="submit" value="Book and Pay" />
+         	<input type="reset" value="Reset" />
          </div>
          
       </form>

@@ -118,7 +118,11 @@ label span {
 
 label {
         position: relative;
-      }
+}
+
+input {
+        margin-left: 10px;
+}
       
 #sectionInputGuest input {
 	width: 300px;
@@ -130,6 +134,33 @@ label {
 
 #sectionInputCard {
   margin: 50px 0;
+}
+
+#reservationDates input {
+	width: 140px;
+}
+
+#reservationDates {
+	margin-top: 30px;
+}
+
+#reservationDates input[type=submit],
+#reservationDates input[type=reset]{
+	display: inline-block;
+	width: 100px;
+	text-align: center;
+	margin-left: 20px;
+}
+
+.inputSubmitReset{
+	position:relative;
+	margin-left: 60px;
+	margin-top: 20px;
+	padding:10px;
+}
+
+.formInput{
+	position:relative;
 }
 
 .submitReservation {
