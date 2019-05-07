@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webApp.beans.Reservation;
+import webApp.beans.Starwood;
 
 public class DB_reservation {
 
@@ -190,5 +191,19 @@ public class DB_reservation {
 	        pstm.executeUpdate();
 
 	    }
+	   
+		public static void deleteBookings(Connection conn, BigInteger reservationID) throws SQLException {
+
+			reservationID.toString();
+
+			String sql = "Delete From Reserved_Rooms where reservationID= ?";
+
+			PreparedStatement pstm = conn.prepareStatement(sql);
+
+			pstm.setString(1, reservationID.toString());
+			
+			pstm.executeUpdate();
+
+		}
 
 }
