@@ -5,6 +5,7 @@ body.hero, html.hero {
     top: 40%; 
     margin-top: 40px;
     background: #696969;
+    padding:0px;
 }
 
 
@@ -78,6 +79,7 @@ th {
   	background-size: cover;
   	position: relative;
   	align-items: center;
+  	border: 20px solid rgba(0,0,0, 0.3);
 
 }
 
@@ -94,11 +96,7 @@ th {
 .cabin-image {
 
 	margin: 30px;
-	
-
 }
-
-
 
 .menu {
 	
@@ -111,8 +109,6 @@ th {
 	    min-height: 100%;
     padding-bottom:60px;
     margin-bottom:50px;
-
-    
 }
 .footer {
 	padding-top: 10px;
