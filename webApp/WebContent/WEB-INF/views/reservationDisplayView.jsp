@@ -24,7 +24,7 @@
 	<h2>Find my reservation</h2>
 
 	<!-- If submitCount not equal to null, display -->
-	<c:if test="${submitCount!=null || submitCount.isempy()}">
+	<c:if test="${submitCount!=null}">
 		<p style="color: blue;">Sorry that reservation doesn't exist (attempt: ${submitCount})</p>
 	</c:if>
 
@@ -32,11 +32,22 @@
 	<br/>
 	<br/>
 
+	<div id="inputWrapper">
+	
 	<form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
-		Reservation number: <input type="number" name="resNumber" min="1" value="${resNumber}" required>
-		<br/> <br/> 
-		<input type="submit" value="SubmitReservation"> <input type="reset" value="Reset">
 		
+		<label for="resNumber"> 
+			<span>
+				Reservation number
+			</span> 
+		</label>
+		
+		<input type="number" name="resNumber" id="resNumber" min="1" value="${resNumber}" required>
+
+		<div class="inputSubmitReset">
+			<input type="submit" value="Submit">
+			<input type="reset" value="Reset">
+		</div>
 		
 	</form>
 

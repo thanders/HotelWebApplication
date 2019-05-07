@@ -9,12 +9,17 @@
       <title>Login</title>
    </head>
    <body>
-      <jsp:include page="_header.jsp"></jsp:include>
-      <jsp:include page="_menu.jsp"></jsp:include>
+		<jsp:include page="_header.jsp"></jsp:include>
+		
+		<jsp:include page="_menu.jsp"></jsp:include>
  
       <h3>Login</h3>
-      <p style="color: red;">${errorString}</p>
+      
+      <span style="color: red;">${errorString}</span>
+      
+      <div id="inputWrapper">
  
+ 		<!-- the login form -->
       <form method="POST" action="${pageContext.request.contextPath}/login">
  
  			<p>
@@ -55,6 +60,8 @@
 	<c:if test="${loginCount!=null || loginCount.isempy()}">
 		<p style="color: blue;">Invalid login attempts: ${loginCount}</p>
 	</c:if>
+	
+	</div>
  
       <!-- <p style="color:blue;">User Name: Tom.yates, password: Password1</p> -->
  
