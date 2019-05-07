@@ -3,6 +3,7 @@ package webApp.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,7 +47,15 @@ public class LoginCounterServlet extends HttpServlet {
 			loginCount +=1 ;
 
 			// set submitCount so you can use it on the JSP
-			sessionLoginCount.setAttribute("loginCount", loginCount);  
+			sessionLoginCount.setAttribute("loginCount", loginCount);
+			
+			// Sleep for two seconds to delay a brute force attack
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			// Forward to reservationDisplayView
 			RequestDispatcher dispatcher //
@@ -59,10 +68,7 @@ public class LoginCounterServlet extends HttpServlet {
 		else{
 			
 			loginCount =4 ;
-			
-			// session timeout after 2 minutes
-			sessionLoginCount.setMaxInactiveInterval(2*60);
-			
+		
 			// set session login count to loginCount
 			sessionLoginCount.setAttribute("loginCount", loginCount);
 			request.setAttribute("locked", loginCount);
