@@ -4,7 +4,7 @@
 <header>
 <div>
   <div>
-     <h1>Welcome to Marriot Hotel UCD</h1>
+     <h1>Welcome to Marriott Hotel UCD</h1>
   </div>
  
   <div style="float: right; padding: 10px; text-align: right;">

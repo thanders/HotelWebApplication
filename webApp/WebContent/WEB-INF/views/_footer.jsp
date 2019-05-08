@@ -4,7 +4,8 @@
 <footer class="footer">
 
 <ul>
-  <li>5-Star Hotel<li>
-  <li>© 2019 all rights reserved</li>
+	<li>Marriott Hotel UCD<li>
+	<li>Five-Star Hotel<li>
+	<li>COMP47660</li>
 </ul>  
 </footer>
