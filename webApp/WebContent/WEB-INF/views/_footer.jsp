@@ -7,5 +7,5 @@
 	<li>Marriott Hotel UCD<li>
 	<li>Five-Star Hotel<li>
 	<li>COMP47660</li>
-</ul>  
+</ul>
 </footer>

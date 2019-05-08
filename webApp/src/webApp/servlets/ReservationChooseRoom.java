@@ -66,10 +66,20 @@ public class ReservationChooseRoom extends HttpServlet {
 		System.out.println("Duration:  "+durationFromToday);
 		//System.out.println(start.compareTo(now));
 		
+		System.out.println("Duration long: " + durationLong + " DurationFromToday: " + durationFromToday);
+		System.out.println("Now: " + now);
+		
 		// If duration less than 1 day
-		if (durationLong < 0 || durationFromToday < 0) {
+		if (durationLong < 1 || durationFromToday < 0) {
 			
+			if (durationFromToday<0) {
+				request.setAttribute("durationMSG", "The start date must be from today onwards");	
+			}
+			
+			else {
 			request.setAttribute("durationMSG", "That's not a valid date range. Duration must be positive and from today onwards");
+			}
+			
 			request.setAttribute("durationVisit", durationLong);
 			request.setAttribute("durationFromToday", durationFromToday);
 			  
