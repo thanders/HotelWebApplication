@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -12,71 +12,113 @@
 </head>
 <body>
 
-      <jsp:include page="_header.jsp"></jsp:include>
-      <jsp:include page="_menu.jsp"></jsp:include>
-      
-      <div class="container">
-      
-<form method="POST" action="${pageContext.request.contextPath}/createStarwood">
-<p style="color: red;">${errorString}</p>
-   
-      <h3>Enter your personal details</h3>
-         <table>
-            <tr>
-               <td>Name</td>
-               <td><input type="text" name=name value="${fn:escapeXml(member.name)}" required/></td>
-            </tr>
-            <tr>
-               <td>Surname</td>
-               <td><input type="text" name="surename" value="${fn:escapeXml(member.surename)}"required/></td>
-            </tr>
-            <tr>
-               <td>Address</td>
-               <td><input type="text" name="address"  value="${fn:escapeXml(member.address)}" required/></td>
-            </tr>
-            <tr>
-               <td>Email</td>
-               <td><input type="email" name="email" value="${fn:escapeXml(member.email)}" required/></td>
-            </tr>
-                        
-            <tr>
-               <td>Phone number</td>
-               <td><input type="text" name="phoneNumber"  value="${fn:escapeXml(member.phoneNumber)}" required/></td>
-            </tr>
+	<jsp:include page="_header.jsp"></jsp:include>
+	<jsp:include page="_menu.jsp"></jsp:include>
+	<div class="container">
 
-         	<tr>
-               <th>Credit card number</th>
-               <td><input type="text" name="CardNumber" maxlength="80"  pattern="^\d{16,16}$" title="16 digits required" required/></td>
-            </tr>
-            <tr>
-               <th> CVV number</th>
-               <td><input type="text" name="CVV"  pattern="^\d{3,3}$" title="3 digits required"  required/></td>
-            </tr>
-            
-             <tr>
-               <th>Expiry Date</th>
-               <td><input type="date" name="ExpiryDate" required/></td>
-            </tr>
-            <tr>
-               <td>User Name</td>
-               <td><input type="text" name="userName" pattern=".{6,}" required/></td>
-            </tr>
-            <tr> 
-               <td>Password</td>
-               <td><input type="password" name="password" pattern="(?=.*\d)(?=.*[\W_]).{8,}" title="Minimum of 8 characters. Should have at least one special character and one number." required/></td>
-            </tr>
-          	<tr>
-               <td colspan="2">                   
-                   <input type="submit" value="Submit" />
-                   <input type="reset" value="Reset">
-               </td>
-            </tr>
-         </table>
-      </form>
-      
-      </div>
-       
-      <jsp:include page="_footer.jsp"></jsp:include>
-       
-   </body>
+
+		<div class="inputWrapper">
+
+			<form method="POST"
+				action="${pageContext.request.contextPath}/createStarwood">
+
+
+				<div id="sectionInputGuest">
+
+					<h3>Enter your personal details</h3>
+
+					<p>
+						<label for="name"> <span>Name</span>
+						</label> <input type="text" name="name" id="name"
+							value="${fn:escapeXml(member.name)}" placeholder="Joe"
+							maxlength="40" required />
+					</p>
+
+					<p>
+						<label for="surename"> <span>Surname</span>
+						</label> <input type="text" name="surename" id="surname"
+							value="${fn:escapeXml(member.surename)}" placeholder="Joe"
+							maxlength="40" required />
+					</p>
+
+					<p>
+						<label for="address"> <span>Address</span>
+						</label> <input type="text" name="address" id="address"
+							value="${fn:escapeXml(member.address)}"
+							placeholder="University College Dublin, Belfield, Dublin 4"
+							maxlength="60" required />
+					</p>
+
+					<p>
+						<label for="email"> <span>Email</span>
+						</label> <input type="email" name="email" id="email"
+							placeholder="joe.security@ucd.ie" maxlength="40" required />
+					</p>
+
+					<p>
+						<label for="phoneNumber"> <span>Phone number</span>
+						</label> <input type="text" name="phoneNumber" id="phoneNumber"
+							value="${fn:escapeXml(member.phoneNumber)}" pattern="^[0-9]+$"
+							placeholder="0555252560" maxlength="10"
+							title="Input your phone number, digits only (max 10)" required />
+					</p>
+
+				</div>
+
+				<div id="sectionInputCard">
+
+					<h3>Payment information</h3>
+
+					<p>
+						<label for="CardNumber"> <span>Credit card number</span>
+						</label> <input type="text" name="CardNumber" id="CardNumber"
+							value="${fn:escapeXml(member.cardNumber)}" pattern="^\d{16,16}$"
+							title="16 digits required" placeholder="1234567812345678"
+							maxlength="16" required />
+					</p>
+
+					<p>
+						<label for="CVV"> <span>CVV number</span>
+						</label> <input type="text" name="CVV" id="CVV"
+							value="${fn:escapeXml(member.CVV)}" pattern="^\d{3,3}$"
+							title="Three digits required" placeholder="890" maxlength="3"
+							required />
+					</p>
+
+					<p>
+						<label for="ExpiryDate"> <span>Expiration date</span>
+						</label> <input type="date" name="ExpiryDate" id="ExpiryDate"
+							value="${fn:escapeXml(member.ExpiryDate)}" required />
+					</p>
+
+				</div>
+				<div id="sectionInputCard">
+
+					<h3>Log in details</h3>
+
+					<p>
+						<label for="userName"> <span>User Name</span>
+						</label> <input type="text" name="userName" pattern=".{6,}" required />
+					</p>
+					<p>
+						<label for="username"> <span>Password</span>
+						</label> <input type="password" name="password"
+							pattern="(?=.*\d)(?=.*[\W_]).{8,}"
+							title="Minimum of 8 characters. Should have at least one special character and one number."
+							required />
+					</p>
+
+				</div>
+				<div class="inputSubmitReset"> 
+	         	<input type="submit" value="Register" />
+	         	<input type="reset" value="Reset" />
+	         </div>
+			</form>
+
+		</div>
+
+	</div>
+
+	<jsp:include page="_footer.jsp"></jsp:include>
+</body>
 </html>
