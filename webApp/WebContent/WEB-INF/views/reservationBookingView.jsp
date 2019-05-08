@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  
 <!DOCTYPE html>
 <html>
@@ -55,38 +56,38 @@
          <table>
             <tr>
                <th>Name</th>
-               <td><input type="text" name=guestName value="${Guest.guestName}" required/></td>
+               <td><input type="text" name=guestName value="${fn:escapeXml(Guest.guestName)}" required/></td>
             </tr>
             <tr>
                <th>Surname</th>
-               <td><input type="text" name="guestSurename" value="${Guest.guestSurename}" required/></td>
+               <td><input type="text" name="guestSurename" value="${fn:escapeXml(Guest.guestSurename)}" required/></td>
             </tr>
             <tr>
                <th>Address</th>
-               <td><input type="text" name="guestAddress" value="${Guest.guestAddress}" required/></td>
+               <td><input type="text" name="guestAddress" value="${fn:escapeXml(Guest.guestAddress)}" required/></td>
             </tr>
             <tr>
                <th>Email</th>
-               <td><input type="email" name="guestEmail" value="${Guest.guestEmail}" required/></td>
+               <td><input type="email" name="guestEmail" value="${fn:escapeXml(Guest.guestEmail)}" required/></td>
             </tr>
                         
             <tr>
                <th>Phone number</th>
-               <td><input type="text" name="guestPhoneNumber" value="${Guest.guestPhoneNumber}" required/></td>
+               <td><input type="text" name="guestPhoneNumber" value="${fn:escapeXml(Guest.guestPhoneNumber)}" required/></td>
             </tr>
 
          	<tr>
                <th>Credit card number</th>
-               <td><input type="text" name="guestCardNumber" maxlength="80" value="${Guest.guestCardNumber}" pattern=".{16,16}" title="16 digits required" required/></td>
+               <td><input type="text" name="guestCardNumber" maxlength="80" value="${fn:escapeXml(Guest.guestCardNumber)}" pattern=".{16,16}" title="16 digits required" required/></td>
             </tr>
             <tr>
                <th> CVV number</th>
-               <td><input type="text" name="CVV" value="${Guest.CVV}" pattern=".{3,3}" title="3 digits required" required/></td>
+               <td><input type="text" name="CVV" value="${fn:escapeXml(Guest.CVV)}" pattern=".{3,3}" title="3 digits required" required/></td>
             </tr>
             
              <tr>
                <th>Expiry Date</th>
-               <td><input type="date" name="ExpiryDate" value="${Guest.ExpiryDate}" required/></td>
+               <td><input type="date" name="ExpiryDate" value="${fn:escapeXml(Guest.ExpiryDate)}" required/></td>
             </tr>
          </table>
 	</c:if>

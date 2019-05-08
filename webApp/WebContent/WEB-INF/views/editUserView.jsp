@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,34 +19,34 @@
          <table>
             <tr>
                <th>Name</th>
-               <td><input type="text" name=name value="${member.name}" /></td>
+               <td><input type="text" name=name value="${fn:escapeXml(member.name)}" /></td>
             </tr>
             <tr>
                <th>Surname</th>
-               <td><input type="text" name="surename" value="${member.surename}" /></td>
+               <td><input type="text" name="surename" value="${fn:escapeXml(member.surename)}" /></td>
             </tr>
             <tr>
                <th>Address</th>
-               <td><input type="text" name="address" value="${member.address}" /></td>
+               <td><input type="text" name="address" value="${fn:escapeXml(member.address)}" /></td>
             </tr>
             <tr>
                <th>Email</th>
-               <td><input type="email" name="email" value="${member.email}" /></td>
+               <td><input type="email" name="email" value="${fn:escapeXml(member.email)}" /></td>
             </tr>
                         
             <tr>
                <th>Phone number</th>
-               <td><input type="text" name="phoneNumber" value="${member.phoneNumber}" /></td>
+               <td><input type="text" name="phoneNumber" value="${fn:escapeXml(member.phoneNumber)}" /></td>
             </tr>
 
             
             <tr>
                <th>User Name</th>
-               <td><input type="text" name="userName" value="${member.userName}" /></td>
+               <td><input type="text" name="userName" value="${fn:escapeXml(member.userName)}" /></td>
             </tr>
             <tr>
                <th>Password</th>
-               <td><input type="password" name="password" value="${member.password}" pattern="(?=.*\d)(?=.*[\W_]).{8,}" title="Minimum of 8 characters. Should have at least one special character and one number." required/></td>
+               <td><input type="password" name="password" value="${fn:escapeXml(member.password)}" pattern="(?=.*\d)(?=.*[\W_]).{8,}" title="Minimum of 8 characters. Should have at least one special character and one number." required/></td>
             </tr>
           	<tr>
                <td colspan="2">                   
