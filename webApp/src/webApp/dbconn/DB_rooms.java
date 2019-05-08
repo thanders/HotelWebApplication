@@ -77,7 +77,7 @@ public class DB_rooms {
 		   
 	    	// Select available Rooms
 		   public static List<Room>selectAvailableRooms(Connection conn, LocalDate startDate, LocalDate endDate) throws SQLException {
-		        String sql = "SELECT r.Room_Number, r.capacity, r.price FROM sse.Room AS r WHERE r.Room_Number NOT IN(SELECT b.roomNumber FROM sse.Reserved_Rooms AS b JOIN sse.Reservations AS a ON a.Reservation_Id=b.reservationID WHERE a.start >= ? OR a.end <= ? AND a.status='Active')";
+		        String sql = "SELECT r.Room_Number, r.capacity, r.price FROM sse.Room AS r WHERE r.Room_Number NOT IN(SELECT b.roomNumber FROM sse.Reserved_Rooms AS b JOIN sse.Reservations AS a ON a.Reservation_Id=b.reservationID WHERE a.start >= ? AND a.end <= ? AND a.status='Active')";
 		 
 		        PreparedStatement pstm = conn.prepareStatement(sql);
 		        pstm.setObject(1, startDate);
