@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,24 +24,24 @@
          <table>
             <tr>
                <td>Name</td>
-               <td><input type="text" name=name value="${member.name}" required/></td>
+               <td><input type="text" name=name value="${fn:escapeXml(member.name)}" required/></td>
             </tr>
             <tr>
                <td>Surname</td>
-               <td><input type="text" name="surename" value="${member.surename}" required/></td>
+               <td><input type="text" name="surename" value="${fn:escapeXml(member.surename)}"required/></td>
             </tr>
             <tr>
                <td>Address</td>
-               <td><input type="text" name="address" value="${member.address}" required/></td>
+               <td><input type="text" name="address"  value="${fn:escapeXml(member.address)}" required/></td>
             </tr>
             <tr>
                <td>Email</td>
-               <td><input type="email" name="email" value="${member.email}" required/></td>
+               <td><input type="email" name="email" value="${fn:escapeXml(member.email)}" required/></td>
             </tr>
                         
             <tr>
                <td>Phone number</td>
-               <td><input type="text" name="phoneNumber" value="${member.phoneNumber}" required/></td>
+               <td><input type="text" name="phoneNumber"  value="${fn:escapeXml(member.phoneNumber)}" required/></td>
             </tr>
 
          	<tr>
@@ -48,20 +50,20 @@
             </tr>
             <tr>
                <th> CVV number</th>
-               <td><input type="text" name="CVV"  pattern=".{3,3}" title="3 digits required" required/></td>
+               <td><input type="text" name="CVV"  pattern=".{3,3}" title="3 digits required"  required/></td>
             </tr>
             
              <tr>
                <th>Expiry Date</th>
-               <td><input type="date" name="ExpiryDate"  required/></td>
+               <td><input type="date" name="ExpiryDate" required/></td>
             </tr>
             <tr>
                <td>User Name</td>
-               <td><input type="text" name="userName"  required/></td>
+               <td><input type="text" name="userName" pattern=".{6,}" required/></td>
             </tr>
-            <tr>
+            <tr> 
                <td>Password</td>
-               <td><input type="password" name="password"  pattern="(?=.*\d)(?=.*[\W_]).{8,}" title="Minimum of 8 characters. Should have at least one special character and one number." required/></td>
+               <td><input type="password" name="password" pattern="(?=.*\d)(?=.*[\W_]).{8,}" title="Minimum of 8 characters. Should have at least one special character and one number." required/></td>
             </tr>
           	<tr>
                <td colspan="2">                   
