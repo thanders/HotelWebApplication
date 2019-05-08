@@ -26,7 +26,7 @@
 		<welcome-file>home</welcome-file>
 	</welcome-file-list>
 
-<!-- Confidential, forces traffic over SSL
+<!-- Confidential, forces traffic over SSL-->
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Entire Application</web-resource-name>
@@ -36,7 +36,7 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
--->
+
 
 	<session-config>
 		<session-timeout>30</session-timeout>

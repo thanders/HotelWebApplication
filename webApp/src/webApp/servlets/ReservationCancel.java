@@ -80,6 +80,9 @@ public class ReservationCancel extends HttpServlet {
 			// Change the reservation's status to cancelled
 	        DB_reservation.updateReservationStatus(conn, resNumber);
 	        
+	        // Delete room bookings for that reservation in Room table
+	        DB_reservation.deleteBookings(conn, resNumber);
+	        
 	        // Execute query again to have an updated version of the reservations
 			reservations = DB_reservation.queryReservations(conn, guestID , "Member");
 			
@@ -110,9 +113,14 @@ public class ReservationCancel extends HttpServlet {
 		    // Difference between current date and reservation date in days
 		    long difference = ChronoUnit.HOURS.between(resObj.getBookingDate(), now);
 		    
+		    // If the difference is less than or equal to 24 hours
 		    if (difference <= 24) {
 		        // Change the reservation's status to cancelled
 		        DB_reservation.updateReservationStatus(conn, resNumber);
+		        
+		        // Delete room bookings for that reservation in Room table
+		        DB_reservation.deleteBookings(conn, resNumber);
+		        
 		        request.setAttribute("CancelMSG", "Your booking has been cancelled (Hours since booking: "+ difference+" hours)");
 		        // Reload reservation object to get updated status from database:
 			    resObj = DB_reservation.queryReservationRID(conn, resNumber);

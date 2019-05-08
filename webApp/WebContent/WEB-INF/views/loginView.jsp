@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
    <head>
@@ -8,37 +9,61 @@
       <title>Login</title>
    </head>
    <body>
-      <jsp:include page="_header.jsp"></jsp:include>
-      <jsp:include page="_menu.jsp"></jsp:include>
+		<jsp:include page="_header.jsp"></jsp:include>
+		
+		<jsp:include page="_menu.jsp"></jsp:include>
  
-      <h3>Login Page</h3>
-      <p style="color: red;">${errorString}</p>
+      <h3>Login</h3>
+      
+      <span style="color: red;">${errorString}</span>
+      
+      <div id="inputWrapper">
  
- 
+ 		<!-- the login form -->
       <form method="POST" action="${pageContext.request.contextPath}/login">
-         <table border="1">
-            <tr>
-               <td>User Name</td>
-               <td><input type="text" name="userName" value= "${user.userName}" /> </td>
-            </tr>
-            <tr>
-               <td>Password</td>
-               <td><input type="password" name="password" value= "${user.password}" /> </td>
-            </tr>
-            <tr>
-               <td>Remember me</td>
-               <td><input type="checkbox" name="rememberMe" value= "Y" /> </td>
-            </tr>
-            <tr>
-               <td colspan ="2">
-                  <input type="submit" value= "Submit" />
-                  <a href="${pageContext.request.contextPath}/">Cancel</a>
-               </td>
-            </tr>
-         </table>
-      </form>
  
-      <p style="color:blue;">User Name: Tom.yates, password: Password1</p>
+ 			<p>
+ 	        	<label for="userName">
+					<span>User Name</span>
+				</label>
+               <input type="text" name="userName" id="userName" value= "${user.userName}" />
+            </p>
+            
+            <p>
+ 	        	<label for="password">
+					<span>Password</span>
+				</label>
+				
+               <input type="password" name="password" id="password" value= "${user.password}" />
+			
+			</p>
+			
+			<p>
+ 	        	<label for="rememberMe">
+					<span>Remember me</span>
+				</label>
+
+               <input type="checkbox" name="rememberMe" id="rememberMe" value= "Y" />
+            </p>
+
+			<div class="inputSubmitReset">
+			
+                  <input type="submit" value= "Submit" />
+                  
+                  <input type="reset" />
+                  <a href="${pageContext.request.contextPath}/">Cancel</a>
+			</div>
+      </form>
+      
+      
+    <!-- If loginCount not equal to null, display -->
+	<c:if test="${loginCount!=null || loginCount.isempy()}">
+		<p style="color: blue;">Invalid login attempts: ${loginCount}</p>
+	</c:if>
+	
+	</div>
+ 
+      <!-- <p style="color:blue;">User Name: Tom.yates, password: Password1</p> -->
  
       <jsp:include page="_footer.jsp"></jsp:include>
    </body>

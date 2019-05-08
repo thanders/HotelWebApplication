@@ -13,9 +13,9 @@
  
  		<div>
  		
-      <h3>Having trouble viewing your reservation?</h3>
+      <h3>Having trouble ${purposeLocked1}?</h3>
       
-      <p>Our web application supports access control and anti-brute-force techniques to prevent unauthorized access to your reservation records.</p>
+      <p>Our web application supports access control and anti-brute-force techniques to prevent unauthorized access to your records.</p>
       
       Techniques include:
       <ul>
@@ -24,10 +24,11 @@
       	<li>Reference number submission lock out after 3 attempts</li>
       </ul>
       
-      <p>Please wait <b>two minutes</b> for your session to expire before trying to access your reservation again.</p>
+      <p>Please wait <b>two minutes</b> for your session to expire before trying to ${purposeLocked2}.</p>
       
+      <h3>Why am I being redirected to this page?</h3>
       
-      <p style="color: red;">${errorString}</p>
+      <p style="color: red;">Incorrect attempts to ${purposeLocked2}: ${count}</p>
  		
  		
  		</div>

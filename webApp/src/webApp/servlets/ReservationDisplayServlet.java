@@ -62,6 +62,8 @@ public class ReservationDisplayServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 		else {
+			
+			System.out.println("WHY AM I NOT SEEEING THE PAGE???");
 
 			RequestDispatcher dispatcher = request.getServletContext()
 					.getRequestDispatcher("/WEB-INF/views/reservationDisplayView.jsp");
@@ -74,10 +76,11 @@ public class ReservationDisplayServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-
+		System.out.println("HELLOOO");
 		// Use get parameter to obtain posted data from form
 		String resNumberInt = (String) request.getParameter("resNumber");
-
+		System.out.println("resNumber: " + resNumberInt);
+		
 		BigInteger resNumber = null;
 		Reservation resObj = null;
 		Guest guestObj = null;
@@ -100,6 +103,9 @@ public class ReservationDisplayServlet extends HttpServlet {
 				// if session exists kill it (this will remove stored login attempts)
 				HttpSession session = request.getSession();
 				session.invalidate();
+				
+				System.out.println(resObj.toString());
+				
 				guestObj = DB_guests.QueryGuest(conn, resObj.getGuestID());
 				if(guestObj!=null) {
 
@@ -120,7 +126,7 @@ public class ReservationDisplayServlet extends HttpServlet {
 					request.setAttribute("bookingDate", bookingDateFormat.format(resObj.getBookingDate()));
 					request.setAttribute("reservationType", resObj.getReservationType());
 
-
+					System.out.println("WTFFFF");
 
 
 
@@ -135,6 +141,7 @@ public class ReservationDisplayServlet extends HttpServlet {
 
 						request.setAttribute("reservationPrice", price);
 					}
+				
 
 					// Set attributes for Guest data
 					request.setAttribute("guestName", guestObj.getGuestName());
@@ -145,6 +152,10 @@ public class ReservationDisplayServlet extends HttpServlet {
 							.getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
 					dispatcher.forward(request, response);
 
+				}
+				else {
+					System.out.println("GUEST ID IS NULL!");
+					System.out.println(resObj.toString());
 				}
 
 			}
@@ -165,6 +176,7 @@ public class ReservationDisplayServlet extends HttpServlet {
 
 		}
 		catch ( Exception e){
+			System.out.println("THIS is an exception");
 			e.printStackTrace();
 		}
 

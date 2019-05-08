@@ -1,8 +1,6 @@
 package webApp.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +13,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = { "/submitCount" })
 public class ReservationRetrieveCounter extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("deprecation")
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,  IOException {
 
@@ -38,8 +38,11 @@ public class ReservationRetrieveCounter extends HttpServlet {
 		
 		// If submitCount greater than 3, you are locked out - redirect to locked out page
 		if (submitCount >3) {
-			request.setAttribute("locked", submitCount);
 			
+			request.setAttribute("purposeLocked1", "viewing your reservation");
+			request.setAttribute("purposeLocked2", "view your reservation");
+			request.setAttribute("count", submitCount);
+
 			RequestDispatcher rd = request.getRequestDispatcher("/lockedOut");
 			rd.forward(request,response);
 			

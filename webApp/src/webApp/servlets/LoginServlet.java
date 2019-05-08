@@ -44,11 +44,33 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/userInfo");
 			return;
 		}
+		
+		try {
+		
+			Integer loginCount = (Integer) session.getAttribute("loginCount");
+		
+			if (loginCount != null && loginCount >3) {
+				
+				// Forward to /WEB-INF/views/login.jsp
+				RequestDispatcher dispatcher //
+						= this.getServletContext().getRequestDispatcher("/loginCount");
+	
+				dispatcher.forward(request, response);
+			}
+			
+		
 
 		RequestDispatcher dispatcher //
 				= this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
 
 		dispatcher.forward(request, response);
+		
+		}
+		
+		catch (Exception e) {
+			System.out.println("ERRORRRRRRS:");
+			e.printStackTrace();
+		}
 
 	}
 
@@ -65,6 +87,7 @@ public class LoginServlet extends HttpServlet {
 		Starwood user = null;
 		boolean hasError = false;
 		String errorString = null;
+		
 //		Starwood userlogInDetails = null;
 		if (userName == null || password == null || userName.length() == 0 || password.length() == 0) {
 			hasError = true;
@@ -80,7 +103,7 @@ public class LoginServlet extends HttpServlet {
 
 				if (user == null) {					
 					hasError = true;
-					errorString = "User Name or password invalid";
+					errorString = "User Name or password invalid, both are case sensitive";
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -88,42 +111,60 @@ public class LoginServlet extends HttpServlet {
 				errorString = e.getMessage();
 			}
 		}
-		// If error, forward to /WEB-INF/views/login.jsp
-		if (hasError) {
-			// fix
-			user = new Starwood();
-			user.setUserName(userName);
-			user.setPassword(password);
-
-			// Store information in request attribute, before forward.
-			request.setAttribute("errorString", errorString);
-			request.setAttribute("user", user);
-
-			// Forward to /WEB-INF/views/login.jsp
-			RequestDispatcher dispatcher //
-					= this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
-
-			dispatcher.forward(request, response);
-		}
-		// If no error
-		// Store user information in Session
-		// And redirect to userInfo page.
-		else {
-			HttpSession session = request.getSession();
-			SessionUtils.storeLoginedUser(session, user);
-
-			// If user checked "Remember me".
-			if (remember) {
-				SessionUtils.storeUserCookie(response, user);
+		
+		// Assuming user posted data, Try to login
+		// If loginCount > 3, forward to /WEB-INF/views/login.jsp
+		
+		try {
+		
+			if (hasError) {
+				// fix
+				user = new Starwood();
+				user.setUserName(userName);
+				user.setPassword(password);
+	
+				// Store information in request attribute, before forward.
+				request.setAttribute("errorString", errorString);
+				request.setAttribute("user", user);
+	
+				// Forward to /WEB-INF/views/login.jsp
+				RequestDispatcher dispatcher //
+						= this.getServletContext().getRequestDispatcher("/loginCount");
+	
+				dispatcher.forward(request, response);
 			}
-			// Else delete cookie.
+			// If no error
+			// Store user information in Session
+			// And redirect to userInfo page.
 			else {
-				SessionUtils.deleteUserCookie(response);
-			}
+				HttpSession session = request.getSession();
 
-			// Redirect to userInfo page.
-			response.sendRedirect(request.getContextPath() + "/userInfo");
+				SessionUtils.storeLoginedUser(session, user);
+	
+				// If user checked "Remember me".
+				if (remember) {
+					SessionUtils.storeUserCookie(response, user);
+				}
+				// Else delete cookie.
+				else {
+					SessionUtils.deleteUserCookie(response);
+				}
+	
+				// Redirect to userInfo page.
+				response.sendRedirect(request.getContextPath() + "/userInfo");
+			}
+			
 		}
+		
+		catch (Exception e) {
+			System.out.println("ERRORRRRRRS:");
+			e.printStackTrace();
+			hasError = true;
+			errorString = e.getMessage();
+		}
+		
+		
 	}
+		
 
 }

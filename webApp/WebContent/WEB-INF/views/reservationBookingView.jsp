@@ -16,7 +16,7 @@
       
       <div class="container">
        
-      <h2>Reservation (3/3)</h2>
+      <h3>Reservation (3/3)</h3>
        
       <p style="color: red;">${errorString}</p>
      
@@ -47,66 +47,109 @@
       
 	<br/> <br/>
     
-      
-      <form method="POST" action="${pageContext.request.contextPath}/reservationConfirm">
-      <c:if test="${empty sessionScope.loginedUser}">
-    	If you would like to pay for this booking, enter your personal details:
-    <br/> <br/>
-         <table>
-            <tr>
-               <th>Name</th>
-               <td><input type="text" name=guestName value="${Guest.guestName}" required/></td>
-            </tr>
-            <tr>
-               <th>Surname</th>
-               <td><input type="text" name="guestSurename" value="${Guest.guestSurename}" required/></td>
-            </tr>
-            <tr>
-               <th>Address</th>
-               <td><input type="text" name="guestAddress" value="${Guest.guestAddress}" required/></td>
-            </tr>
-            <tr>
-               <th>Email</th>
-               <td><input type="email" name="guestEmail" value="${Guest.guestEmail}" required/></td>
-            </tr>
-                        
-            <tr>
-               <th>Phone number</th>
-               <td><input type="text" name="guestPhoneNumber" value="${Guest.guestPhoneNumber}" required/></td>
-            </tr>
+		<div class= "inputWrapper">
+	      
+	    	<form method="POST" action="${pageContext.request.contextPath}/reservationConfirm">
+	    	
+	    	<!-- If user is not logged-in -->
+	    	<c:if test="${empty sessionScope.loginedUser}">
+	    		If you would like to pay for this booking, enter your personal details:
+	    		<br/> <br/>
+		
+			<div id="sectionInputGuest">
+		
+				<h3> Guest information</h3>
+			
+				<p>
+					<label for="guestName">
+						<span>First Name</span>
+					</label>
+					<input type="text" name=guestName id=guestName value="${Guest.guestName}" placeholder="Joe" maxlength = "40" required/>
+				</p>
+		        
+				<p>
+		        	<label for="guestSurename">
+						<span>Surname</span>
+					</label>
+		            <input type="text" name="guestSurename" id="guestSurename" value="${Guest.guestSurename}" placeholder="Security" maxlength = "40" required/>
+		        </p>
+		        
+		        <p>
+		        	<label for="guestAddress">
+						<span>Address</span>
+					</label>
+		       		<input type="text" name="guestAddress" id="guestAddress" value="${Guest.guestAddress}" placeholder="University College Dublin, Belfield, Dublin 4" maxlength = "60" required/>
+		        </p>
+		        
+				<p>
+		        	<label for="guestEmail">
+						<span>Email</span>
+					</label>
+		        	<input type="email" name="guestEmail" id="guestEmail" placeholder="joe.security@ucd.ie" maxlength = "40"required/>
+		    	</p>
+		                        
+				<p>
+			        <label for="guestPhoneNumber">
+						<span>Phone number</span>
+					</label>
+		           	<input type="text" name="guestPhoneNumber" id="guestPhoneNumber" value="${Guest.guestPhoneNumber}" pattern="^[0-9]+$" placeholder="0555252560" maxlength = "10" title="Input your phone number, digits only (max 10)" required/>
+		   		</p>
+		   	
+			</div>
+		
+			<div id="sectionInputCard">
+		
+				<h3> Payment information</h3>
+			
+				<p>
+			        <label for="guestCardNumber">
+						<span>Credit card number</span>
+					</label>
+		        	<input type="text" name="guestCardNumber" id="guestCardNumber" value="${Guest.guestCardNumber}" pattern="^\d{16,16}$" title="16 digits required" placeholder="1234567812345678" maxlength = "16" required/>
+		    	</p>
+		        
+				<p>
+			        <label for="CVV">
+						<span>CVV number</span>
+					</label>
+		            <input type="text" name="CVV" id="CVV" value="${Guest.CVV}" pattern="^\d{3,3}$" title="Three digits required" placeholder="890" maxlength = "3" required/>
+		    	</p>
+		            
+				<p>
+		        	<label for="ExpiryDate">
+						<span>Expiration date</span>
+					</label>
+		            <input type="date" name="ExpiryDate" id="ExpiryDate" value="${Guest.ExpiryDate}" required/>
+		    	</p>
+	    
+	    	</div>
 
-         	<tr>
-               <th>Credit card number</th>
-               <td><input type="text" name="guestCardNumber" maxlength="80" value="${Guest.guestCardNumber}" pattern=".{16,16}" title="16 digits required" required/></td>
-            </tr>
-            <tr>
-               <th> CVV number</th>
-               <td><input type="text" name="CVV" value="${Guest.CVV}" pattern=".{3,3}" title="3 digits required" required/></td>
-            </tr>
-            
-             <tr>
-               <th>Expiry Date</th>
-               <td><input type="date" name="ExpiryDate" value="${Guest.ExpiryDate}" required/></td>
-            </tr>
-         </table>
-	</c:if>
-	
-	<c:if test="${not empty sessionScope.loginedUser}">
-	<p >Choose a Credit Card to pay with:</p>
-         <select name="CreditCard">
-    <c:forEach var="d" items="${cards}">
-      <option value="${d.getCardNumber()}">${d.getCardNumber()}</option>
-    </c:forEach>
-		</select>
-		<br/><br/>
 		</c:if>
-         <input type="submit" value="Book and Pay" />
-         
-      </form>
+		
+		<!-- If user is logged-in -->
+		<c:if test="${not empty sessionScope.loginedUser}">
+		<p >Choose a Credit Card to pay with:</p>
+	         <select name="CreditCard">
+	    <c:forEach var="d" items="${cards}">
+	      <option value="${d.getCardNumber()}">${d.getCardNumber()}</option>
+	    </c:forEach>
+			</select>
+			<br/><br/>
+			</c:if>
+			
+	         <div class="inputSubmitReset"> 
+	         	<input type="submit" value="Book and Pay" />
+	         	<input type="reset" value="Reset" />
+	         </div>
+	         
+	      </form>
+	      
+	      </div>
+      </div>
        
       <jsp:include page="_footer.jsp"></jsp:include>
       
-      </div>
+
        
    </body>
 </html>

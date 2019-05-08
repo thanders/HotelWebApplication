@@ -18,7 +18,7 @@ import webApp.beans.Room;
 import webApp.beans.Starwood;
 
 public class DBUtils {
-	
+
 	public static Starwood findStarwoodMember(Connection conn,String userName, String password,String key) throws SQLException {
 
 		String sql = "Select * from Members a " //
@@ -31,18 +31,23 @@ public class DBUtils {
 
 		if (rs.next()) {
 			String pass = rs.getString("User_Password");
+			System.out.println(rs.getString("User_Name"));
 			try {
 				pass = EncryptDecrypt.decrypt(pass, key);
-				System.out.println(pass);
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("ENtered password is "+password);
+
 			if(pass.equals(password)) {
-				System.out.println("made it :)");
+
 				Starwood member = findStarwoodMember(conn,userName);
-				return member;
+				if(member!=null) {
+					pass = rs.getString("User_Password");
+					member.setPassword(pass);
+					return member;
+				}
 			}
 		}
 		return null;
@@ -60,6 +65,7 @@ public class DBUtils {
 		ResultSet rs = pstm.executeQuery();
 
 		if (rs.next()) {
+			System.out.println("found");
 			String name = rs.getString("Member_Name");
 			String surname = rs.getString("Member_Surname");
 			String address = rs.getString("Address");
@@ -103,11 +109,10 @@ public class DBUtils {
 	public static BigInteger insertGuest(Connection conn, Guest guest) throws SQLException {
 		String sql = "Insert into Guest(Id,Guest_Name, Guest_Surname, Address, Email_Address, Card_Number, Phone_Number,ExpiryDate,CVV) values (?,?,?,?,?,?,?,?,?)";
 
-		//PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		
 		AdHoc adHoc = new AdHoc();
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        pstm.setString(1, adHoc.randomNumber().toString());
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		BigInteger GuestID = adHoc.randomNumber();
+		pstm.setString(1, GuestID.toString());
 		pstm.setString(2, guest.getGuestName());
 		pstm.setString(3, guest.getGuestSurename());
 		pstm.setString(4, guest.getGuestAddress());
@@ -117,16 +122,7 @@ public class DBUtils {
 		pstm.setObject(8, guest.getExpiryDate());
 		pstm.setInt(9, guest.getCVV());
 		pstm.executeUpdate();
-
-		ResultSet rs = pstm.getGeneratedKeys();
-
-		BigInteger GuestID = BigInteger.valueOf(0);
-
-		// Assign auto generated Guest key to variable and create reservation
-		if (rs != null && rs.next()) {
-			GuestID = BigInteger.valueOf(rs.getLong("Id"));
-		}
-
+		
 		return GuestID;
 	}
 
@@ -160,7 +156,7 @@ public class DBUtils {
 		pstm.executeUpdate();
 
 		int ID = 0;
-		ResultSet rs = pstm.getGeneratedKeys();
+		ResultSet rs = pstm.getResultSet();
 
 		// Assign auto generated Guest key to variable and create reservation
 		if (rs != null && rs.next()) {

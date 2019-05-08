@@ -49,7 +49,7 @@ public class AddCardServlet extends HttpServlet {
 		String CVV = (String) request.getParameter("CVV");
 		int Cvv = Integer.parseInt(CVV);
 		String CardDate= (String) request.getParameter("ExpiryDate");
-		System.out.println(CardDate+" yes");
+		
 		DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ;
 		LocalDate expiry = LocalDate.parse( CardDate , f ) ;
 		EncryptDecrypt encoder = new EncryptDecrypt();
@@ -60,21 +60,16 @@ public class AddCardServlet extends HttpServlet {
 
 		// Encrypt
 
-		String encryptedCredit="",decryptedCredit="";
+		String encryptedCredit="";
 		try {
 			encryptedCredit = EncryptDecrypt.encrypt(cardNumber,key);
-			// Decrypt
-			 decryptedCredit = EncryptDecrypt.decrypt(encryptedCredit,key);
-			// Output
+			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 
-		System.out.println("Password: " + cardNumber);
-		System.out.println("Encrypted: " + encryptedCredit);
-		System.out.println("Decrypted: " + decryptedCredit);
 		
 		String errorString = null;
 
