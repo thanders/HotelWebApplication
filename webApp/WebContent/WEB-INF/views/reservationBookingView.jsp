@@ -65,21 +65,21 @@
 					<label for="guestName">
 						<span>First Name</span>
 					</label>
-					<input type="text" name=guestName id=guestName value="${Guest.guestName}" placeholder="Joe" maxlength = "40" required/>
+					<input type="text" name=guestName id=guestName value="${fn:escapeXml(Guest.guestName)}" placeholder="Joe" maxlength = "40" required/>
 				</p>
 		        
 				<p>
 		        	<label for="guestSurename">
 						<span>Surname</span>
 					</label>
-		            <input type="text" name="guestSurename" id="guestSurename" value="${Guest.guestSurename}" placeholder="Security" maxlength = "40" required/>
+		            <input type="text" name="guestSurename" id="guestSurename" value="${fn:escapeXml(Guest.guestSurename)}" placeholder="Security" maxlength = "40" required/>
 		        </p>
 		        
 		        <p>
 		        	<label for="guestAddress">
 						<span>Address</span>
 					</label>
-		       		<input type="text" name="guestAddress" id="guestAddress" value="${Guest.guestAddress}" placeholder="University College Dublin, Belfield, Dublin 4" maxlength = "60" required/>
+		       		<input type="text" name="guestAddress" id="guestAddress" value="${fn:escapeXml(Guest.guestAddress)}" placeholder="University College Dublin, Belfield, Dublin 4" maxlength = "60" required/>
 		        </p>
 		        
 				<p>
@@ -93,7 +93,7 @@
 			        <label for="guestPhoneNumber">
 						<span>Phone number</span>
 					</label>
-		           	<input type="text" name="guestPhoneNumber" id="guestPhoneNumber" value="${Guest.guestPhoneNumber}" pattern="^[0-9]+$" placeholder="0555252560" maxlength = "10" title="Input your phone number, digits only (max 10)" required/>
+		           	<input type="text" name="guestPhoneNumber" id="guestPhoneNumber" value="${fn:escapeXml(Guest.guestPhoneNumber)}" pattern="^[0-9]+$" placeholder="0555252560" maxlength = "10" title="Input your phone number, digits only (max 10)" required/>
 		   		</p>
 		   	
 			</div>
@@ -106,21 +106,21 @@
 			        <label for="guestCardNumber">
 						<span>Credit card number</span>
 					</label>
-		        	<input type="text" name="guestCardNumber" id="guestCardNumber" value="${Guest.guestCardNumber}" pattern="^\d{16,16}$" title="16 digits required" placeholder="1234567812345678" maxlength = "16" required/>
+		        	<input type="text" name="guestCardNumber" id="guestCardNumber"  value="${fn:escapeXml(Guest.guestCardNumber)}" pattern="^\d{16,16}$" title="16 digits required" placeholder="1234567812345678" maxlength = "16" required/>
 		    	</p>
 		        
 				<p>
 			        <label for="CVV">
 						<span>CVV number</span>
 					</label>
-		            <input type="text" name="CVV" id="CVV" value="${Guest.CVV}" pattern="^\d{3,3}$" title="Three digits required" placeholder="890" maxlength = "3" required/>
+		            <input type="text" name="CVV" id="CVV" value="${fn:escapeXml(Guest.CVV)}" pattern="^\d{3,3}$" title="Three digits required" placeholder="890" maxlength = "3" required/>
 		    	</p>
 		            
 				<p>
 		        	<label for="ExpiryDate">
 						<span>Expiration date</span>
 					</label>
-		            <input type="date" name="ExpiryDate" id="ExpiryDate" value="${Guest.ExpiryDate}" required/>
+		            <input type="date" name="ExpiryDate" id="ExpiryDate"  value="${fn:escapeXml(Guest.ExpiryDate)}" required/>
 		    	</p>
 	    
 	    	</div>

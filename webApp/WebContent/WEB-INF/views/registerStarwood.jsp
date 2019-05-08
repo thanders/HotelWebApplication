@@ -46,11 +46,11 @@
 
          	<tr>
                <th>Credit card number</th>
-               <td><input type="text" name="CardNumber" maxlength="80"  pattern=".{16,16}" title="16 digits required" required/></td>
+               <td><input type="text" name="CardNumber" maxlength="80"  pattern="^\d{16,16}$" title="16 digits required" required/></td>
             </tr>
             <tr>
                <th> CVV number</th>
-               <td><input type="text" name="CVV"  pattern=".{3,3}" title="3 digits required"  required/></td>
+               <td><input type="text" name="CVV"  pattern="^\d{3,3}$" title="3 digits required"  required/></td>
             </tr>
             
              <tr>
