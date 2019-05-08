@@ -59,7 +59,7 @@ public class EncryptDecrypt {
 		random.nextBytes(bytes);
 		// Derive the key
 		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-		PBEKeySpec spec = new PBEKeySpec(patientSecret.toCharArray(), bytes, 65556, 256);
+		PBEKeySpec spec = new PBEKeySpec(patientSecret.toCharArray(), bytes, 65556, 128);
 		SecretKey secretKey = factory.generateSecret(spec);
 		SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
 		//encrypting the record
@@ -89,7 +89,7 @@ public class EncryptDecrypt {
 		buffer.get(encryptedTextBytes);
 		// Deriving the key
 		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-		PBEKeySpec spec = new PBEKeySpec(patientSecret.toCharArray(), saltBytes, 65556, 256);
+		PBEKeySpec spec = new PBEKeySpec(patientSecret.toCharArray(), saltBytes, 65556, 128);
 		SecretKey secretKey = factory.generateSecret(spec);
 		SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
 		cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(ivBytes1));
