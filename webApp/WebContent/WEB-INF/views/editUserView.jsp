@@ -6,7 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css">
+
 <title>Insert title here</title>
+
 </head>
 <body>
 
@@ -37,9 +40,7 @@
             <tr>
                <th>Phone number</th>
                <td><input type="text" name="phoneNumber" value="${fn:escapeXml(member.phoneNumber)}" /></td>
-            </tr>
-
-            
+            </tr>            
             <tr>
                <th>User Name</th>
                <td><input type="text" name="userName" value="${fn:escapeXml(member.userName)}" /></td>
