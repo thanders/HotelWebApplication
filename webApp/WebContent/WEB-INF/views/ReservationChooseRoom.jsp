@@ -28,7 +28,7 @@
 		Please choose any <b>${numRooms}</b>:
 	<br/><br/>
 	
-	<div id="inputWrapper">
+	<div class="inputWrapper">
 	
 		<form method="POST" action="${pageContext.request.contextPath}/ReservationChooseRoom">
 		

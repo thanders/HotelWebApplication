@@ -147,16 +147,17 @@ input {
   margin: 50px 0;
 }
 
-#inputWrapper input {
+.inputWrapper input {
 	width: 140px;
+
 }
 
-#inputWrapper {
-	margin-top: 30px;
+.inputWrapper {
+	margin-top: 50px;
 }
 
-#inputWrapper input[type=submit],
-#inputWrapper input[type=reset]{
+.inputWrapper input[type=submit],
+.inputWrapper input[type=reset]{
 	display: inline-block;
 	width: 100px;
 	text-align: center;

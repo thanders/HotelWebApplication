@@ -15,7 +15,8 @@
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
 	<div class="container">
-
+	
+	<h2>Starwood Member Registration</h2>
 
 		<div class="inputWrapper">
 
@@ -37,7 +38,7 @@
 					<p>
 						<label for="surename"> <span>Surname</span>
 						</label> <input type="text" name="surename" id="surname"
-							value="${fn:escapeXml(member.surename)}" placeholder="Joe"
+							value="${fn:escapeXml(member.surename)}" placeholder="Security"
 							maxlength="40" required />
 					</p>
 
@@ -92,6 +93,7 @@
 					</p>
 
 				</div>
+				
 				<div id="sectionInputCard">
 
 					<h3>Log in details</h3>
@@ -109,10 +111,12 @@
 					</p>
 
 				</div>
+				
 				<div class="inputSubmitReset"> 
-	         	<input type="submit" value="Register" />
-	         	<input type="reset" value="Reset" />
-	         </div>
+	         		<input type="submit" value="Register" />
+	         		<input type="reset" />
+	         	</div>
+	         	
 			</form>
 
 		</div>

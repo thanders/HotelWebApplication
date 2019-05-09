@@ -15,7 +15,7 @@
     
     <div class="container">
  
-    <h3>Reservation confirmation</h3>
+    <h2>Reservation confirmation</h2>
  
     <p style="color: red;">${errorString}</p>
     

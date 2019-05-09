@@ -13,11 +13,11 @@
 		
 		<jsp:include page="_menu.jsp"></jsp:include>
  
-      <h3>Login</h3>
+      <h2>Login</h2>
       
       <span style="color: red;">${errorString}</span>
       
-      <div id="inputWrapper">
+      <div class="inputWrapper">
  
  		<!-- the login form -->
       <form method="POST" action="${pageContext.request.contextPath}/login">
