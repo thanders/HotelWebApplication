@@ -18,6 +18,8 @@
     <h3>Reservation confirmation</h3>
  
     <p style="color: red;">${errorString}</p>
+    
+    <p style="color: blue;">${cardExpired}</p>
  	
  	Thank you for booking a room with us. Your reservation number is <b>${resNumber}</b>
  	<br/> <br/>

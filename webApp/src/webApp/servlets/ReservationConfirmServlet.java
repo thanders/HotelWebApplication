@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -86,7 +87,21 @@ public class ReservationConfirmServlet extends HttpServlet {
 			int guestcvvNumber = Integer.parseInt(cvvNumber);
 			LocalDate expiry = LocalDate.parse( guestCardDate , f ) ;
 			
-		
+			Long durationExpired = ChronoUnit.DAYS.between(expiry, LocalDate.now());
+
+			String destination = "test";
+			
+			System.out.println("WTF: "+ durationExpired);
+			
+			if (durationExpired >0) {
+				request.setAttribute("cardExpired", "Your creditcard has expired. Try again with another one");
+				destination = "/WEB-INF/views/reservationBookingView.jsp";
+
+			}
+			else {
+				destination = "/WEB-INF/views/reservationConfirmView.jsp";
+			}
+			
 			String encryptedCredit="";
 			try {
 				encryptedCredit = EncryptDecrypt.encrypt(guestCardNumber,key);
@@ -188,7 +203,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 
 				RequestDispatcher dispatcher = request.getServletContext()
-						.getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
+						.getRequestDispatcher(destination);
 				dispatcher.forward(request, response);
 
 			} catch (SQLException e) {

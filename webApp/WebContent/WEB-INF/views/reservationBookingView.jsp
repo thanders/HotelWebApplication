@@ -18,10 +18,14 @@
       <div class="container">
        
       <h3>Reservation (3/3)</h3>
-       
+       <c:if test="${errorString != null}">
       <p style="color: red;">${errorString}</p>
-     
-      
+     </c:if>
+       
+       <c:if test="${cardExpired != null}">     
+            <p style="color: red;">${cardExpired}</p>
+       </c:if>
+       
       From <b>${startDate}</b> until <b>${endDate}</b> (${duration} days)
       
      <br/> <br/>
