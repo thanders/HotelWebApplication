@@ -15,9 +15,9 @@
 	<jsp:include page="_header.jsp"></jsp:include>
 	<jsp:include page="_menu.jsp"></jsp:include>
 	<div class="container">
-	
-	<h2>Starwood Member Registration</h2>
 
+		<h2>Starwood Member Registration</h2>
+		<span style="color: red;">${errorString}</span>
 		<div class="inputWrapper">
 
 			<form method="POST"
@@ -69,7 +69,6 @@
 				<div id="sectionInputCard">
 
 					<h3>Payment information</h3>
-
 					<p>
 						<label for="CardNumber"> <span>Credit card number</span>
 						</label> <input type="text" name="CardNumber" id="CardNumber"
@@ -89,18 +88,19 @@
 					<p>
 						<label for="ExpiryDate"> <span>Expiration date</span>
 						</label> <input type="date" name="ExpiryDate" id="ExpiryDate"
-							value="${fn:escapeXml(member.ExpiryDate)}" required />
+							value="${fn:escapeXml(member.expiryDate)}" required />
 					</p>
 
 				</div>
-				
+
 				<div id="sectionInputCard">
 
 					<h3>Log in details</h3>
 
 					<p>
 						<label for="userName"> <span>User Name</span>
-						</label> <input type="text" name="userName" pattern=".{6,}" title="Must be minimum of 6 characters." required />
+						</label> <input type="text" name="userName" pattern=".{6,}"
+							title="Must be minimum of 6 characters." required />
 					</p>
 					<p>
 						<label for="username"> <span>Password</span>
@@ -109,15 +109,15 @@
 							title="Minimum of 8 characters. Should have at least one special character and one number."
 							required />
 					</p>
-					<p> Password must be a minimum of 8 characters containing at least 1 digit and 1 a special character (!,?,$)</p>
+					<p>Password must be a minimum of 8 characters containing at
+						least 1 digit and 1 a special character (!,?,$)</p>
 
 				</div>
-				
-				<div class="inputSubmitReset"> 
-	         		<input type="submit" value="Register" />
-	         		<input type="reset" />
-	         	</div>
-	         	
+
+				<div class="inputSubmitReset">
+					<input type="submit" value="Register" /> <input type="reset" />
+				</div>
+
 			</form>
 
 		</div>
