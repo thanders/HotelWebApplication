@@ -91,8 +91,6 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 			String destination = "test";
 			
-			System.out.println("WTF: "+ durationExpired);
-			
 			if (durationExpired >0) {
 				request.setAttribute("cardExpired", "Your creditcard has expired. Try again with another one");
 				destination = "/WEB-INF/views/reservationBookingView.jsp";
@@ -220,13 +218,31 @@ public class ReservationConfirmServlet extends HttpServlet {
 			String guestSurename = SessionUtils.getLoginedUser(request.getSession()).getSurename();
 			String guestAddress = SessionUtils.getLoginedUser(request.getSession()).getAddress();
 			String guestEmail = SessionUtils.getLoginedUser(request.getSession()).getEmail();
+			LocalDate guestExpiryDate = SessionUtils.getLoginedUser(request.getSession()).getExpiryDate();
 			String guestCardNumber="";
+			
 			try {
 				guestCardNumber = EncryptDecrypt.decrypt(SessionUtils.getLoginedUser(request.getSession()).getCardNumber(),key);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			// Check to make sure credit card is not expired
+			Long durationExpired = ChronoUnit.DAYS.between(guestExpiryDate, LocalDate.now());
+
+			String destination = "test";
+			
+			// 
+			if (durationExpired >0) {
+				request.setAttribute("cardExpired", "Your creditcard has expired. Try again with another one");
+				destination = "/WEB-INF/views/reservationBookingView.jsp";
+
+			}
+			else {
+				destination = "/WEB-INF/views/reservationConfirmView.jsp";
+			}
+			
 			int guestPhoneNumber = SessionUtils.getLoginedUser(request.getSession()).getPhoneNumber();
 
 			// Create instance of Guest class
@@ -304,7 +320,7 @@ public class ReservationConfirmServlet extends HttpServlet {
 
 
 				RequestDispatcher dispatcher = request.getServletContext()
-						.getRequestDispatcher("/WEB-INF/views/reservationConfirmView.jsp");
+						.getRequestDispatcher(destination);
 				dispatcher.forward(request, response);
 
 			} catch (SQLException e) {
