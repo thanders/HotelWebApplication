@@ -17,13 +17,13 @@
 
 	<div class="container">
 	
-		<h3>Make a Reservation (1/3)</h3>
+		<h2>Make a Reservation (1/3)</h2>
 		<p style="color: red;">${errorString}</p>
 		<P>This hotel currently has  a maximum of <b>${maxRooms}</b> rooms. The reservation system can tell you which rooms are free.</P>
 	
 		<p> Select the dates you would like to view and specify the number of rooms you want to book:</p>
 	
-		<div id="inputWrapper">
+		<div class="inputWrapper">
 	
 		<form action="${pageContext.request.contextPath}/ReservationChooseRoom">
 			

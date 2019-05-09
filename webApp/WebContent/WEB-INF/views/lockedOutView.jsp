@@ -13,7 +13,7 @@
  
  		<div>
  		
-      <h3>Having trouble ${purposeLocked1}?</h3>
+      <h2>Having trouble ${purposeLocked1}?</h2>
       
       <p>Our web application supports access control and anti-brute-force techniques to prevent unauthorized access to your records.</p>
       

@@ -21,7 +21,7 @@
 
 	<div class="container">
 
-	<h3>Find my reservation</h3>
+	<h2>Find my reservation</h2>
 
 	<!-- If submitCount not equal to null, display -->
 	<c:if test="${submitCount!=null}">
@@ -32,7 +32,7 @@
 	<br/>
 	<br/>
 
-	<div id="inputWrapper">
+	<div class="inputWrapper">
 	
 	<form method="POST" action="${pageContext.request.contextPath}/reservationDisplay">
 		
