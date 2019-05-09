@@ -120,6 +120,10 @@ th {
   	position: fixed;
   	width: 100%;
 }
+li
+.footer a {
+	
+}
 
 label span {
           display: inline-block;
@@ -186,7 +190,7 @@ input {
 
 /* Menu */
 
-ul {
+.menu ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -194,11 +198,11 @@ ul {
   background-color: #696969;
 }
 
-li {
+.menu li {
   float: left;
 }
 
-li a {
+.menu li a {
   display: block;
   color: white;
   text-align: center;
@@ -206,7 +210,7 @@ li a {
   text-decoration: none;
 }
 
-li a:hover:not(.active) {
+.menu li a:hover:not(.active) {
   background-color: #111;
 }
 
@@ -230,6 +234,15 @@ li a:hover:not(.active) {
 .footer li {
 	float: left;
 	margin-right: 20px;
+}
+
+.footer a:link {
+    color: white;
+    text-decoration: none;
+}
+
+.footer a:visited {
+  color: white;
 }
 
   

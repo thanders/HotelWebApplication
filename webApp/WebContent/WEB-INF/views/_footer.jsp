@@ -4,8 +4,8 @@
 <footer class="footer">
 
 <ul>
-	<li>Marriott Hotel UCD<li>
-	<li>Five-Star Hotel<li>
+	<li> <a href="${pageContext.request.contextPath}/">Marriott Hotel UCD</a> </li>
+	<li>Five-Star Hotel</li>
 	<li>COMP47660</li>
 </ul>
 </footer>

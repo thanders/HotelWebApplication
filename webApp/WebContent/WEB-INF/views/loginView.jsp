@@ -51,7 +51,7 @@
                   <input type="submit" value= "Submit" />
                   
                   <input type="reset" />
-                  <a href="${pageContext.request.contextPath}/">Cancel</a>
+                  
 			</div>
       </form>
       
