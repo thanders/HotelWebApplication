@@ -4,6 +4,13 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 	<display-name>MarriotWebApp</display-name>
+	
+	<!-- Set Tomcat timezone-->
+	<context-param>
+        <param-name>timezone</param-name>
+        <param-value>Europe/Dublin</param-value>
+    </context-param>
+    
 	<filter-mapping>
 		<filter-name>jdbcFilter</filter-name>
 		<url-pattern>/*</url-pattern>
