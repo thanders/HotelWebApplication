@@ -98,7 +98,7 @@
 
 					<p>
 						<label for="userName"> <span>User Name</span>
-						</label> <input type="text" name="userName" pattern=".{6,}" required />
+						</label> <input type="text" name="userName" pattern=".{6,}" title="Must be minimum of 6 characters." required />
 					</p>
 					<p>
 						<label for="username"> <span>Password</span>
@@ -107,6 +107,7 @@
 							title="Minimum of 8 characters. Should have at least one special character and one number."
 							required />
 					</p>
+					<p> Password must be a minimum of 8 characters containing at least 1 digit and 1 a special character (!,?,$)</p>
 
 				</div>
 				<div class="inputSubmitReset"> 
