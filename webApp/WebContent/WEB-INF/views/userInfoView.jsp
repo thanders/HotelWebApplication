@@ -21,7 +21,6 @@
 	Surname: ${user.surename}
 	<br> Name: ${user.name}
 	<br>Address: ${user.address} 
-	<br>Card Details: ${user.cardNumber}
 	<br> Email: ${user.email}
 	<br> Phone Number: ${user.phoneNumber}
 	<br>
