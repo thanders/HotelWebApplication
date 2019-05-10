@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `Credit_Card`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Credit_Card` (
-  `Card_Number` varchar(280) COLLATE utf8_bin NOT NULL,
+  `Card_Number` varchar(500) COLLATE utf8_bin NOT NULL,
   `MemberID` int(11) NOT NULL,
   `CVV` int(3) NOT NULL,
   `ExpiryDate` date NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE `Guest` (
   `Guest_Name` varchar(128) COLLATE utf8_bin NOT NULL,
   `Guest_Surname` varchar(128) COLLATE utf8_bin NOT NULL,
   `Address` varchar(280) COLLATE utf8_bin NOT NULL,
-  `Card_Number` varchar(280) COLLATE utf8_bin NOT NULL,
+  `Card_Number` varchar(500) COLLATE utf8_bin NOT NULL,
   `Phone_Number` int(15) NOT NULL,
   `Email_Address` varchar(128) COLLATE utf8_bin NOT NULL,
   `CVV` int(3) NOT NULL,
@@ -217,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-09 19:29:40
+-- Dump completed on 2019-05-10 11:54:13
