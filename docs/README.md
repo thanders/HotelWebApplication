@@ -12,7 +12,7 @@ Log into MySQL from this repository's root directory (username root) `mysql -u r
 
 Create a database called sse `CREATE database sse;`
 
-Execute the included SQL file to create the webApp's tables `source docs/db/createTables.sql;`
+Execute the included SQL file to create the webApp's tables `source docs/db/createDatabase.sql;`
 
 ## Webserver deployment
 
