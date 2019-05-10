@@ -19,11 +19,11 @@
                <tr>
              	<tr>
                <th>Credit card number</th>
-               <td><input type="text" name="Card" value="${CreditCard.cardNumber}" pattern=".{16,16}" title="16 digits required" required/></td>
+               <td><input type="text" name="Card" value="${CreditCard.cardNumber}" pattern="^\d{16,16}$" title="16 digits required" placeholder="1234567812345678" maxlength="16" required/></td>
             </tr>
             <tr>
                <th> CVV number</th>
-               <td><input type="text" name="CVV" value="${CreditCard.CVV}" pattern=".{3,3}" title="3 digits required" required/></td>
+               <td><input type="text" name="CVV" value="${CreditCard.CVV}" pattern="^\d{3,3}$" title="3 digits required" placeholder="890" maxlength="3" required/></td>
             </tr>
             
              <tr>

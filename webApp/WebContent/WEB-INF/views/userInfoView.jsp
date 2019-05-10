@@ -21,7 +21,6 @@
 	Surname: ${user.surename}
 	<br> Name: ${user.name}
 	<br>Address: ${user.address} 
-	<br>Card Details: ${user.cardNumber}
 	<br> Email: ${user.email}
 	<br> Phone Number: ${user.phoneNumber}
 	<br>
@@ -31,7 +30,7 @@
 	<a href="${pageContext.request.contextPath}/addCard"> Add Card</a>
 	<br />
 	
-	<a href="${pageContext.request.contextPath}/editCard"> Edit Card Details</a>
+	<a href="${pageContext.request.contextPath}/editCard"> Delete a card</a>
 	<br />
 
 	<form method="POST"
