@@ -25,10 +25,6 @@ The `/server` directory contains server.xml and keystore. If you are using Tomca
 
 Once the webserver is working and SSL has been setup our project can be accessed from:
 
-HTTP:
-
-http://localhost:8080/MarriotWebApp/
-
 HTTPS:
 
 https://localhost:8443/MarriotWebApp/
