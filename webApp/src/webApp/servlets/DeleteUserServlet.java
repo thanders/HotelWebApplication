@@ -28,14 +28,24 @@ public class DeleteUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		Connection conn = SessionUtils.getStoredConnection(request);
 		HttpSession session = request.getSession();
+		String storedToken = (String)session.getAttribute("csrfToken");
+		String token = request.getParameter("token");
+		//do check
+		if (storedToken.equals(token)) {
+			//go ahead and process ... do business logic here
+			try {
+				DBUtils.removeUser(conn, SessionUtils.getLoginedUser(session));
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			} 
 
 
-		try {
-			DBUtils.removeUser(conn, SessionUtils.getLoginedUser(session));
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} else {
+			//DO NOT PROCESS ... this is to be considered a CSRF attack - handle appropriately
+		}
 
-		} 
+
 
 
 		response.sendRedirect(request.getContextPath() + "/logout");

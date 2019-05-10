@@ -31,6 +31,7 @@
 	<div class="inputWrapper">
 	
 		<form method="POST" action="${pageContext.request.contextPath}/ReservationChooseRoom">
+		<input name="token" type="hidden" value="${sessionScope.csrfToken}" />
 		
 			<table>
 			

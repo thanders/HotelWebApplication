@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import security.EncryptDecrypt;
 import webApp.dbconn.DBUtils;
 import webApp.dbconn.DB_members;
+import webApp.beans.AdHoc;
 import webApp.beans.CreditCard;
 import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
@@ -83,6 +84,7 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		Starwood member = new Starwood(name, surename, address, email, encryptedCredit, PhoneNumber, userName, encryptedPassword,
 				cvvNumber, expiry);
 		String errorString = null;
+		member.setCardNumber(SessionUtils.maskCardNumber(member.getCardNumber(), "************####"));
 
 		// If error string is null, try to insert the guest object into the Guest
 		// database table
@@ -118,6 +120,8 @@ public class CreateStarwoodUserServlet extends HttpServlet {
 		}
 		// Makes member available for page redirection
 		request.setAttribute("member", member);
+		AdHoc adHoc = new AdHoc();
+		request.getSession().setAttribute("csrfToken", adHoc.randomBigInteger().toString());
 
 		// If error, forward to Edit page.
 		if (errorString != null) {

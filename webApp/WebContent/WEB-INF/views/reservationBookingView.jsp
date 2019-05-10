@@ -56,6 +56,7 @@
 		<div class= "inputWrapper">
 	      
 	    	<form method="POST" action="${pageContext.request.contextPath}/reservationConfirm">
+	    	<input name="token" type="hidden" value="${sessionScope.csrfToken}" />
 	    	
 	    	<!-- If user is not logged-in -->
 	    	<c:if test="${empty sessionScope.loginedUser}">

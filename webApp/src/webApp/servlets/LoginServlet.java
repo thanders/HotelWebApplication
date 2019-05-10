@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import security.EncryptDecrypt;
+import webApp.beans.AdHoc;
 import webApp.beans.Starwood;
 import webApp.cookies.SessionUtils;
 import webApp.dbconn.DBUtils;
@@ -151,6 +152,7 @@ public class LoginServlet extends HttpServlet {
 				}
 	
 				// Redirect to userInfo page.
+				
 				response.sendRedirect(request.getContextPath() + "/userInfo");
 			}
 			

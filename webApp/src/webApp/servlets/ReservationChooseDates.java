@@ -58,7 +58,6 @@ public class ReservationChooseDates extends HttpServlet {
             throws ServletException, IOException {
     	
 
-
     }
         
         

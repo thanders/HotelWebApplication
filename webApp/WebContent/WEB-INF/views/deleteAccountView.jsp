@@ -16,6 +16,7 @@
       <h2>Enter Password to confirm deletion</h2>
  
       <form method="POST" action="${pageContext.request.contextPath}/deleteAccount">
+      <input name="token" type="hidden" value="${sessionScope.csrfToken}" />
          <table border="1">           
             <tr>
                <td>Password</td>

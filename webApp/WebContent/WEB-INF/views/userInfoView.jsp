@@ -15,6 +15,7 @@
 	
 	<div class="container">
 	<p style="color: green;">${changesString}</p>
+	<p style="color: red;">${errorString}</p>
 	
 	<h3>Hello: ${user.name}</h3>
 	Surname: ${user.surename}
@@ -28,6 +29,9 @@
 		details</a>
 	<br>
 	<a href="${pageContext.request.contextPath}/addCard"> Add Card</a>
+	<br />
+	
+	<a href="${pageContext.request.contextPath}/editCard"> Edit Card Details</a>
 	<br />
 
 	<form method="POST"
