@@ -1,0 +1,52 @@
+
+plugins {
+    id 'java'
+    id 'war'
+    id 'com.bmuschko.tomcat' version "2.5"
+    id 'eclipse-wtp'
+}
+
+
+group 'MariottWebAPP'
+version '1.0'
+
+
+    repositories {
+        jcenter()
+    }
+
+
+dependencies {
+    def tomcatVersion = '9.0.19'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+
+    // https://mvnrepository.com/artifact/javax.servlet/jstl
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+
+    // https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api
+    compile group: 'javax.servlet.jsp', name: 'jsp-api', version: '2.2.1-b03'
+
+    // https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-util
+    compile group: 'org.apache.tomcat', name: 'tomcat-util', version: '9.0.19'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+
+}
+
+
+tomcat {
+    // Configuration below is required for Tomcat9 over http and https
+    httpsPort = 8443
+    enableSSL = true
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    httpsProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+
+}
