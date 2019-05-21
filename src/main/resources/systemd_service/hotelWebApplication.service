@@ -1,0 +1,9 @@
+[Unit]
+Description=This service is responsible the HotelWebApplication.
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/bin/start_hotelWebApp.sh
+
+[Install]
+WantedBy=multi-user.target
