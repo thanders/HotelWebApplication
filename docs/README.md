@@ -27,9 +27,11 @@ After the project has been deployed on a server, a systemd service can be create
 On a Linux server each file can be placed in the following locations:
 
 Path for service file:
+
 /lib/systemd/system/hotelWebApp.service
 
 Path for start shell script:
+
 /usr/bin/start_hotelWebApp.sh
 
 Once the service has been setup as described above, the webapp can be started with the following command:
