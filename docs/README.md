@@ -18,6 +18,23 @@ Execute the included SQL file to create the webApp's tables `source docs/db/crea
 
 This project can be deployed on any webserver. However, we developed it using Tomcat.
 
+### Deploying systemd service
+
+After the project has been deployed on a server, a systemd service can be created in order to start, stop and monitor the embedded Tomcat webserver. This project includes the files listed below to create a systemd service:
+- HotelWebApplication/docs/systemd/hotelWebApp.service
+- HotelWebApplication/docs/systemd/start_hotelWebApp.sh
+
+On a Linux server each file can be placed in the following locations:
+
+Path for service file:
+/lib/systemd/system/hotelWebApp.service
+
+Path for start shell script:
+/usr/bin/start_hotelWebApp.sh
+
+Once the service has been setup as described above, the webapp can be started with the following command:
+`systemctl start hotelWebApp.service`
+
 ### SSL
 We have provided a two sample files for deploying our app with SSL.
 
