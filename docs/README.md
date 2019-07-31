@@ -35,6 +35,7 @@ Path for start shell script:
 /usr/bin/start_hotelWebApp.sh
 
 Once the service has been setup as described above, the webapp can be started with the following command:
+
 `systemctl start hotelWebApp.service`
 
 ### SSL
